@@ -1,27 +1,26 @@
 package es.currexify.server.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 @Entity
+@Table(name="USUARIOS_MODEL")
 public class UsuariosModel implements Serializable {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5022988561549940818L;
-
-	@Id
-	@GeneratedValue
+	@Id @GeneratedValue
+	@Column(name="ID")
 	private int id;
-	
+	@Column(name="NAME")
 	private String name;
+	@Column(name="PASSWORD")
 	private String password;
+	@Column(name="EMAIL")
 	private String email;
+	@Column(name="ADDRESS")
 	private String address;
+	@Column(name="PHONE")
 	private int phone;
+	@Column(name="CARD_N")
 	private int cardN;
 	
 	public UsuariosModel(int id, String name, String password, String email, String address, int phone, int cardN) {

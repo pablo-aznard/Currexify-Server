@@ -2,24 +2,23 @@ package es.currexify.server.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="HISTORY_MODEL")
 public class HistoryModel implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4433150505590981000L;
-	@Id
-	@GeneratedValue
+	@Id @GeneratedValue
+	@Column(name="ID")
 	private int id;
+	@Column(name="CARD_N")
 	private int cardN;
+	@Column(name="COIN")
 	private String coin;
+	@Column(name="AMOUNT")
 	private double amount;
+	@Column(name="TYPE")
 	private String type;
+	@Column(name="DATE")
 	private String date;
 		
 	public HistoryModel(int id, int cardN, String coin, double amount, String type, String date) {

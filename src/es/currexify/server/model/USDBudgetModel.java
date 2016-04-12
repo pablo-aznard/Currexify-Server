@@ -1,20 +1,18 @@
 package es.currexify.server.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 @Entity
+@Table(name="USD_BUDGET_MODEL")
 public class USDBudgetModel implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5595039122184805252L;
-	@Id
-	@GeneratedValue
+
+	@Id @GeneratedValue
+	@Column(name="ID")
 	private int id;
+	@Column(name="CARD_N")
 	private int cardN;
+	@Column(name="USD_BUDGET")
 	private double usdBudget;
 	
 	public USDBudgetModel(int id, int cardN, double usdBudget) {

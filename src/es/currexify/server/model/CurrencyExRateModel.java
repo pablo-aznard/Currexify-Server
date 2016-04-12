@@ -1,22 +1,19 @@
 package es.currexify.server.model;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="CURRENCY_EXCHANGE_RATE_MODEL")
 public class CurrencyExRateModel implements Serializable {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3430242647280169365L;
-	@Id
-	@GeneratedValue
+	@Id @GeneratedValue
+	@Column(name="ID")
 	private int id;
+	@Column(name="EURO_EX")
 	private double euroEx;
+	@Column(name="CURRENCY")
+	private String currency;
 	
 	public CurrencyExRateModel(int id, double euroEx) {
 		this.id = id;
@@ -33,6 +30,12 @@ public class CurrencyExRateModel implements Serializable {
 	}
 	public void setEuroEx(double euroEx) {
 		this.euroEx = euroEx;
+	}
+	public String getCurrency() {
+		return currency;
+	}
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 	
 	

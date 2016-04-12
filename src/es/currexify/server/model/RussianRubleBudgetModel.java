@@ -1,21 +1,18 @@
 package es.currexify.server.model;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="RUSSIAN_RUBLE_BUDGET_MODEL")
 public class RussianRubleBudgetModel implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3883157755597152513L;
-	@Id
-	@GeneratedValue
+	
+	@Id @GeneratedValue
+	@Column(name="ID")
 	private int id;
+	@Column(name="CARD_N")
 	private int cardN;
+	@Column(name="RUBLE_BUDGET")
 	private double rubleBudget;
 	
 	public RussianRubleBudgetModel(int id, int cardN, double rubleBudget) {
