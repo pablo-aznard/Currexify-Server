@@ -23,9 +23,8 @@ public class UsuariosModel implements Serializable {
 	@Column(name="CARD_N")
 	private int cardN;
 	
-	public UsuariosModel(int id, String name, String password, String email, String address, int phone, int cardN) {
-		super();
-		this.id = id;
+	public UsuariosModel(String name, String password, 
+			String email, String address, int phone, int cardN) {
 		this.name = name;
 		this.password = password;
 		this.email = email;

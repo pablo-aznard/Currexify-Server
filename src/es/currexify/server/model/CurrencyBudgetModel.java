@@ -18,9 +18,9 @@ public class CurrencyBudgetModel implements Serializable {
 	private double budget;
 	
 		
-	public CurrencyBudgetModel(int id, int cardN, double budget) {
-		this.id = id;
+	public CurrencyBudgetModel(int cardN, String currency, double budget) {
 		this.cardN = cardN;
+		this.currency = currency;
 		this.budget = budget;
 	}
 
