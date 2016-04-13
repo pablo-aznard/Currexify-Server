@@ -5,10 +5,10 @@ import es.currexify.server.model.HistoryModel;
 
 public interface HistoryDAO {
 
-	public boolean createHistory(int id, int cardN,	String coin,
+	public HistoryModel createHistory(String cardN,	String coin,
 			double amount, String type, String date);
 	public List<HistoryModel> readHistory();
 	public boolean updateHistory(HistoryModel hm);
-	public boolean deleteHistoryById(int id);
+	public boolean deleteHistoryById(long id);
 	
 }

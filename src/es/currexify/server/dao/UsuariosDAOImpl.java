@@ -10,16 +10,25 @@ import es.currexify.server.model.UsuariosModel;
 
 public class UsuariosDAOImpl implements UsuariosDAO {
 
+	private static UsuariosDAOImpl instance;
+	private UsuariosDAOImpl () {
+	}
+	public static UsuariosDAOImpl getInstance() {
+		if (instance == null)
+			instance = new UsuariosDAOImpl();
+		return instance;
+	}
+	
 	@Override
-	public boolean createUser(String name, String password, String email,
-			String address, int phone, int cardN) {
+	public UsuariosModel createUser(String name, String password, String email,
+			String address, String phone, String cardN) {
 		UsuariosModel um = null;
 		EntityManager em = EMFService.get().createEntityManager();
 		um = new UsuariosModel(name, password, email, address,
 				phone, cardN);
 		em.persist(um);
 		em.close();
-		return true;
+		return um;
 	}
 
 	@Override
@@ -32,9 +41,9 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	}
 
 	@Override
-	public UsuariosModel readUserById(int id) {
+	public UsuariosModel readUserById(long id) {
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select u from TFG u where u.id = :id");
+		Query q = em.createQuery("select u from UsuariosModel u where u.id = :id");
 		q.setParameter("ID", id);
 		UsuariosModel res = null;
 		List<UsuariosModel> ums= q.getResultList();
@@ -47,7 +56,7 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	@Override
 	public UsuariosModel readUserByName(String name) {
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select u from TFG u where u.name = :name");
+		Query q = em.createQuery("select u from UsuariosModel u where u.name = :name");
 		q.setParameter("NAME", name);
 		UsuariosModel res = null;
 		List<UsuariosModel> ums= q.getResultList();
@@ -68,7 +77,7 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	}
 
 	@Override
-	public boolean deleteUsuarioById(int id) {
+	public boolean deleteUsuarioById(long id) {
 		EntityManager em = EMFService.get().createEntityManager();
 		try {
 			UsuariosModel todo = em.find(UsuariosModel.class, id);

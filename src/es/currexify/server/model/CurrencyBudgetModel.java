@@ -4,13 +4,13 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name="EURO_BUDGET_MODEL", uniqueConstraints={@UniqueConstraint(columnNames={"ID"})})
+@Table(name="EURO_BUDGET_MODEL")
 public class CurrencyBudgetModel implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
-	private int id;
+	private long id;
 	@Column(name="CARD_N")
 	private int cardN;
 	@Column(name="CURRENCY")
@@ -26,12 +26,12 @@ public class CurrencyBudgetModel implements Serializable {
 	}
 
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

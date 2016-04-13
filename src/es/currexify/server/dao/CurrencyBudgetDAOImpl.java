@@ -8,14 +8,24 @@ import es.currexify.server.model.CurrencyBudgetModel;
 
 public class CurrencyBudgetDAOImpl implements CurrencyBudgetDAO {
 
+	private static CurrencyBudgetDAOImpl instance;
+	private CurrencyBudgetDAOImpl () {
+	}
+	public static CurrencyBudgetDAOImpl getInstance() {
+		if (instance == null)
+			instance = new CurrencyBudgetDAOImpl();
+		return instance;
+	}
+
+	
 	@Override
-	public boolean createCurrencyBudget(int cardN, String currency, double budget) {
+	public CurrencyBudgetModel createCurrencyBudget(int cardN, String currency, double budget) {
 		CurrencyBudgetModel cbm = null;
 		EntityManager em = EMFService.get().createEntityManager();
 		cbm = new CurrencyBudgetModel(cardN, currency, budget);
 		em.persist(cbm);
 		em.close();
-		return true;
+		return cbm;
 	}
 
 	@Override

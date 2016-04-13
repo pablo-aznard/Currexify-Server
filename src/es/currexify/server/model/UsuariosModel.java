@@ -4,13 +4,13 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name="USUARIOS_MODEL", uniqueConstraints={@UniqueConstraint(columnNames={"ID", "NAME", "EMAIL", "CARD_N"})})
+@Table(name="USUARIOS_MODEL")
 public class UsuariosModel implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
-	private int id;
+	private long id;
 	@Column(name="NAME")
 	private String name;
 	@Column(name="PASSWORD")
@@ -20,12 +20,12 @@ public class UsuariosModel implements Serializable {
 	@Column(name="ADDRESS")
 	private String address;
 	@Column(name="PHONE")
-	private int phone;
+	private String phone;
 	@Column(name="CARD_N")
-	private int cardN;
+	private String cardN;
 	
 	public UsuariosModel(String name, String password, 
-			String email, String address, int phone, int cardN) {
+			String email, String address, String phone, String cardN) {
 		this.name = name;
 		this.password = password;
 		this.email = email;
@@ -33,10 +33,10 @@ public class UsuariosModel implements Serializable {
 		this.phone = phone;
 		this.cardN = cardN;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -63,16 +63,16 @@ public class UsuariosModel implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public int getCardN() {
+	public String getCardN() {
 		return cardN;
 	}
-	public void setCardN(int cardN) {
+	public void setCardN(String cardN) {
 		this.cardN = cardN;
 	}
 	

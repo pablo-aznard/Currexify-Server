@@ -4,18 +4,28 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import es.currexify.server.model.CurrencyExRateModel;
 
 public class CurrencyExRateDAOImpl implements CurrencyExRateDAO {
 
+	private static CurrencyExRateDAOImpl instance;
+	private CurrencyExRateDAOImpl () {
+	}
+	public static CurrencyExRateDAOImpl getInstance() {
+		if (instance == null)
+			instance = new CurrencyExRateDAOImpl();
+		return instance;
+	}
+	
 	@Override
-	public boolean createCurrencyExRate(double euroEx, String currency) {
+	public CurrencyExRateModel createCurrencyExRate(double euroEx, String currency) {
 		CurrencyExRateModel cer = null;
 		EntityManager em = EMFService.get().createEntityManager();
 		cer = new CurrencyExRateModel(euroEx, currency);
 		em.persist(cer);
 		em.close();
-		return true;
+		return cer;
 	}
 
 	@Override
@@ -36,7 +46,7 @@ public class CurrencyExRateDAOImpl implements CurrencyExRateDAO {
 	}
 
 	@Override
-	public boolean deleteCurrencyExRateById(int id) {
+	public boolean deleteCurrencyExRateById(long id) {
 		EntityManager em = EMFService.get().createEntityManager();
 		try {
 			CurrencyExRateModel all = em.find(CurrencyExRateModel.class, id);

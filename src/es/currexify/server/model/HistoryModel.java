@@ -5,15 +5,15 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name="HISTORY_MODEL", uniqueConstraints={@UniqueConstraint(columnNames={"ID"})})
+@Table(name="HISTORY_MODEL")
 public class HistoryModel implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
-	private int id;
+	private long id;
 	@Column(name="CARD_N")
-	private int cardN;
+	private String cardN;
 	@Column(name="COIN")
 	private String coin;
 	@Column(name="AMOUNT")
@@ -23,7 +23,7 @@ public class HistoryModel implements Serializable {
 	@Column(name="DATE")
 	private String date;
 		
-	public HistoryModel(int cardN, String coin, double amount, String type, String date) {
+	public HistoryModel(String cardN, String coin, double amount, String type, String date) {
 		this.cardN = cardN;
 		this.coin = coin;
 		this.amount = amount;
@@ -31,16 +31,16 @@ public class HistoryModel implements Serializable {
 		this.date = date;
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-	public int getCardN() {
+	public String getCardN() {
 		return cardN;
 	}
-	public void setCardN(int cardN) {
+	public void setCardN(String cardN) {
 		this.cardN = cardN;
 	}
 	public String getCoin() {
@@ -67,6 +67,4 @@ public class HistoryModel implements Serializable {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
-
 }

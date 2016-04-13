@@ -4,13 +4,13 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name="CURRENCY_EXCHANGE_RATE_MODEL", uniqueConstraints={@UniqueConstraint(columnNames={"ID"})})
+@Table(name="CURRENCY_EXCHANGE_RATE_MODEL")
 public class CurrencyExRateModel implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
-	private int id;
+	private long id;
 	@Column(name="EURO_EX")
 	private double euroEx;
 	@Column(name="CURRENCY")
@@ -20,10 +20,10 @@ public class CurrencyExRateModel implements Serializable {
 		this.euroEx = euroEx;
 		this.currency = currency;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public double getEuroEx() {
