@@ -4,9 +4,10 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name="CURRENCY_EXCHANGE_RATE_MODEL")
+@Table(name="CURRENCY_EXCHANGE_RATE_MODEL", uniqueConstraints={@UniqueConstraint(columnNames={"ID"})})
 public class CurrencyExRateModel implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue
 	@Column(name="ID")
 	private int id;
@@ -15,9 +16,9 @@ public class CurrencyExRateModel implements Serializable {
 	@Column(name="CURRENCY")
 	private String currency;
 	
-	public CurrencyExRateModel(int id, double euroEx) {
-		this.id = id;
+	public CurrencyExRateModel(double euroEx, String currency) {
 		this.euroEx = euroEx;
+		this.currency = currency;
 	}
 	public int getId() {
 		return id;

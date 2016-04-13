@@ -8,8 +8,7 @@ public interface HistoryDAO {
 	public boolean createHistory(int id, int cardN,	String coin,
 			double amount, String type, String date);
 	public List<HistoryModel> readHistory();
-	public boolean updateHistory(int id, int cardN,	String coin,
-			double amount, String type, String date);
+	public boolean updateHistory(HistoryModel hm);
 	public boolean deleteHistoryById(int id);
 	
 }

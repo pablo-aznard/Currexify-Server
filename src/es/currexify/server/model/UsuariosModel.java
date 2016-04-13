@@ -4,9 +4,10 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name="USUARIOS_MODEL")
+@Table(name="USUARIOS_MODEL", uniqueConstraints={@UniqueConstraint(columnNames={"ID", "NAME", "EMAIL", "CARD_N"})})
 public class UsuariosModel implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue
 	@Column(name="ID")
 	private int id;

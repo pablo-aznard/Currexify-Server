@@ -4,9 +4,10 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name="EURO_BUDGET_MODEL")
+@Table(name="EURO_BUDGET_MODEL", uniqueConstraints={@UniqueConstraint(columnNames={"ID"})})
 public class CurrencyBudgetModel implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue
 	@Column(name="ID")
 	private int id;

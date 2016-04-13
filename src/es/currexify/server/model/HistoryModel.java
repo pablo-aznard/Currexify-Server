@@ -5,8 +5,10 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name="HISTORY_MODEL")
+@Table(name="HISTORY_MODEL", uniqueConstraints={@UniqueConstraint(columnNames={"ID"})})
 public class HistoryModel implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue
 	@Column(name="ID")
 	private int id;
@@ -21,9 +23,7 @@ public class HistoryModel implements Serializable {
 	@Column(name="DATE")
 	private String date;
 		
-	public HistoryModel(int id, int cardN, String coin, double amount, String type, String date) {
-		super();
-		this.id = id;
+	public HistoryModel(int cardN, String coin, double amount, String type, String date) {
 		this.cardN = cardN;
 		this.coin = coin;
 		this.amount = amount;

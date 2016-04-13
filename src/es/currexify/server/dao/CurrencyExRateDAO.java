@@ -8,8 +8,7 @@ public interface CurrencyExRateDAO {
 
 	public boolean createCurrencyExRate(double euroEx, String currency);
 	public List<CurrencyExRateModel> readCurrencyExRates();
-	public boolean updateCurrencyExRate(String currency);
+	public boolean updateCurrencyExRate(CurrencyExRateModel cerm);
 	public boolean deleteCurrencyExRateById(int id);
-	public boolean deleteCurrencyExRateByCurrency(String currency);
 
 }
