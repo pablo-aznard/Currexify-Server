@@ -9,6 +9,6 @@ public interface CurrencyExRateDAO {
 	public CurrencyExRateModel createCurrencyExRate(double euroEx, String currency);
 	public List<CurrencyExRateModel> readCurrencyExRates();
 	public boolean updateCurrencyExRate(CurrencyExRateModel cerm);
-	public boolean deleteCurrencyExRateById(long id);
+	public boolean deleteCurrencyExRateById(Long id);
 
 }

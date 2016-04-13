@@ -10,38 +10,38 @@ public class CurrencyBudgetModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
-	private long id;
+	private Long id;
 	@Column(name="CARD_N")
-	private int cardN;
+	private String cardN;
 	@Column(name="CURRENCY")
 	private String currency;
 	@Column(name="BUDGET")
 	private double budget;
 	
 		
-	public CurrencyBudgetModel(int cardN, String currency, double budget) {
+	public CurrencyBudgetModel(String cardN, String currency, double budget) {
 		this.cardN = cardN;
 		this.currency = currency;
 		this.budget = budget;
 	}
 
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 
-	public int getCardN() {
+	public String getCardN() {
 		return cardN;
 	}
 
 
-	public void setCardN(int cardN) {
+	public void setCardN(String cardN) {
 		this.cardN = cardN;
 	}
 

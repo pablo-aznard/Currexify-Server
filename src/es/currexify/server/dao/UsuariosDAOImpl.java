@@ -41,7 +41,7 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	}
 
 	@Override
-	public UsuariosModel readUserById(long id) {
+	public UsuariosModel readUserById(Long id) {
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em.createQuery("select u from UsuariosModel u where u.id = :id");
 		q.setParameter("ID", id);
@@ -77,7 +77,7 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	}
 
 	@Override
-	public boolean deleteUsuarioById(long id) {
+	public boolean deleteUsuarioById(Long id) {
 		EntityManager em = EMFService.get().createEntityManager();
 		try {
 			UsuariosModel todo = em.find(UsuariosModel.class, id);

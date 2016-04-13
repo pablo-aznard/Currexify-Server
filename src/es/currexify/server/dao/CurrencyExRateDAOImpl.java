@@ -46,7 +46,7 @@ public class CurrencyExRateDAOImpl implements CurrencyExRateDAO {
 	}
 
 	@Override
-	public boolean deleteCurrencyExRateById(long id) {
+	public boolean deleteCurrencyExRateById(Long id) {
 		EntityManager em = EMFService.get().createEntityManager();
 		try {
 			CurrencyExRateModel all = em.find(CurrencyExRateModel.class, id);

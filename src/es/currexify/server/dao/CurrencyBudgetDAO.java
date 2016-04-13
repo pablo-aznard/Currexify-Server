@@ -5,8 +5,8 @@ import java.util.List;
 import es.currexify.server.model.CurrencyBudgetModel;
 
 public interface CurrencyBudgetDAO {
-	public CurrencyBudgetModel createCurrencyBudget(int cardN, String currency, double budget);
-	public List<CurrencyBudgetModel> readCurrencyBudgetByCardN(int cardN);
+	public CurrencyBudgetModel createCurrencyBudget(String cardN, String currency, double budget);
+	public List<CurrencyBudgetModel> readCurrencyBudgetByCardN(String cardN);
 	public boolean updateCurrencyBudget(CurrencyBudgetModel cbm);
-	public boolean deleteCurrencyBudgetById(int cardN);
+	public boolean deleteCurrencyBudgetById(Long id);
 }

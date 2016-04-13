@@ -10,7 +10,7 @@ public class CurrencyExRateModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
-	private long id;
+	private Long id;
 	@Column(name="EURO_EX")
 	private double euroEx;
 	@Column(name="CURRENCY")
@@ -20,10 +20,10 @@ public class CurrencyExRateModel implements Serializable {
 		this.euroEx = euroEx;
 		this.currency = currency;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public double getEuroEx() {

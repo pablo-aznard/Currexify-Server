@@ -10,7 +10,7 @@ public class UsuariosModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
-	private long id;
+	private Long id;
 	@Column(name="NAME")
 	private String name;
 	@Column(name="PASSWORD")
@@ -33,10 +33,10 @@ public class UsuariosModel implements Serializable {
 		this.phone = phone;
 		this.cardN = cardN;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {

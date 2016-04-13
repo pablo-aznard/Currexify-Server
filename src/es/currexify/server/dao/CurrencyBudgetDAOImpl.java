@@ -19,7 +19,7 @@ public class CurrencyBudgetDAOImpl implements CurrencyBudgetDAO {
 
 	
 	@Override
-	public CurrencyBudgetModel createCurrencyBudget(int cardN, String currency, double budget) {
+	public CurrencyBudgetModel createCurrencyBudget(String cardN, String currency, double budget) {
 		CurrencyBudgetModel cbm = null;
 		EntityManager em = EMFService.get().createEntityManager();
 		cbm = new CurrencyBudgetModel(cardN, currency, budget);
@@ -29,17 +29,20 @@ public class CurrencyBudgetDAOImpl implements CurrencyBudgetDAO {
 	}
 
 	@Override
-	public List<CurrencyBudgetModel> readCurrencyBudgetByCardN(int cardN) {
+	public List<CurrencyBudgetModel> readCurrencyBudgetByCardN(String cardN) {
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select m from CurrencyBudgetModel m");
+		Query q = em.createQuery("select m from CurrencyBudgetModel m where m.cardN = :cardN", CurrencyBudgetModel.class);
+		q.setParameter("cardN", cardN);
 		List<CurrencyBudgetModel> res = q.getResultList();
-		em.close();
+		System.out.println("----------------------");
+		em.close();	
+		System.out.println("----------------------");
 		return res;
 	}
 
 	@Override
 	public boolean updateCurrencyBudget(CurrencyBudgetModel cbm) {
-
+		
 		EntityManager em = EMFService.get().createEntityManager();
 		em.merge(cbm);
 		em.close();
@@ -48,7 +51,7 @@ public class CurrencyBudgetDAOImpl implements CurrencyBudgetDAO {
 	}
 
 	@Override
-	public boolean deleteCurrencyBudgetById(int id) {
+	public boolean deleteCurrencyBudgetById(Long id) {
 		EntityManager em = EMFService.get().createEntityManager();
 		try {
 			CurrencyBudgetModel todo = em.find(CurrencyBudgetModel.class, id);

@@ -1,6 +1,8 @@
 package es.currexify.server;
 
+
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.*;
 
@@ -14,12 +16,39 @@ public class CurrexifyServlet extends HttpServlet {
     //resp.getWriter().println("Hello, world");
     
     CurrencyBudgetDAO cbdao = CurrencyBudgetDAOImpl.getInstance();
-    CurrencyBudgetModel cbm = cbdao.createCurrencyBudget(1234, "Euro", 10.0);
-    CurrencyBudgetModel cbm1 = cbdao.createCurrencyBudget(12, "Euro", 10.0);
-    resp.getWriter().println(cbm.getId()+" "+cbm.getCardN()+" "
-        +cbm.getCurrency()+" "+cbm.getBudget()+" "+
-        cbm1.getId()+" "+cbm1.getCardN()+" "+cbm1.getCurrency()+" "+cbm1.getBudget());
+    CurrencyBudgetModel cbm = cbdao.createCurrencyBudget("1234", "Euro", 10.00);
+    CurrencyBudgetModel cbm1 = cbdao.createCurrencyBudget("12", "Euro", 10.00);
+    //resp.getWriter().println(cbm.getId()+" "+cbm.getCardN()+" "
+    //  +cbm.getCurrency()+" "+cbm.getBudget()+" "+
+    //  cbm1.getId()+" "+cbm1.getCardN()+" "+cbm1.getCurrency()+" "+cbm1.getBudget());
+    List<CurrencyBudgetModel> cbml = cbdao.readCurrencyBudgetByCardN("1234");
+    if(cbml.size()>0){
+    	for(CurrencyBudgetModel cbmr : cbml){
+    		//resp.getWriter().println(cbmr.getId()+" "+cbmr.getCardN()+" "
+    	    //        +cbmr.getCurrency()+" "+cbmr.getBudget());
+    		cbmr.setBudget(Math.random()*1000);
+    		cbdao.updateCurrencyBudget(cbmr);
+    		cbdao.deleteCurrencyBudgetById(cbmr.getId());
+    		}
+    	}    
     
+    else {
+    	resp.getWriter().println("IMBÉCIL");
+    }    
+    cbml = cbdao.readCurrencyBudgetByCardN("1234");
+    if(cbml.size()>0){
+    	for(CurrencyBudgetModel cbmr : cbml){
+    		resp.getWriter().println(cbmr.getId()+" "+cbmr.getCardN()+" "
+    	            +cbmr.getCurrency()+" "+cbmr.getBudget());}
+    	}    
+    
+    else {
+    	resp.getWriter().println("IMBÉCIL");
+    }
+    
+    
+    
+    /*
     CurrencyExRateDAO cerdao = CurrencyExRateDAOImpl.getInstance();
     CurrencyExRateModel cer = cerdao.createCurrencyExRate(1.1, "Perico");
     CurrencyExRateModel cer1 = cerdao.createCurrencyExRate(1.2, "Periquito");
@@ -46,7 +75,7 @@ public class CurrexifyServlet extends HttpServlet {
     		um1.getId()+" "+um1.getName()+" "+um1.getPassword()+
     		" "+um1.getEmail()+" "+um1.getAddress()+" "+um1.getPhone()+" "+
     		um1.getCardN());
-    
+    */
     
     /*for(CurrencyBudgetModel cbm: cbdao.read()) {
       resp.getWriter().println(cbm);

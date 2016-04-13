@@ -46,7 +46,7 @@ public class HistoryDAOImpl implements HistoryDAO {
 	}
 
 	@Override
-	public boolean deleteHistoryById(long id) {
+	public boolean deleteHistoryById(Long id) {
 		EntityManager em = EMFService.get().createEntityManager();
 		try {
 			HistoryModel all = em.find(HistoryModel.class, id);

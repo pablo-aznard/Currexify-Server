@@ -10,9 +10,9 @@ public interface UsuariosDAO {
 	public UsuariosModel createUser(String name, String password, String email,
 			String address, String phone, String cardN);
 	public List<UsuariosModel> readUsers();
-	public UsuariosModel readUserById(long id);
+	public UsuariosModel readUserById(Long id);
 	public UsuariosModel readUserByName(String name);
 	public boolean updateUsuario(UsuariosModel um);
-	public boolean deleteUsuarioById(long id);
+	public boolean deleteUsuarioById(Long id);
 	
 }

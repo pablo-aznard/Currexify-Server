@@ -9,6 +9,6 @@ public interface HistoryDAO {
 			double amount, String type, String date);
 	public List<HistoryModel> readHistory();
 	public boolean updateHistory(HistoryModel hm);
-	public boolean deleteHistoryById(long id);
+	public boolean deleteHistoryById(Long id);
 	
 }
