@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import es.currexify.server.model.CurrencyBudgetModel;
 import es.currexify.server.model.UsuariosModel;
 
 public class UsuariosDAOImpl implements UsuariosDAO {
@@ -34,7 +33,7 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	@Override
 	public List<UsuariosModel> readUsers() {
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select m from CurrencyBudgetModel m");
+		Query q = em.createQuery("select u from UsuariosModel u");
 		List<UsuariosModel> res = q.getResultList();
 		em.close();
 		return res;
@@ -44,7 +43,7 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	public UsuariosModel readUserById(Long id) {
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em.createQuery("select u from UsuariosModel u where u.id = :id");
-		q.setParameter("ID", id);
+		q.setParameter("id", id);
 		UsuariosModel res = null;
 		List<UsuariosModel> ums= q.getResultList();
 		if (ums.size() > 0)
@@ -57,7 +56,7 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	public UsuariosModel readUserByName(String name) {
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em.createQuery("select u from UsuariosModel u where u.name = :name");
-		q.setParameter("NAME", name);
+		q.setParameter("name", name);
 		UsuariosModel res = null;
 		List<UsuariosModel> ums= q.getResultList();
 		if (ums.size() > 0)

@@ -15,6 +15,7 @@ public class CurrexifyServlet extends HttpServlet {
     resp.setContentType("text/plain");
     //resp.getWriter().println("Hello, world");
     
+    /*
     CurrencyBudgetDAO cbdao = CurrencyBudgetDAOImpl.getInstance();
     CurrencyBudgetModel cbm = cbdao.createCurrencyBudget("1234", "Euro", 10.00);
     CurrencyBudgetModel cbm1 = cbdao.createCurrencyBudget("12", "Euro", 10.00);
@@ -45,7 +46,7 @@ public class CurrexifyServlet extends HttpServlet {
     else {
     	resp.getWriter().println("IMBÉCIL");
     }
-    
+    */
     
     
     /*
@@ -69,12 +70,28 @@ public class CurrexifyServlet extends HttpServlet {
     UsuariosDAO udao = UsuariosDAOImpl.getInstance();
     UsuariosModel um = udao.createUser("Perico", "asdfjklh", "asdfjkh@gmail.com", "Calle Casas", "666666666", "12345");
     UsuariosModel um1 = udao.createUser("Pepe", "riuekbv", "ouitrb@gmail.com", "Calle Edificios", "777777777", "123");
-    resp.getWriter().println(um.getId()+" "+um.getName()+" "+um.getPassword()+
-    		" "+um.getEmail()+" "+um.getAddress()+" "+um.getPhone()+" "+
-    		um.getCardN()+ " "+
-    		um1.getId()+" "+um1.getName()+" "+um1.getPassword()+
-    		" "+um1.getEmail()+" "+um1.getAddress()+" "+um1.getPhone()+" "+
-    		um1.getCardN());
+    List<UsuariosModel> uml = udao.readUsers();
+    if(uml.size()>0){
+    	for(UsuariosModel umr : uml){
+    		//resp.getWriter().println(cbmr.getId()+" "+cbmr.getCardN()+" "
+    	    //        +cbmr.getCurrency()+" "+cbmr.getBudget());
+    		String tamaño = String.valueOf(uml.size());
+    		umr.setName("Perico"+tamaño);
+    		udao.updateUsuario(umr);
+    		udao.deleteUsuarioById(umr.getId());
+    		}
+    	}    
+    
+    else {
+    	resp.getWriter().println("IMBÉCIL");
+    }    
+    if(uml.size()>0){
+    	for(UsuariosModel umr : uml){
+    		resp.getWriter().println(umr.getId()+" "+umr.getName()+" "+umr.getPassword()+
+    				" "+umr.getEmail()+" "+umr.getAddress()+" "+umr.getPhone()+" "+
+    				umr.getCardN()+ " ");
+    	}
+    }
     */
     
     /*for(CurrencyBudgetModel cbm: cbdao.read()) {

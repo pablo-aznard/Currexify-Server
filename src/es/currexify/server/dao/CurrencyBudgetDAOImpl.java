@@ -31,12 +31,10 @@ public class CurrencyBudgetDAOImpl implements CurrencyBudgetDAO {
 	@Override
 	public List<CurrencyBudgetModel> readCurrencyBudgetByCardN(String cardN) {
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select m from CurrencyBudgetModel m where m.cardN = :cardN", CurrencyBudgetModel.class);
+		Query q = em.createQuery("select m from CurrencyBudgetModel m where m.cardN = :cardN");
 		q.setParameter("cardN", cardN);
 		List<CurrencyBudgetModel> res = q.getResultList();
-		System.out.println("----------------------");
 		em.close();	
-		System.out.println("----------------------");
 		return res;
 	}
 
