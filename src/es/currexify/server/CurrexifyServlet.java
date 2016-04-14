@@ -32,4 +32,4 @@ public class CurrexifyServlet extends HttpServlet {
 		RequestDispatcher view = req.getRequestDispatcher("login.jsp");
 		view.forward(req, resp);
 	}
-}
+  }

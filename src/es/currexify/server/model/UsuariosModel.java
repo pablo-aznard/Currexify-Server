@@ -2,6 +2,7 @@ package es.currexify.server.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 @Table(name="USUARIOS_MODEL")
@@ -23,6 +24,10 @@ public class UsuariosModel implements Serializable {
 	private String phone;
 	@Column(name="CARD_N")
 	private String cardN;
+	@OneToMany(targetEntity=HistoryModel.class)
+	private List<HistoryModel> histories;
+	@OneToMany(targetEntity=CurrencyBudgetModel.class)
+	private List<CurrencyBudgetModel> userCurrencies;
 	
 	public UsuariosModel(String name, String password, 
 			String email, String address, String phone, String cardN) {
@@ -76,5 +81,20 @@ public class UsuariosModel implements Serializable {
 		this.cardN = cardN;
 	}
 	
+	public List<HistoryModel> getHistories(){
+		return histories;
+	}
+	
+	public void setHistories(List<HistoryModel> histories){
+		this.histories = histories;
+	}
+	
+	public List<CurrencyBudgetModel> getUserCurrencies(){
+		return userCurrencies;
+	}
+	
+	public void setUserCurrencies(List<CurrencyBudgetModel> userCurrencies){
+		this.userCurrencies = userCurrencies;
+	}
 
 }
