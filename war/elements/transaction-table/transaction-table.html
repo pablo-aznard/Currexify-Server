@@ -1,0 +1,61 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="transaction-table">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+    </style>
+    <div style="width: 100%; margin-top: 20px">
+        <div style="background-color: #666; color: white; width: 100%; padding: 10px"><span>{{title}}</span></div>
+        <template is="dom-repeat" items="{{transations}}" as="item">
+            <div style="padding:10px; width: 100%; background-color: #EEE; border-bottom: 1px solid #ccc">
+                <span style="margin-right: 60px; float: left;">{{item.user}}</span>
+                <span style="margin-right: 30px; float: right;">{{item.quantity}}</span>
+                <span style="margin-right: 30px; float: right;">{{item.type}}</span>
+                <div style="clear: both"></div>
+            </div>
+        </template>
+    </div>
+</template>
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'transaction-table',
+
+        properties: {
+            title: {
+                type: "String",
+                value: "Transactions"
+            },
+            transations: {
+                type: Array,
+                value: [{"user":"Pablo Pavo", "type":"0.95", "quantity":"200€"},{"user":"Nacho Cano", "type":"0.05", "quantity":"300€"},{"user":"William Tell", "type":"2.95", "quantity":"500€"}]
+            }
+        },
+
+        ready: function() {
+          var that = this;
+        }
+      });
+    })();
+  </script>
+</dom-module>

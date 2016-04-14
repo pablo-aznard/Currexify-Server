@@ -1,0 +1,157 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<dom-module id="register-user">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+
+      .img-logo {
+        max-width: 200px;
+        display: block;
+        margin: 0 auto;
+      }
+
+      #submit {
+        color: white; 
+        background-color: #4AAECF; 
+        width: 20%; 
+        float:right;
+      }
+
+      #clear {
+        color: white; 
+        background-color: #4AAECF; 
+        width: 20%; 
+        float:right;
+      }
+
+    </style>
+    <div style="width: 100%;">
+      <div style="margin: 0 auto;">
+        <img src="../../images/touch/logotipo_tocho.png" class="img-logo">
+      </div>
+      <div style="width: 90%; margin-left:5%;">
+        <div>
+          <paper-input id="user" label="Usuario">
+            <iron-icon icon="account-circle" prefix></iron-icon>
+            <paper-icon-button suffix on-click="clearUser" icon="clear" alt="clear" title="clear">
+          </paper-input>
+          <paper-input id="pass" label="Contraseña" type="password">
+            <iron-icon icon="fingerprint" prefix></iron-icon>
+            <paper-icon-button suffix on-click="clearPass" icon="clear" alt="clear" title="clear">
+          </paper-input>
+          <paper-input label="E-mail" id="email">
+            <iron-icon icon="mail" prefix></iron-icon>
+            <div suffix>@gmail.com</div>
+            <paper-icon-button suffix on-click="clearEmail" icon="clear" alt="clear" title="clear">
+            </paper-icon-button>
+          </paper-input>
+          <paper-input id="address" label="Address">
+            <iron-icon icon="home" prefix></iron-icon>
+            <paper-icon-button suffix on-click="clearAddress" icon="clear" alt="clear" title="clear">
+          </paper-input>
+          <paper-input id="phone" label="Phone" type="number">
+            <iron-icon icon="settings-phone" prefix></iron-icon>
+            <paper-icon-button suffix on-click="clearPhone" icon="clear" alt="clear" title="clear">
+          </paper-input>
+          <paper-input id="cardnum" label="Card Number" char-counter maxlength="16">
+            <iron-icon icon="credit-card" prefix></iron-icon>
+            <paper-icon-button suffix on-click="clearCard" icon="clear" alt="clear" title="clear">
+          </paper-input>
+        </div>
+        <div style="margin-top: 2em;">
+          <div style="display: inline-block; width: 100%; margin: 0 auto">
+            <paper-button id="clear" raised on-click="clearAll">Clear fields</paper-button>
+            <paper-button id="submit" raised on-click="submit">Submit</paper-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'register-user',
+
+        properties: {
+          username: {
+            type: String,
+            notify: true,
+            value: "username"
+          },
+
+          password: {
+            type: String,
+            value: "password"
+          }
+        },
+
+        ready: function() {
+          var that = this;
+        },
+
+        clearUser: function() {
+          this.$.user.value = ""
+        },
+
+        clearPass: function() {
+          this.$.pass.value = ""
+        },
+
+        clearEmail: function() {
+          this.$.email.value = ""
+        },
+
+        clearAddress: function() {
+          this.$.address.value = ""
+        },
+
+        clearPhone: function() {
+          this.$.phone.value = ""
+        },
+
+        clearCard: function() {
+          this.$.cardnum.value = ""
+        },
+
+        clearAll: function() {
+          this.$.user.value = ""
+          this.$.pass.value = ""
+          this.$.email.value = ""
+          this.$.address.value = ""
+          this.$.phone.value = ""
+          this.$.cardnum.value = ""
+        },
+
+        submit: function() {
+          //Estructure
+        }
+      });
+    })();
+  </script>
+</dom-module>

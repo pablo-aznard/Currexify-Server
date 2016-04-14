@@ -1,0 +1,168 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../transaction-table/transaction-table.html">
+
+<dom-module id="transaction-user">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+
+      .column-6 {
+          display: inline-block;
+          padding: 0;
+          margin: 0;
+          border: 0;
+          width: 49.5%;
+      }
+
+      paper-dropdown-menu {
+          width: 100%;
+      }
+
+      div.recommended {
+          vertical-align: bottom;
+      }
+
+    </style>
+    <div class="row">
+        <div class="column-6">
+            <paper-input type="number" on-input="calc" value="{{money}}" label="Ingrese Cantidad">
+              <div suffix>{{currency}}</div>
+            </paper-input>
+        </div>
+        <div class="column-6">
+            <paper-dropdown-menu label="Type">
+                <paper-menu class="dropdown-content" selected="{{selected}}">
+                    <template is="dom-repeat" items="{{types}}" as="type">
+                        <paper-item>[[type]]</paper-item>
+                    </template>
+                </paper-menu>
+            </paper-dropdown-menu>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column-6">
+            El dinero que vais a percibir es <span style="font-size: 20px; font-weight: 800; margin-left: 10px">{{change}}</span><span style="font-size: 20px; font-weight: 800">{{currencyex}}</span>
+        </div>
+        <div class="column-6">
+            <paper-dropdown-menu label="Type">
+                <paper-menu class="dropdown-content" selected="{{selectedChange}}">
+                    <template is="dom-repeat" items="{{types}}" as="type">
+                        <paper-item>[[type]]</paper-item>
+                    </template>
+                </paper-menu>
+            </paper-dropdown-menu>
+        </div>
+    </div>
+    <div class="row">
+        <transaction-table title="Transaction history"></transaction-table>
+    </div>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'transaction-user',
+
+        properties: {
+          types: {
+            type: Array,
+            value: ["USD", "EUR"]
+          },
+
+          selected: {
+            type: Number,
+            value: 0,
+            observer: "_getCurrency"
+          },
+
+          selectedChange: {
+            type: Number,
+            value: 0,
+            observer: "_getCurrencyChange"
+          },
+
+          currency: {
+            type: String,
+            value: "$"
+          },
+
+          currencyex: {
+            type: String,
+            value: "€"
+          },
+
+          change: {
+            type: String,
+            value: "1234.56"
+          },
+
+          money: {
+            type: Number,
+            value: 0
+          }
+        },
+
+        ready: function() {
+          var that = this;
+        },
+
+        calc: function() {
+          if (this.types[this.selected] == "USD" && this.types[this.selectedChange] == "EUR")
+            this.change = (this.money*0.877389241).toFixed(2)
+          else if (this.types[this.selected] == "EUR" && this.types[this.selectedChange] == "USD")
+            this.change = (this.money*1.139745).toFixed(2)
+          else if (this.types[this.selected] == "USD" && this.types[this.selectedChange] == "USD"){
+            if(this.money != undefined)
+              this.change = parseInt(this.money).toFixed(2)
+            else
+              this.change = 0
+          }
+          else if (this.types[this.selected] == "EUR" && this.types[this.selectedChange] == "EUR") {
+            if(this.money != undefined)
+              this.change = parseInt(this.money).toFixed(2)
+            else
+              this.change = 0
+          }
+        },
+
+        _getCurrency: function() {
+          if(this.types[this.selected] == "USD")
+            this.currency = "$"
+          else if(this.types[this.selected] == "EUR")
+            this.currency = "€"
+          this.calc()
+        },
+
+        _getCurrencyChange: function() {
+          if(this.types[this.selectedChange] == "USD")
+            this.currencyex = "$"
+          else if(this.types[this.selectedChange] == "EUR")
+            this.currencyex = "€"
+          this.calc()
+        }
+      });
+    })();
+  </script>
+</dom-module>

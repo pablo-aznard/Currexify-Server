@@ -1,0 +1,74 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="home-screen">
+  <style is="custom-style">
+    @import url("../../styles/app-theme.html");
+  </style>
+  <link rel="import" type="css" href="home-screen.css">
+  <template>
+    <paper-material elevation="1">
+      <div style="width: 100%; background-color: #BBDEFB">
+        <div style="padding: 30px; width: 100%; display: flex">
+          <img src="/images/touch/logotipo_tocho.png" class="img-home">
+        </div>
+      </div>
+    </paper-material>
+
+    <paper-material elevation="1">
+      <div style="width: 100%;background-image: url('https://0.s3.envato.com/files/74370248/preview.jpg'); text-align: center; color: white; height: 280px; padding-top: 50px; background-repeat: no-repeat; background-size: cover;">
+        <h1 style="font-size: 54px; margin-bottom: 20px"> Social Exchange </h1>
+        <h3 style="font-size: 24px"> La manera inteligente de cambiar tu dinero</h3>
+        <h5 style="font-size: 14px"> Cambia con otro viajero de cualquier otro país y obten más por tu dinero.</h3>
+      </div>
+      <section class="banner-lead bg-charcoal-dark">
+        <div class="container"><p>En Currexify la moneda que recibes proviene de otros viajeros. En lugar de cambiar en el banco o casas de cambio, facilitamos que la gente pueda cambiar entre ellos aún estando en diferentes países. Una manera más barata, transparente y beneficiosa de obtener moneda extranjera. Lo llamamos moneda social.</p></div>
+      </section>
+    </paper-material>
+
+    <paper-material elevation="1">
+      <div class="row">
+        <div class="col-lead">
+          <h2 class="heading">Precios simples y transparentes</h1><p>Al intercambiar tu moneda con otros viajeros, te sale más barato. En Currexify pagarás por tu moneda extranjera un 1%, que viene a ser 10 veces menos de lo que te cobrarían en el banco, o en los aeropuertos.</p></div>
+        <div class="col-calculator"><img src="/images/changes.png" style="width:100%;"></div>
+        <div class="load col" title="">
+          <h2 class="heading">Carga</h2><p>Carga tu cuenta con la cantidad que necesites cambiar. Puedes usar tu banco para hacer una transferencia a tu cuenta Currexify o recargarla con la tarjeta de débito de tu banco habitual.</p></div>
+        <div class="swap col" title="">
+          <h2 class="heading">Cambia</h2><p>Dinos qué moneda quieres y para cuándo, y nosotros hacemos el resto. Encontraremos a gente en nuestra plataforma con la moneda que necesites e intercambiaremos vuestro dinero automáticamente.</p></div>
+        <div class="spend col" title="">
+          <h2 class="heading">Viaja</h2><p>Enviamos a cada usuario una tarjeta MasterCard®&nbsp;de prepago de Currexify gratuita, lo que te permitirá utilizar tu dinero en cualquier punto que acepte MasterCard.</p></div>
+        <div style="width: 100%; clear: both; margin-bottom: 70px"></div>
+
+        <h2 class="heading">Únete a nosotros hoy mismo</h2>
+        <div class="col-reg"><a class="btn btn-primary btn-lg btn-block" href="{{baseUrl}}register">Regístrate</a></div>
+        <div style="width: 100%; clear: both; visibility: hidden">#</div>
+      </div>
+    </paper-material>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'home-screen',
+
+        properties: {
+        },
+
+        ready: function() {
+        }
+      });
+    })();
+  </script>
+</dom-module>

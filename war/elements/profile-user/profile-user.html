@@ -1,0 +1,87 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<link rel="import" href="../transaction-table/transaction-table.html">
+
+<dom-module id="profile-user">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+
+      .img-profile {
+        width: 76px;
+        height: 76px;
+        border-radius: 38px;
+      }
+
+      .name {
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      .notify{
+        font-size: 12px;
+      }
+
+    </style>
+    <div style="width: 100%;">
+      <div style="display: inline-block; vertical-align: middle; margin-right: 30px">
+        <img src="{{img}}" class="img-profile">
+      </div>
+      <div style="display: inline-block;">
+        <div class="name"><span>{{name}}</span></div>
+        <div class="notify">Notificaciones de cambio: <span>{{notifications}}</span></div>
+      </div>
+    </div>
+    <transaction-table title="Transactions"></transaction-table>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'profile-user',
+
+        properties: {
+          name: {
+            type: String,
+            notify: true,
+            value: "Nombre Apellido1 Apellido2"
+          },
+
+          img: {
+            type: String,
+            value: "images/touch/user-default.png"
+          },
+
+          notifications: {
+            type: Number,
+            value: 5
+          }
+        },
+
+        ready: function() {
+          var that = this;
+
+        }
+      });
+    })();
+  </script>
+</dom-module>
