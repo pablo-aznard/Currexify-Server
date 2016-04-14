@@ -80,7 +80,7 @@ span { @apply (--paper-font-body1);
 }
 
 .content {
-	padding:20px
+	padding: 20px
 }
 </style>
 </head>
@@ -107,10 +107,8 @@ span { @apply (--paper-font-body1);
 			icon="swap-horiz"></iron-icon> <span>Transactions</span>
 	</a> <a data-route="contact" href="{{baseUrl}}contact"> <iron-icon
 			icon="mail"></iron-icon> <span>Contact</span>
-	</a> </paper-menu> </paper-scroll-header-panel> 
-	<!-- Main Area --> 
-	<paper-scroll-header-panel
-		main id="headerPanelMain" condenses keep-condensed-header>
+	</a> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
+		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
 
@@ -147,9 +145,11 @@ span { @apply (--paper-font-body1);
 						</p>
 					</div>
 					<div style="display: inline-block; width: 49.5%">
-						<a href="<c:url value="${url}"/>"><paper-button raised
-								style="color: white; background-color: #4AAECF; width: 25%; float:right;">
-							<c:out value="${urlLinktext}" /></paper-button></a>
+						<a href="<c:url value="${url}"/>">
+							<paper-button raised style="color: white; background-color: #4AAECF; width: 25%; float:right;">
+								<c:out value="${urlLinktext}"/>
+							</paper-button>
+						</a>
 					</div>
 				</div>
 			</div>

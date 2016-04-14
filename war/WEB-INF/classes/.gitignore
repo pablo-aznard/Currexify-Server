@@ -1,2 +1,4 @@
-/es/
 /.DS_Store
+/META-INF/
+/es/
+/log4j.properties
