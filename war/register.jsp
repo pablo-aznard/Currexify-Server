@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <!doctype html>
 <!--
 @license
@@ -59,10 +64,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!-- For shared styles, shared-styles.html import in elements.html -->
 <style is="custom-style" include="shared-styles"></style>
-<link rel="import" href="bower_components/polymer/polymer.html">
-<link rel="import" href="bower_components/paper-styles/typography.html">
+<style>
+:host {
+	display: block;
+}
 
-<link rel="stylesheet" href="styles/home-screen.css">
+span { @apply (--paper-font-body1);
+	
+}
+
+.img-logo {
+	max-width: 200px;
+	display: block;
+	margin: 0 auto;
+}
+
+#submit {
+	color: white;
+	background-color: #4AAECF;
+	width: 20%;
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	min-width: 5.14em;
+	margin: 0 0.29em;
+	border: none;
+	text-align: center;
+	font: inherit;
+	text-transform: uppercase;
+	outline-width: 0;
+	border-radius: 3px;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	z-index: 0;
+	padding: 0.7em 0.57em;
+	float: right;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
+		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+#clear {
+	color: white;
+	background-color: #4AAECF;
+	width: 20%;
+	float: right;
+}
+
+.content {
+	padding: 54px 64px;
+}
+</style>
 </head>
 
 <body unresolved>
@@ -81,7 +135,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<span>Home</span>
 	</a> <a data-route="profile" href="{{baseUrl}}profile"> <iron-icon
 			icon="face"></iron-icon> <span>Profile</span>
-	</a> <a href="login"> <iron-icon icon="verified-user"></iron-icon> <span>Login</span>
+	</a> <a data-route="users" href="{{baseUrl}}users"> <iron-icon
+			icon="verified-user"></iron-icon> <span>Login</span>
 	</a> <a data-route="transaction" href="{{baseUrl}}transaction"> <iron-icon
 			icon="swap-horiz"></iron-icon> <span>Transactions</span>
 	</a> <a data-route="contact" href="{{baseUrl}}contact"> <iron-icon
@@ -106,74 +161,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
 		<paper-material elevation="1">
-		<div style="width: 100%; background-color: #BBDEFB">
-			<div style="padding: 30px; width: 100%; display: flex">
-				<img src="/images/touch/logotipo_tocho.png" class="img-home">
+		<div style="width: 100%;">
+			<div style="margin: 0 auto;">
+				<img src="../../images/touch/logotipo_tocho.png" class="img-logo">
 			</div>
-		</div>
-		<div
-			style="width: 100%; background-image: url('https://0.s3.envato.com/files/74370248/preview.jpg'); text-align: center; color: white; height: 280px; padding-top: 50px; background-repeat: no-repeat; background-size: cover;">
-			<h1 style="font-size: 54px; margin-bottom: 20px">Social Exchange
-			</h1>
-			<h3 style="font-size: 24px">La manera inteligente de cambiar tu
-				dinero</h3>
-			<h5 style="font-size: 14px">
-				Cambia con otro viajero de cualquier otro país y obten más por tu
-				dinero.
-				</h3>
-		</div>
-		<section class="banner-lead bg-charcoal-dark">
-			<div class="container">
-				<p>En Currexify la moneda que recibes proviene de otros
-					viajeros. En lugar de cambiar en el banco o casas de cambio,
-					facilitamos que la gente pueda cambiar entre ellos aún estando en
-					diferentes países. Una manera más barata, transparente y
-					beneficiosa de obtener moneda extranjera. Lo llamamos moneda
-					social.</p>
-			</div>
-		</section>
-		<div class="row">
-			<div class="col-lead">
-				<h2 class="heading">
-					Precios simples y transparentes
-					</h1>
-					<p>Al intercambiar tu moneda con otros viajeros, te sale más
-						barato. En Currexify pagarás por tu moneda extranjera un 1%, que
-						viene a ser 10 veces menos de lo que te cobrarían en el banco, o
-						en los aeropuertos.</p>
-			</div>
-			<div class="col-calculator">
-				<img src="/images/changes.png" style="width: 100%;">
-			</div>
-			<div class="load col" title="">
-				<h2 class="heading">Carga</h2>
-				<p>Carga tu cuenta con la cantidad que necesites cambiar. Puedes
-					usar tu banco para hacer una transferencia a tu cuenta Currexify o
-					recargarla con la tarjeta de débito de tu banco habitual.</p>
-			</div>
-			<div class="swap col" title="">
-				<h2 class="heading">Cambia</h2>
-				<p>Dinos qué moneda quieres y para cuándo, y nosotros hacemos el
-					resto. Encontraremos a gente en nuestra plataforma con la moneda
-					que necesites e intercambiaremos vuestro dinero automáticamente.</p>
-			</div>
-			<div class="spend col" title="">
-				<h2 class="heading">Viaja</h2>
-				<p>Enviamos a cada usuario una tarjeta MasterCard®&nbsp;de
-					prepago de Currexify gratuita, lo que te permitirá utilizar tu
-					dinero en cualquier punto que acepte MasterCard.</p>
-			</div>
-			<div style="width: 100%; clear: both; margin-bottom: 70px"></div>
+			<div style="width: 90%; margin-left: 5%;">
 
-			<h2 class="heading">Únete a nosotros hoy mismo</h2>
-			<div class="col-reg">
-				<a class="btn btn-primary btn-lg btn-block"
-					href="{{baseUrl}}register">Regístrate</a>
+				<form action="register" method="post">
+					<div>
+						<paper-input id="user" label="Usuario" name="user">
+						<iron-icon icon="account-circle" prefix></iron-icon> <paper-icon-button
+							suffix on-click="clearUser" icon="clear" alt="clear"
+							title="clear"></paper-input>
+						<paper-input id="pass" name="pass" label="Contraseña"
+							type="password"> <iron-icon icon="fingerprint"
+							prefix></iron-icon> <paper-icon-button suffix
+							on-click="clearPass" icon="clear" alt="clear" title="clear"></paper-input>
+						<paper-input label="E-mail" name="email" id="email">
+						<iron-icon icon="mail" prefix></iron-icon>
+						<div suffix>@gmail.com</div>
+						<paper-icon-button suffix on-click="clearEmail" icon="clear"
+							alt="clear" title="clear"> </paper-icon-button> </paper-input>
+						<paper-input id="address" name="address" label="Address">
+						<iron-icon icon="home" prefix></iron-icon> <paper-icon-button
+							suffix on-click="clearAddress" icon="clear" alt="clear"
+							title="clear"></paper-input>
+						<paper-input id="phone" label="Phone" name="phone" type="number">
+						<iron-icon icon="settings-phone" prefix></iron-icon> <paper-icon-button
+							suffix on-click="clearPhone" icon="clear" alt="clear"
+							title="clear"></paper-input>
+						<paper-input id="cardnum" name="cardnum" label="Card Number"
+							char-counter maxlength="16"> <iron-icon
+							icon="credit-card" prefix></iron-icon> <paper-icon-button suffix
+							on-click="clearCard" icon="clear" alt="clear" title="clear"></paper-input>
+					</div>
+					<div style="margin-top: 2em;">
+						<div style="display: inline-block; width: 100%; margin: 0 auto">
+							<paper-button id="clear" raised on-click="clearAll">Clear
+							fields</paper-button>
+							<input type="submit" value="submit" id="submit">
+						</div>
+					</div>
+
+				</form>
 			</div>
-			<div style="width: 100%; clear: both; visibility: hidden">#</div>
 		</div>
 		</paper-material>
-	</div>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
