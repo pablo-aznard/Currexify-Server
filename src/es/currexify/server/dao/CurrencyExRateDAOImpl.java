@@ -31,7 +31,7 @@ public class CurrencyExRateDAOImpl implements CurrencyExRateDAO {
 	@Override
 	public List<CurrencyExRateModel> readCurrencyExRates() {
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select m from CurrencyExRateModel m");
+		Query q = em.createQuery("select c from CurrencyExRateModel c");
 		List<CurrencyExRateModel> cerms = q.getResultList();
 		em.close();
 		return cerms;

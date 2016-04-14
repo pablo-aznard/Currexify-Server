@@ -1,5 +1,6 @@
 package es.currexify.server.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,7 +20,7 @@ public class HistoryDAOImpl implements HistoryDAO {
 	}
 	
 	@Override
-	public HistoryModel createHistory(String cardN, String coin, double amount, String type, String date) {
+	public HistoryModel createHistory(String cardN, String coin, double amount, String type, Date date) {
 		HistoryModel hm = null;
 		EntityManager em = EMFService.get().createEntityManager();
 		hm = new HistoryModel(cardN, coin, amount, type, date);
@@ -35,6 +36,19 @@ public class HistoryDAOImpl implements HistoryDAO {
 		List<HistoryModel> hm = q.getResultList();
 		em.close();
 		return hm;
+	}
+	
+	@Override
+	public HistoryModel readHistoryById(Long id) {
+		EntityManager em = EMFService.get().createEntityManager();
+		Query q = em.createQuery("select h from HistoryModel h where h.id = :id");
+		q.setParameter("id", id);
+		HistoryModel res = null;
+		List<HistoryModel> hms= q.getResultList();
+		if (hms.size() > 0)
+			res = (HistoryModel) (q.getResultList().get(0));
+		em.close();
+		return res; 
 	}
 
 	@Override

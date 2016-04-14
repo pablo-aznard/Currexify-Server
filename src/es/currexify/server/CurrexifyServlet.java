@@ -2,7 +2,7 @@ package es.currexify.server;
 
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.*;
 
@@ -65,13 +65,28 @@ public class CurrexifyServlet extends HttpServlet {
         +hm.getCoin()+" "+hm.getAmount()+" "+hm.getType()+" "+hm.getDate()+" "+
         hm1.getId()+" "+hm1.getCardN()+" "
         +hm1.getCoin()+" "+hm1.getAmount()+" "+hm1.getType()+" "+hm1.getDate());
-    
+    */
     
     UsuariosDAO udao = UsuariosDAOImpl.getInstance();
+    HistoryDAO hdao = HistoryDAOImpl.getInstance();
     UsuariosModel um = udao.createUser("Perico", "asdfjklh", "asdfjkh@gmail.com", "Calle Casas", "666666666", "12345");
     UsuariosModel um1 = udao.createUser("Pepe", "riuekbv", "ouitrb@gmail.com", "Calle Edificios", "777777777", "123");
+    HistoryModel hm1 = hdao.createHistory("1234", "EURO", 10.5, "entrante", new Date());
+    HistoryModel hm2 = hdao.createHistory("1234", "DOLLAR", 10.8, "saliente", new Date());
+    HistoryModel hm3 = hdao.createHistory("1234", "POUND", 10.7, "entrante", new Date());
+    
+    hdao.createHistory(hm1.getCardN(), hm1.getCoin(), hm1.getAmount(), hm1.getType(), hm1.getDate());
+    hdao.createHistory(hm2.getCardN(), hm2.getCoin(), hm2.getAmount(), hm2.getType(), hm2.getDate());
+    hdao.createHistory(hm3.getCardN(), hm3.getCoin(), hm3.getAmount(), hm3.getType(), hm3.getDate());
+    List<HistoryModel> empList = new ArrayList<HistoryModel>(); 
+    empList.add(hm1);
+    empList.add(hm2);
+    empList.add(hm3);
+    
+    um.setHistories(empList);
+    udao.updateUsuario(um);
     List<UsuariosModel> uml = udao.readUsers();
-    if(uml.size()>0){
+   /* if(uml.size()>0){
     	for(UsuariosModel umr : uml){
     		//resp.getWriter().println(cbmr.getId()+" "+cbmr.getCardN()+" "
     	    //        +cbmr.getCurrency()+" "+cbmr.getBudget());
@@ -84,7 +99,7 @@ public class CurrexifyServlet extends HttpServlet {
     
     else {
     	resp.getWriter().println("IMBÉCIL");
-    }    
+    }   */ 
     if(uml.size()>0){
     	for(UsuariosModel umr : uml){
     		resp.getWriter().println(umr.getId()+" "+umr.getName()+" "+umr.getPassword()+
@@ -92,7 +107,7 @@ public class CurrexifyServlet extends HttpServlet {
     				umr.getCardN()+ " ");
     	}
     }
-    */
+    
     
     /*for(CurrencyBudgetModel cbm: cbdao.read()) {
       resp.getWriter().println(cbm);

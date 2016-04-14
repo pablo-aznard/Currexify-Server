@@ -1,6 +1,7 @@
 package es.currexify.server.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -21,9 +22,9 @@ public class HistoryModel implements Serializable {
 	@Column(name="TYPE")
 	private String type;
 	@Column(name="DATE")
-	private String date;
+	private Date date;
 		
-	public HistoryModel(String cardN, String coin, double amount, String type, String date) {
+	public HistoryModel(String cardN, String coin, double amount, String type, Date date) {
 		this.cardN = cardN;
 		this.coin = coin;
 		this.amount = amount;
@@ -61,10 +62,10 @@ public class HistoryModel implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 }
