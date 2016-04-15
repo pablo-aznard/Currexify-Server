@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.google.appengine.api.datastore.Key;
+
 @Entity
 @Table(name="HISTORY_MODEL")
 public class HistoryModel implements Serializable {
@@ -12,7 +14,7 @@ public class HistoryModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
-	private Long id;
+	private Key key;
 	@Column(name="CARD_N")
 	private String cardN;
 	@Column(name="COIN")
@@ -32,11 +34,11 @@ public class HistoryModel implements Serializable {
 		this.date = date;
 	}
 	
-	public Long getId() {
-		return id;
+	public Key getId() {
+		return key;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(Key key) {
+		this.key = key;
 	}
 	public String getCardN() {
 		return cardN;

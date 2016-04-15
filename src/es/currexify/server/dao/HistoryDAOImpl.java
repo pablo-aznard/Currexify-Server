@@ -20,53 +20,57 @@ public class HistoryDAOImpl implements HistoryDAO {
 	}
 	
 	@Override
-	public HistoryModel createHistory(String cardN, String coin, double amount, String type, Date date) {
-		HistoryModel hm = null;
-		EntityManager em = EMFService.get().createEntityManager();
-		hm = new HistoryModel(cardN, coin, amount, type, date);
+	public HistoryModel createHistory(EntityManager em, HistoryModel hm) {
+		em.getTransaction().begin();
 		em.persist(hm);
-		em.close();
-		return hm;
-	}
-
-	@Override
-	public List<HistoryModel> readHistory() {
-		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select m from HistoryModel m");
-		List<HistoryModel> hm = q.getResultList();
-		em.close();
+		em.getTransaction().commit();
 		return hm;
 	}
 	
 	@Override
-	public HistoryModel readHistoryById(Long id) {
-		EntityManager em = EMFService.get().createEntityManager();
+	public HistoryModel createHistory(EntityManager em, String cardN, String coin, double amount, String type, Date date) {
+		HistoryModel hm = null;
+		em.getTransaction().begin();
+		hm = new HistoryModel(cardN, coin, amount, type, date);
+		em.persist(hm);
+		em.getTransaction().commit();
+		return hm;
+	}
+
+	@Override
+	public List<HistoryModel> readHistory(EntityManager em) {
+		Query q = em.createQuery("select m from HistoryModel m");
+		List<HistoryModel> hm = q.getResultList();
+		return hm;
+	}
+	
+	@Override
+	public HistoryModel readHistoryById(EntityManager em, Long id) {
 		Query q = em.createQuery("select h from HistoryModel h where h.id = :id");
 		q.setParameter("id", id);
 		HistoryModel res = null;
 		List<HistoryModel> hms= q.getResultList();
 		if (hms.size() > 0)
 			res = (HistoryModel) (q.getResultList().get(0));
-		em.close();
 		return res; 
 	}
 
 	@Override
-	public boolean updateHistory(HistoryModel hm) {
-		EntityManager em = EMFService.get().createEntityManager();
+	public boolean updateHistory(EntityManager em, HistoryModel hm) {
+		em.getTransaction().begin();
 		em.merge(hm);
-		em.close();
+		em.getTransaction().commit();
 		return true;
 	}
 
 	@Override
-	public boolean deleteHistoryById(Long id) {
-		EntityManager em = EMFService.get().createEntityManager();
+	public boolean deleteHistoryById(EntityManager em, Long id) {
+		em.getTransaction().begin();
 		try {
 			HistoryModel all = em.find(HistoryModel.class, id);
 			em.remove(all);
 			} finally {
-			em.close();
+				em.getTransaction().commit();
 			}
 		return true;
 	}

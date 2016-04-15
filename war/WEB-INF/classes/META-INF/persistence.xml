@@ -6,6 +6,10 @@
 
     <persistence-unit name="transactions-optional">
         <provider>org.datanucleus.api.jpa.PersistenceProviderImpl</provider>
+        <class>es.currexify.server.model.CurrencyBudgetModel</class>
+      	<class>es.currexify.server.model.CurrencyExRateModel</class>
+      	<class>es.currexify.server.model.HistoryModel</class>
+      	<class>es.currexify.server.model.UsuariosModel</class>
         <properties>
             <property name="datanucleus.NontransactionalRead" value="true"/>
             <property name="datanucleus.NontransactionalWrite" value="true"/>
