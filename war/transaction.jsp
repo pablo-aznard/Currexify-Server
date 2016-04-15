@@ -88,6 +88,37 @@ paper-dropdown-menu {
 div.recommended {
 	vertical-align: bottom;
 }
+
+#submit {
+	color: white;
+	background-color: #4AAECF;
+	width: 20%;
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	min-width: 5.14em;
+	margin: 0 0.29em;
+	border: none;
+	text-align: center;
+	font: inherit;
+	text-transform: uppercase;
+	outline-width: 0;
+	border-radius: 3px;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	z-index: 0;
+	padding: 0.7em 0.57em;
+	float: right;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
+		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.content {
+	padding: 54px 64px;
+}
 </style>
 </head>
 
@@ -136,42 +167,43 @@ div.recommended {
 		<form action="transaction" method="post">
 			<div class="row">
 				<div class="column-6">
-					<paper-input id="amountInput" type="number" name="amount" label="Ingrese Cantidad" onkeydown="amountChanged(this.value)">
+					<paper-input id="amountInput" type="number" name="amount"
+						label="Ingrese Cantidad" onkeydown="amountChanged(this.value)">
 					<div suffix>{{currency}}</div>
 					</paper-input>
 				</div>
 				<div class="column-6">
-					<paper-dropdown-menu label="Type"> 
-						<paper-menu class="dropdown-content" name="currST">
-							<c:forEach items="${currencies}" var="curr">
-								<paper-item><c:out value="${curr}"/></paper-item>
-							</c:forEach>
-						</paper-menu> 
-					</paper-dropdown-menu>
+					<paper-dropdown-menu label="Type"> <paper-menu
+						class="dropdown-content" attr-for-selected="value"
+						selected="{{disk}}"> <c:forEach items="${currencies}"
+						var="curr">
+						<paper-item value="<c:out value="${curr}"/>">
+						<c:out value="${curr}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+					<input type="hidden" name="currST" value="{{disk}}">
 				</div>
 			</div>
 			<div class="row">
 				<div class="column-6">
-					El dinero que vas a percibir es <span id="amountChanged" style="font-size: 20px; font-weight: 800"></span>
+					El dinero que vas a percibir es <span id="amountChanged"
+						style="font-size: 20px; font-weight: 800"></span>
 				</div>
 				<div class="column-6">
-					<paper-dropdown-menu label="Type"> 
-						<paper-menu class="dropdown-content" name="currND">
-							<c:forEach items="${currencies}" var="curr2">
-								<paper-item><c:out value="${curr2}"/></paper-item>
-							</c:forEach>
-						</paper-menu> 
-					</paper-dropdown-menu>
+					<paper-dropdown-menu label="Type"> <paper-menu
+						class="dropdown-content" attr-for-selected="value"
+						selected="{{disk2}}"> <c:forEach
+						items="${currencies}" var="curr2">
+						<paper-item value="<c:out value="${curr2}"/>">
+						<c:out value="${curr2}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+					<input type="hidden" name="currND" value="{{disk2}}">
 				</div>
 			</div>
-			<div class="row">
-				<input type="submit" value="submit">
-			</div>
-			<transaction-table title="History" transactions='<c:out value="${history}"/>'>
-			</transaction-table>
+			<input type="submit" value="submit" id="submit">
+			<transaction-table style="margin-top:50px" title="History"
+				transactions='<c:out value="${history}"/>'> </transaction-table>
 		</paper-material>
 		</form>
-		
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->

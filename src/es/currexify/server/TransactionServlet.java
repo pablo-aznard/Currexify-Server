@@ -61,6 +61,8 @@ public class TransactionServlet extends HttpServlet {
 	
 	public void doPost (HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String amount = req.getParameter("amount");
-		resp.getWriter().println(amount);
+		String from = req.getParameter("currST");
+		String to = req.getParameter("currND");
+		resp.getWriter().println(amount + " " + from + " " + to);
 	}
   }
