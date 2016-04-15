@@ -18,24 +18,23 @@ import es.currexify.server.model.*;
 
 @SuppressWarnings("serial")
 public class TransactionServlet extends HttpServlet {
-	
-	String[] currencies = {"EUR", "USD"};
-	
+
+	String[] currencies = { "EUR", "USD" };
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-//		UserService userService = UserServiceFactory.getUserService();
-//		String url = userService.createLoginURL(req.getRequestURI());
-//		String urlLinktext = "Login";
-//		String user = "";
-//		if (req.getUserPrincipal() != null) {
-//			user = req.getUserPrincipal().getName();
-//			url = userService.createLogoutURL(req.getRequestURI());
-//			urlLinktext = "Logout";
-//		}
-//
-//		req.getSession().setAttribute("user", user);
-//		req.getSession().setAttribute("url", url);
-//		req.getSession().setAttribute("urlLinktext", urlLinktext);
+		 UserService userService = UserServiceFactory.getUserService();
+		 String url = userService.createLoginURL(req.getRequestURI());
+		 String urlLinktext = "Login";
+		 String user = "";
+		 if (req.getUserPrincipal() != null) {
+		 user = req.getUserPrincipal().getName();
+		 url = userService.createLogoutURL(req.getRequestURI());
+		 urlLinktext = "Logout";
+		 }
 		
+		 req.getSession().setAttribute("user", user);
+		 req.getSession().setAttribute("url", url);
+		 req.getSession().setAttribute("urlLinktext", urlLinktext);
 		req.getSession().setAttribute("currencies", currencies);
 		
 		JSONArray jArray = new JSONArray();		

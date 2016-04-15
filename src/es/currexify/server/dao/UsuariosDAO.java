@@ -12,7 +12,7 @@ public interface UsuariosDAO {
 	
 	public UsuariosModel createUser(EntityManager em, UsuariosModel um);
 	public UsuariosModel createUser(EntityManager em, String name, String password, String email,
-			String address, String phone, String cardN);
+			String address, String phone);
 	public List<UsuariosModel> readUsers(EntityManager em);
 	public UsuariosModel readUserById(EntityManager em, Long id);
 	public UsuariosModel readUserByName(EntityManager em, String name);

@@ -3,6 +3,7 @@ package es.currexify.server;
 import java.io.IOException;
 import java.util.*;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -34,13 +35,24 @@ public class Register extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String user = request.getParameter("user");
+	    String user = request.getParameter("name");
 	    String pass = request.getParameter("pass");
 	    String email = request.getParameter("email");
-	    email += "@gmail.com";
 	    String address = request.getParameter("address");
 	    String phone = request.getParameter("phone");
-	    String cardnum = request.getParameter("cardnum");
-		response.getWriter().println("<p>Pulsa " + user + " y además " + pass + " mi correo es " + email + " vivo en " + address + " llámame al " + phone + " y mi Credit card es " + cardnum);
+		
+		EntityManager em = EMFService.get().createEntityManager();
+		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+		if(udao.isEmailUnique(em, email)){
+			UsuariosModel um = new UsuariosModel(user, pass, email, address, phone);
+			udao.createUser(em, um);
+			//AQUI PONER USUARIO REGISTRADO
+		}
+		else{
+			//AQUI MENSAJE DE EMAIL UTILIZADO
+		}
+		em.close();
+		
+		
 	}
   }

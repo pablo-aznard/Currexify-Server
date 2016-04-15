@@ -34,14 +34,22 @@ public class UsuariosModel implements Serializable {
 	private List<CurrencyBudgetModel> userCurrencies;
 		
 	public UsuariosModel(String name, String password, 
-			String email, String address, String phone, String cardN) {
+			String email, String address, String phone) {
 		this.name = name;
 		this.password = password;
 		this.email = email;
 		this.address = address;
 		this.phone = phone;
-		this.cardN = cardN;
+		this.cardN = generateCardN();
 	}
+	
+	private String generateCardN(){
+		Random rand = new Random();
+		Long n = rand.nextLong();
+		String str = String.valueOf(n);
+		return str.substring(1,17);
+	}
+	
 	public Long getId() {
 		return id;
 	}

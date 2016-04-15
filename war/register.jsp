@@ -113,6 +113,10 @@ span { @apply (--paper-font-body1);
 	float: right;
 }
 
+paper-input iron-icon {
+ 	margin-right: 20px
+}
+
 .content {
 	padding: 54px 64px;
 }
@@ -249,35 +253,35 @@ paper-input iron-icon {
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
 	<script type="text/javascript">
-		function clearAll() {
-			document.getElementById("name").value = "";
-			document.getElementById("pass").value = "";
-			document.getElementById("email").value = "";
-			document.getElementById("address").value = "";
-			document.getElementById("phone").value = "";
-			document.getElementById("cardnum").value = "";
-		}
-		
-		function clearName() {
-			document.getElementById("name").value = "";			
-		}
-		
-		function clearPass() {
-			document.getElementById("pass").value = "";			
-		}
-		
-		function clearEmail() {
-			document.getElementById("email").value = "";			
-		}
-		
-		function clearAddress() {
-			document.getElementById("address").value = "";			
-		}
-		
-		function clearPhone() {
-			document.getElementById("phone").value = "";			
-		}
-	</script>
+ 		function clearAll() {
+ 			document.getElementById("name").value = "";
+ 			document.getElementById("pass").value = "";
+ 			document.getElementById("email").value = "";
+ 			document.getElementById("address").value = "";
+ 			document.getElementById("phone").value = "";
+ 			document.getElementById("cardnum").value = "";
+ 		}
+ 		
+ 		function clearName() {
+ 			document.getElementById("name").value = "";			      
+ 		}
+ 		
+ 		function clearPass() {
+ 			document.getElementById("pass").value = "";			      
+ 		}
+ 		
+ 		function clearEmail() {
+ 			document.getElementById("email").value = "";			      
+ 		}
+ 		
+ 		function clearAddress() {
+ 			document.getElementById("address").value = "";			      
+ 		}
+ 		
+ 		function clearPhone() {
+ 			document.getElementById("phone").value = "";			      
+ 		}
+ 	</script>
 </body>
 
 </html>

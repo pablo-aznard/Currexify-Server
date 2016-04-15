@@ -29,12 +29,11 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	
 	@Override
 	public UsuariosModel createUser(EntityManager em, String name, String password, String email,
-			String address, String phone, String cardN) {
+			String address, String phone) {
 		UsuariosModel um = null;
 		
 		em.getTransaction().begin();
-		um = new UsuariosModel(name, password, email, address,
-				phone, cardN);
+		um = new UsuariosModel(name, password, email, address, phone);
 		em.persist(um);
 		em.getTransaction().commit();
 		
