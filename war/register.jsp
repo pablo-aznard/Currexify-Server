@@ -79,6 +79,40 @@ span { @apply (--paper-font-body1);
 	margin: 0 auto;
 }
 
+#submit {
+	color: white;
+	background-color: #4AAECF;
+	width: 20%;
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	min-width: 5.14em;
+	margin: 0 0.29em;
+	border: none;
+	text-align: center;
+	font: inherit;
+	text-transform: uppercase;
+	outline-width: 0;
+	border-radius: 3px;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	z-index: 0;
+	padding: 0.7em 0.57em;
+	float: right;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
+		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+#clear {
+	color: white;
+	background-color: #4AAECF;
+	width: 20%;
+	float: right;
+}
+
 .content {
 	padding: 54px 64px;
 }
@@ -107,10 +141,8 @@ span { @apply (--paper-font-body1);
 			icon="swap-horiz"></iron-icon> <span>Transactions</span>
 	</a> <a data-route="contact" href="{{baseUrl}}contact"> <iron-icon
 			icon="mail"></iron-icon> <span>Contact</span>
-	</a> </paper-menu> </paper-scroll-header-panel> 
-	<!-- Main Area --> 
-	<paper-scroll-header-panel
-		main id="headerPanelMain" condenses keep-condensed-header>
+	</a> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
+		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
 
@@ -134,30 +166,48 @@ span { @apply (--paper-font-body1);
 				<img src="../../images/touch/logotipo_tocho.png" class="img-logo">
 			</div>
 			<div style="width: 90%; margin-left: 5%;">
-				<div>
-			<form action="login" method="post">
-					<paper-input label="Usuario" name="user"></paper-input>
-					<paper-input label="Contraseña" name="pass" type="password"></paper-input>
-    				<input type="submit" value="submit"> 
-				</form> 
-				</div>
-				<div style="margin-top: 2em;">
-					<div style="display: inline-block; width: 49.5%">
-						<paper-checkbox>Mantener sesión iniciada</paper-checkbox>
-						<p>
-							<span>¿No estás registrado?<a href="register.jsp">Regístrate</a></span>
-						</p>
+
+				<form action="register" method="post">
+					<div>
+						<paper-input id="user" label="Usuario" name="user">
+						<iron-icon icon="account-circle" prefix></iron-icon> <paper-icon-button
+							suffix on-click="clearUser" icon="clear" alt="clear"
+							title="clear"></paper-input>
+						<paper-input id="pass" name="pass" label="Contraseña"
+							type="password"> <iron-icon icon="fingerprint"
+							prefix></iron-icon> <paper-icon-button suffix
+							on-click="clearPass" icon="clear" alt="clear" title="clear"></paper-input>
+						<paper-input label="E-mail" name="email" id="email">
+						<iron-icon icon="mail" prefix></iron-icon>
+						<div suffix>@gmail.com</div>
+						<paper-icon-button suffix on-click="clearEmail" icon="clear"
+							alt="clear" title="clear"> </paper-icon-button> </paper-input>
+						<paper-input id="address" name="address" label="Address">
+						<iron-icon icon="home" prefix></iron-icon> <paper-icon-button
+							suffix on-click="clearAddress" icon="clear" alt="clear"
+							title="clear"></paper-input>
+						<paper-input id="phone" label="Phone" name="phone" type="number">
+						<iron-icon icon="settings-phone" prefix></iron-icon> <paper-icon-button
+							suffix on-click="clearPhone" icon="clear" alt="clear"
+							title="clear"></paper-input>
+						<paper-input id="cardnum" name="cardnum" label="Card Number"
+							char-counter maxlength="16"> <iron-icon
+							icon="credit-card" prefix></iron-icon> <paper-icon-button suffix
+							on-click="clearCard" icon="clear" alt="clear" title="clear"></paper-input>
 					</div>
-					<div style="display: inline-block; width: 49.5%">
-						<a href="<c:url value="${url}"/>"><paper-button raised
-								style="color: white; background-color: #4AAECF; width: 25%; float:right;">
-							<c:out value="${urlLinktext}" /></paper-button></a>
+					<div style="margin-top: 2em;">
+						<div style="display: inline-block; width: 100%; margin: 0 auto">
+							<paper-button id="clear" raised on-click="clearAll">Clear
+							fields</paper-button>
+							<input type="submit" value="submit" id="submit">
+						</div>
 					</div>
-				</div>
+
+				</form>
 			</div>
 		</div>
-	</div>
-	</paper-material> </paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
+		</paper-material>
+	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
 	<!--

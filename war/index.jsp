@@ -1,8 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
 <!doctype html>
 <!--
 @license
@@ -17,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Currexify | Social EXchange">
@@ -64,25 +59,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!-- For shared styles, shared-styles.html import in elements.html -->
 <style is="custom-style" include="shared-styles"></style>
-<style>
-:host {
-	display: block;
-}
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/paper-styles/typography.html">
 
-span { @apply (--paper-font-body1);
-	
-}
-
-.img-logo {
-	max-width: 200px;
-	display: block;
-	margin: 0 auto;
-}
-
-.content {
-	padding: 54px 64px;
-}
-</style>
+<link rel="stylesheet" href="styles/home-screen.css">
 </head>
 
 <body unresolved>
@@ -101,16 +81,13 @@ span { @apply (--paper-font-body1);
 		<span>Home</span>
 	</a> <a data-route="profile" href="{{baseUrl}}profile"> <iron-icon
 			icon="face"></iron-icon> <span>Profile</span>
-	</a> <a data-route="users" href="{{baseUrl}}users"> <iron-icon
-			icon="verified-user"></iron-icon> <span>Login</span>
+	</a> <a href="login"> <iron-icon icon="verified-user"></iron-icon> <span>Login</span>
 	</a> <a data-route="transaction" href="{{baseUrl}}transaction"> <iron-icon
 			icon="swap-horiz"></iron-icon> <span>Transactions</span>
 	</a> <a data-route="contact" href="{{baseUrl}}contact"> <iron-icon
 			icon="mail"></iron-icon> <span>Contact</span>
-	</a> </paper-menu> </paper-scroll-header-panel> 
-	<!-- Main Area --> 
-	<paper-scroll-header-panel
-		main id="headerPanelMain" condenses keep-condensed-header>
+	</a> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
+		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
 
@@ -128,36 +105,73 @@ span { @apply (--paper-font-body1);
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1">
-		<div style="width: 100%;">
-			<div style="margin: 0 auto;">
-				<img src="../../images/touch/logotipo_tocho.png" class="img-logo">
-			</div>
-			<div style="width: 90%; margin-left: 5%;">
-				<div>
-			<form action="login" method="post">
-					<paper-input label="Usuario" name="user"></paper-input>
-					<paper-input label="Contraseña" name="pass" type="password"></paper-input>
-    				<input type="submit" value="submit"> 
-				</form> 
-				</div>
-				<div style="margin-top: 2em;">
-					<div style="display: inline-block; width: 49.5%">
-						<paper-checkbox>Mantener sesión iniciada</paper-checkbox>
-						<p>
-							<span>¿No estás registrado?<a href="register.jsp">Regístrate</a></span>
-						</p>
-					</div>
-					<div style="display: inline-block; width: 49.5%">
-						<a href="<c:url value="${url}"/>"><paper-button raised
-								style="color: white; background-color: #4AAECF; width: 25%; float:right;">
-							<c:out value="${urlLinktext}" /></paper-button></a>
-					</div>
-				</div>
+		<div style="width: 100%; background-color: #BBDEFB">
+			<div style="padding: 30px; width: 100%; display: flex">
+				<img src="/images/touch/logotipo_tocho.png" class="img-home">
 			</div>
 		</div>
-	</div>
-	</paper-material> </paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
+		<div
+			style="width: 100%; background-image: url('https://0.s3.envato.com/files/74370248/preview.jpg'); text-align: center; color: white; height: 280px; padding-top: 50px; background-repeat: no-repeat; background-size: cover;">
+			<h1 style="font-size: 54px; margin-bottom: 20px">Social Exchange
+			</h1>
+			<h3 style="font-size: 24px">La manera inteligente de cambiar tu
+				dinero</h3>
+			<h5 style="font-size: 14px">
+				Cambia con otro viajero de cualquier otro país y obten más por tu
+				dinero.
+				</h3>
+		</div>
+		<section class="banner-lead bg-charcoal-dark">
+			<div class="container">
+				<p>En Currexify la moneda que recibes proviene de otros
+					viajeros. En lugar de cambiar en el banco o casas de cambio,
+					facilitamos que la gente pueda cambiar entre ellos aún estando en
+					diferentes países. Una manera más barata, transparente y
+					beneficiosa de obtener moneda extranjera. Lo llamamos moneda
+					social.</p>
+			</div>
+		</section>
+		<div class="row">
+			<div class="col-lead">
+				<h2 class="heading">
+					Precios simples y transparentes
+					</h1>
+					<p>Al intercambiar tu moneda con otros viajeros, te sale más
+						barato. En Currexify pagarás por tu moneda extranjera un 1%, que
+						viene a ser 10 veces menos de lo que te cobrarán en el banco, o en
+						los aeropuertos.</p>
+			</div>
+			<div class="col-calculator">
+				<img src="/images/changes.png" style="width: 100%;">
+			</div>
+			<div class="load col" title="">
+				<h2 class="heading">Carga</h2>
+				<p>Carga tu cuenta con la cantidad que necesites cambiar. Puedes
+					usar tu banco para hacer una transferencia a tu cuenta Currexify o
+					recargarla con la tarjeta de débito de tu banco habitual.</p>
+			</div>
+			<div class="swap col" title="">
+				<h2 class="heading">Cambia</h2>
+				<p>Dinos qué moneda quieres y para cuándo, y nosotros hacemos el
+					resto. Encontraremos a gente en nuestra plataforma con la moneda
+					que necesites e intercambiaremos vuestro dinero automáticamente.</p>
+			</div>
+			<div class="spend col" title="">
+				<h2 class="heading">Viaja</h2>
+				<p>Enviamos a cada usuario una tarjeta MasterCardÂ®&nbsp;de
+					prepago de Currexify gratuita, lo que te permitirá utilizar tu
+					dinero en cualquier punto que acepte MasterCard.</p>
+			</div>
+			<div style="width: 100%; clear: both; margin-bottom: 70px"></div>
+
+			<h2 class="heading">Únete a nosotros hoy mismo</h2>
+			<div class="col-reg">
+				<a class="btn btn-primary btn-lg btn-block"
+					href="register.jsp">Regístrate</a>
+			</div>
+		</div>
+		</div>
+	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
 	<!--
