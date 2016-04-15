@@ -3,6 +3,7 @@ package es.currexify.server;
 import java.io.IOException;
 import java.util.*;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -36,6 +37,14 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String user = request.getParameter("user");
 	    String pass = request.getParameter("pass");
-		response.getWriter().println("<p>Pulsa " + user + " y además " + pass);
+		//response.getWriter().println("<p>Pulsa " + user + " y además " + pass);
+		EntityManager em = EMFService.get().createEntityManager();
+		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+		response.getWriter().println(udao.readUserByName(em, user).getPassword().equals(pass));
+		if(udao.readUserByName(em, user).getPassword().equals(pass)){
+			response.sendRedirect("profile.jsp");			
+		}
+		em.close();
+		
 	}
   }
