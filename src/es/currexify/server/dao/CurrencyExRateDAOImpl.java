@@ -19,40 +19,38 @@ public class CurrencyExRateDAOImpl implements CurrencyExRateDAO {
 	}
 	
 	@Override
-	public CurrencyExRateModel createCurrencyExRate(double euroEx, String currency) {
+	public CurrencyExRateModel createCurrencyExRate(EntityManager em, double euroEx, String currency) {
 		CurrencyExRateModel cer = null;
-		EntityManager em = EMFService.get().createEntityManager();
+		em.getTransaction().begin();
 		cer = new CurrencyExRateModel(euroEx, currency);
 		em.persist(cer);
-		em.close();
+		em.getTransaction().commit();
 		return cer;
 	}
 
 	@Override
-	public List<CurrencyExRateModel> readCurrencyExRates() {
-		EntityManager em = EMFService.get().createEntityManager();
+	public List<CurrencyExRateModel> readCurrencyExRates(EntityManager em) {
 		Query q = em.createQuery("select c from CurrencyExRateModel c");
 		List<CurrencyExRateModel> cerms = q.getResultList();
-		em.close();
 		return cerms;
 	}
 
 	@Override
-	public boolean updateCurrencyExRate(CurrencyExRateModel cerm) {
-		EntityManager em = EMFService.get().createEntityManager();
+	public boolean updateCurrencyExRate(EntityManager em, CurrencyExRateModel cerm) {
+		em.getTransaction().begin();
 		em.merge(cerm);
-		em.close();
+		em.getTransaction().commit();
 		return true;
 	}
 
 	@Override
-	public boolean deleteCurrencyExRateById(Long id) {
-		EntityManager em = EMFService.get().createEntityManager();
+	public boolean deleteCurrencyExRateById(EntityManager em, Long id) {
+		em.getTransaction().begin();
 		try {
 			CurrencyExRateModel all = em.find(CurrencyExRateModel.class, id);
 			em.remove(all);
 			} finally {
-			em.close();
+				em.getTransaction().commit();
 			}
 		return true;
 	}

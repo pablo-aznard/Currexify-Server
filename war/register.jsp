@@ -116,6 +116,10 @@ span { @apply (--paper-font-body1);
 .content {
 	padding: 54px 64px;
 }
+
+paper-input iron-icon {
+	margin-right: 20px
+}
 </style>
 </head>
 
@@ -131,17 +135,36 @@ span { @apply (--paper-font-body1);
 		class="menu-name"><img src="images/touch/logotipo_tocho.png"
 		style="width: 80px"></span> </paper-toolbar> <!-- Drawer Content --> <paper-menu
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
-	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
+	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
-	</a> <a data-route="profile" href="{{baseUrl}}profile"> <iron-icon
-			icon="face"></iron-icon> <span>Profile</span>
-	</a> <a data-route="users" href="{{baseUrl}}users"> <iron-icon
-			icon="verified-user"></iron-icon> <span>Login</span>
-	</a> <a data-route="transaction" href="{{baseUrl}}transaction"> <iron-icon
+	</a>
+	<c:if test='${user != ""}'>
+		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
+			<span>Profile</span>
+		</a> 
+	</c:if>
+	<c:if test='${user == ""}'>
+		<a data-route="users" href="login"> <iron-icon
+				icon="verified-user"></iron-icon> <span>Login</span>
+		</a>
+	</c:if>
+	<c:if test='${user != ""}'>
+		<a data-route="transaction" href="transaction"> <iron-icon
 			icon="swap-horiz"></iron-icon> <span>Transactions</span>
-	</a> <a data-route="contact" href="{{baseUrl}}contact"> <iron-icon
+		</a>
+	</c:if>
+	<a data-route="contact" href="contact"> <iron-icon
 			icon="mail"></iron-icon> <span>Contact</span>
-	</a> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
+	</a>
+	<c:if test='${user != ""}'>
+		<div style="position: absolute; bottom: 0; width: 100%">
+			<hr>
+			<a href="<c:url value="${url}"/>"> <iron-icon
+					icon="subdirectory-arrow-left"></iron-icon> <c:out
+					value="${urlLinktext}" /></a>
+		</div>
+	</c:if>
+	</paper-menu> </paper-scroll-header-panel>  <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -169,35 +192,30 @@ span { @apply (--paper-font-body1);
 
 				<form action="register" method="post">
 					<div>
-						<paper-input id="user" label="Usuario" name="user">
+						<paper-input id="name" label="Usuario" name="name">
 						<iron-icon icon="account-circle" prefix></iron-icon> <paper-icon-button
-							suffix on-click="clearUser" icon="clear" alt="clear"
+							suffix onclick="clearName()" icon="clear" alt="clear"
 							title="clear"></paper-input>
 						<paper-input id="pass" name="pass" label="Contraseña"
 							type="password"> <iron-icon icon="fingerprint"
 							prefix></iron-icon> <paper-icon-button suffix
-							on-click="clearPass" icon="clear" alt="clear" title="clear"></paper-input>
+							onclick="clearPass()" icon="clear" alt="clear" title="clear"></paper-input>
 						<paper-input label="E-mail" name="email" id="email">
 						<iron-icon icon="mail" prefix></iron-icon>
-						<div suffix>@gmail.com</div>
-						<paper-icon-button suffix on-click="clearEmail" icon="clear"
+						<paper-icon-button suffix onclick="clearEmail()" icon="clear"
 							alt="clear" title="clear"> </paper-icon-button> </paper-input>
 						<paper-input id="address" name="address" label="Address">
 						<iron-icon icon="home" prefix></iron-icon> <paper-icon-button
-							suffix on-click="clearAddress" icon="clear" alt="clear"
+							suffix onclick="clearAddress()" icon="clear" alt="clear"
 							title="clear"></paper-input>
 						<paper-input id="phone" label="Phone" name="phone" type="number">
 						<iron-icon icon="settings-phone" prefix></iron-icon> <paper-icon-button
-							suffix on-click="clearPhone" icon="clear" alt="clear"
+							suffix onclick="clearPhone()" icon="clear" alt="clear"
 							title="clear"></paper-input>
-						<paper-input id="cardnum" name="cardnum" label="Card Number"
-							char-counter maxlength="16"> <iron-icon
-							icon="credit-card" prefix></iron-icon> <paper-icon-button suffix
-							on-click="clearCard" icon="clear" alt="clear" title="clear"></paper-input>
 					</div>
 					<div style="margin-top: 2em;">
 						<div style="display: inline-block; width: 100%; margin: 0 auto">
-							<paper-button id="clear" raised on-click="clearAll">Clear
+							<paper-button id="clear" raised onclick="clearAll()">Clear
 							fields</paper-button>
 							<input type="submit" value="submit" id="submit">
 						</div>
@@ -230,6 +248,36 @@ span { @apply (--paper-font-body1);
 	<!-- build:js scripts/app.js -->
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
+	<script type="text/javascript">
+		function clearAll() {
+			document.getElementById("name").value = "";
+			document.getElementById("pass").value = "";
+			document.getElementById("email").value = "";
+			document.getElementById("address").value = "";
+			document.getElementById("phone").value = "";
+			document.getElementById("cardnum").value = "";
+		}
+		
+		function clearName() {
+			document.getElementById("name").value = "";			
+		}
+		
+		function clearPass() {
+			document.getElementById("pass").value = "";			
+		}
+		
+		function clearEmail() {
+			document.getElementById("email").value = "";			
+		}
+		
+		function clearAddress() {
+			document.getElementById("address").value = "";			
+		}
+		
+		function clearPhone() {
+			document.getElementById("phone").value = "";			
+		}
+	</script>
 </body>
 
 </html>

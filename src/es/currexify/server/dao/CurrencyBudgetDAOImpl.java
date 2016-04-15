@@ -17,44 +17,50 @@ public class CurrencyBudgetDAOImpl implements CurrencyBudgetDAO {
 		return instance;
 	}
 
+	@Override
+	public CurrencyBudgetModel createCurrencyBudget(EntityManager em, CurrencyBudgetModel cbm){
+		em.getTransaction().begin();
+		em.persist(cbm);
+		em.getTransaction().commit();
+		return cbm;
+	}
 	
 	@Override
-	public CurrencyBudgetModel createCurrencyBudget(String cardN, String currency, double budget) {
+	public CurrencyBudgetModel createCurrencyBudget(EntityManager em, String cardN, String currency, double budget) {
 		CurrencyBudgetModel cbm = null;
-		EntityManager em = EMFService.get().createEntityManager();
+		em.getTransaction().begin();
 		cbm = new CurrencyBudgetModel(cardN, currency, budget);
 		em.persist(cbm);
-		em.close();
+		em.getTransaction().commit();
 		return cbm;
 	}
 
 	@Override
-	public List<CurrencyBudgetModel> readCurrencyBudgetByCardN(String cardN) {
-		EntityManager em = EMFService.get().createEntityManager();
+	public List<CurrencyBudgetModel> readCurrencyBudgetByCardN(EntityManager em, String cardN) {
 		Query q = em.createQuery("select m from CurrencyBudgetModel m where m.cardN = :cardN");
 		q.setParameter("cardN", cardN);
-		List<CurrencyBudgetModel> res = q.getResultList();
-		em.close();	
+		List<CurrencyBudgetModel> res = q.getResultList();	
 		return res;
 	}
 
 	@Override
-	public boolean updateCurrencyBudget(CurrencyBudgetModel cbm) {
+	public boolean updateCurrencyBudget(EntityManager em, CurrencyBudgetModel cbm) {
 		
-		EntityManager em = EMFService.get().createEntityManager();
+		em.getTransaction().begin();
 		em.merge(cbm);
-		em.close();
+		em.getTransaction().commit();
 		return true;
 		
 	}
 
 	@Override
-	public boolean deleteCurrencyBudgetById(Long id) {
-		EntityManager em = EMFService.get().createEntityManager();
+	public boolean deleteCurrencyBudgetById(EntityManager em, Long id) {
+		em.getTransaction().begin();
 		try {
 			CurrencyBudgetModel todo = em.find(CurrencyBudgetModel.class, id);
 		 	em.remove(todo);
 		} finally {
+			em.getTransaction().commit();
 			 em.close();
 		}
 		return true;
