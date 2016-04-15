@@ -20,5 +20,7 @@ public interface UsuariosDAO {
 	public boolean deleteUsuarioById(EntityManager em, Long id);
 	public boolean addHistoryToUser(EntityManager em, HistoryModel hm, UsuariosModel um);
 	public boolean addCurrencyBudgetToUser(EntityManager em, CurrencyBudgetModel cbm, UsuariosModel um);
+	public boolean isUserUnique(EntityManager em, String user);
+	public boolean isEmailUnique(EntityManager em, String email);
 	
 }

@@ -24,7 +24,10 @@ public class CurrexifyServlet extends HttpServlet {
 		UsuariosDAOImpl umdao = UsuariosDAOImpl.getInstance();
 		UsuariosModel um = new UsuariosModel("Perico", "qwerasdf", "qwer@asdf.com", "Calle Pinos", "123456789", "1234");
 		umdao.createUser(em, um);
-		HistoryModel hm = new HistoryModel(um.getCardN(), "Euro", 10.0, "entrante", new Date());
+		UsuariosModel um1 = umdao.readUserById(em, um.getId());
+		resp.getWriter().println(um1.getId()+" "+um1.getName());
+		em.close();
+		/*HistoryModel hm = new HistoryModel(um.getCardN(), "Euro", 10.0, "entrante", new Date());
 		umdao.addHistoryToUser(em, hm, um);
 		List<UsuariosModel> uml = umdao.readUsers(em);
 		for(UsuariosModel umr : uml){
@@ -33,6 +36,6 @@ public class CurrexifyServlet extends HttpServlet {
 			for(HistoryModel hmr : hmlTemp){
 				resp.getWriter().println(hmr.getId()+" "+hmr.getCardN()+" "+hmr.getCoin()+" "+hmr.getAmount()+" "+hmr.getDate());
 			}
-		}
+		}*/
 	}
   }
