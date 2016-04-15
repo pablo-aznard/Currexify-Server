@@ -9,6 +9,9 @@ import javax.servlet.http.*;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.labs.repackaged.org.json.JSONArray;
+import com.google.appengine.labs.repackaged.org.json.JSONException;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
 
 import es.currexify.server.dao.*;
 import es.currexify.server.model.*;
@@ -34,6 +37,25 @@ public class TransactionServlet extends HttpServlet {
 //		req.getSession().setAttribute("urlLinktext", urlLinktext);
 		
 		req.getSession().setAttribute("currencies", currencies);
+		
+		JSONArray jArray = new JSONArray();		
+		JSONObject json = new JSONObject();
+		
+		try {
+			json.put("quantity", "300€");
+			json.put("type", "0.95");
+			json.put("user", "Pablo Pavo");
+			
+			for (int i=0; i<3; i++) {
+				jArray.put(json);
+			}
+			
+			String jsonText = jArray.toString();
+			req.getSession().setAttribute("history", jsonText);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}		
+		
 		RequestDispatcher view = req.getRequestDispatcher("transaction.jsp");
 		view.forward(req, resp);
 	}

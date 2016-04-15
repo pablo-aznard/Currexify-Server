@@ -136,7 +136,7 @@ div.recommended {
 		<form action="transaction" method="post">
 			<div class="row">
 				<div class="column-6">
-					<paper-input id="amountInput" type="number" name="amount" label="Ingrese Cantidad">
+					<paper-input id="amountInput" type="number" name="amount" label="Ingrese Cantidad" onkeydown="amountChanged(this.value)">
 					<div suffix>{{currency}}</div>
 					</paper-input>
 				</div>
@@ -152,8 +152,7 @@ div.recommended {
 			</div>
 			<div class="row">
 				<div class="column-6">
-					El dinero que vais a percibir es <span style="font-size: 20px; font-weight: 800; margin-left: 10px"><c:out value="${amountInput}"/></span>
-					<span style="font-size: 20px; font-weight: 800"><c:out value="${amountTxed}"/></span>
+					El dinero que vas a percibir es <span id="amountChanged" style="font-size: 20px; font-weight: 800"></span>
 				</div>
 				<div class="column-6">
 					<paper-dropdown-menu label="Type"> 
@@ -168,6 +167,8 @@ div.recommended {
 			<div class="row">
 				<input type="submit" value="submit">
 			</div>
+			<transaction-table title="History" transactions='<c:out value="${history}"/>'>
+			</transaction-table>
 		</paper-material>
 		</form>
 		
@@ -197,11 +198,10 @@ div.recommended {
 </body>
 
 <script>
-	var amountInput, amountTxed;
-	function (inputID) {
-		var amInput = document.getElementById("amountInput").value;
-		amountInput = amInput;
-	}();
+	function amountChanged(val) {
+		var change = 1.05;
+		document.getElementById("amountChanged").innerHTML = val * change;
+	}
 </script>
 
 </html>
