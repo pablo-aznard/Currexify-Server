@@ -2,10 +2,9 @@ package es.currexify.server.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.*;
 
-import es.currexify.server.model.UsuariosModel;
+import es.currexify.server.model.*;
 
 public class UsuariosDAOImpl implements UsuariosDAO {
 
@@ -19,70 +18,110 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	}
 	
 	@Override
-	public UsuariosModel createUser(String name, String password, String email,
+	public UsuariosModel createUser(EntityManager em, UsuariosModel um) {
+		
+		em.getTransaction().begin();
+		em.persist(um);
+		em.getTransaction().commit();
+		
+		return um;
+	}
+	
+	@Override
+	public UsuariosModel createUser(EntityManager em, String name, String password, String email,
 			String address, String phone, String cardN) {
 		UsuariosModel um = null;
-		EntityManager em = EMFService.get().createEntityManager();
+		
+		em.getTransaction().begin();
 		um = new UsuariosModel(name, password, email, address,
 				phone, cardN);
 		em.persist(um);
-		em.close();
+		em.getTransaction().commit();
+		
 		return um;
 	}
 
 	@Override
-	public List<UsuariosModel> readUsers() {
-		EntityManager em = EMFService.get().createEntityManager();
+	public List<UsuariosModel> readUsers(EntityManager em) {
 		Query q = em.createQuery("select u from UsuariosModel u");
 		List<UsuariosModel> res = q.getResultList();
-		em.close();
 		return res;
 	}
 
 	@Override
-	public UsuariosModel readUserById(Long id) {
-		EntityManager em = EMFService.get().createEntityManager();
+	public UsuariosModel readUserById(EntityManager em, Long id) {
+		
 		Query q = em.createQuery("select u from UsuariosModel u where u.id = :id");
 		q.setParameter("id", id);
 		UsuariosModel res = null;
 		List<UsuariosModel> ums= q.getResultList();
 		if (ums.size() > 0)
 			res = (UsuariosModel) (q.getResultList().get(0));
-		em.close();
+		
 		return res; 
 	}
 
 	@Override
-	public UsuariosModel readUserByName(String name) {
-		EntityManager em = EMFService.get().createEntityManager();
+	public UsuariosModel readUserByName(EntityManager em, String name) {
+		
 		Query q = em.createQuery("select u from UsuariosModel u where u.name = :name");
 		q.setParameter("name", name);
 		UsuariosModel res = null;
 		List<UsuariosModel> ums= q.getResultList();
 		if (ums.size() > 0)
 			res = (UsuariosModel) (q.getResultList().get(0));
-		em.close();
+		
 		return res; 
 	}
 
 	@Override
-	public boolean updateUsuario(UsuariosModel um) {
+	public boolean updateUsuario(EntityManager em, UsuariosModel um) {
 
-		EntityManager em = EMFService.get().createEntityManager();
+		
+		em.getTransaction().begin();
 		em.merge(um);
-		em.close();
+		em.getTransaction().commit();
+		
 		return true;
 
 	}
+	
+	@Override
+	public boolean addHistoryToUser(EntityManager em, HistoryModel hm, UsuariosModel um) {
+
+		em.getTransaction().begin();
+		List<HistoryModel> hml = um.getHistories();
+		hml.add(hm);
+		um.setHistories(hml);
+		em.merge(um);
+		em.persist(hm);
+		em.getTransaction().commit();
+		return true;
+	}
+	
+	@Override
+	public boolean addCurrencyBudgetToUser(EntityManager em, CurrencyBudgetModel cbm, UsuariosModel um) {
+		
+		em.getTransaction().begin();
+		List<CurrencyBudgetModel> cbml = um.getUserCurrencies();
+		cbml.add(cbm);
+		um.setUserCurrencies(cbml);
+		em.merge(um);
+		em.getTransaction().commit();
+		
+		return true;
+	}
 
 	@Override
-	public boolean deleteUsuarioById(Long id) {
-		EntityManager em = EMFService.get().createEntityManager();
+	public boolean deleteUsuarioById(EntityManager em, Long id) {
+		
+		em.getTransaction().begin();
 		try {
 			UsuariosModel todo = em.find(UsuariosModel.class, id);
 		 	em.remove(todo);
 		} finally {
-			 em.close();
+			em.getTransaction().commit();
+			
 		}
 		return true;
 	}
