@@ -113,6 +113,10 @@ span { @apply (--paper-font-body1);
 	float: right;
 }
 
+paper-input iron-icon {
+ 	margin-right: 20px
+}
+
 .content {
 	padding: 54px 64px;
 }
@@ -194,7 +198,11 @@ paper-input iron-icon {
 					<div>
 						<paper-input id="name" label="Usuario" name="name">
 						<iron-icon icon="account-circle" prefix></iron-icon> <paper-icon-button
+<<<<<<< HEAD
 							suffix onclick="clearName()" icon="clear" alt="clear"
+=======
+							suffix onclick="clearUser()" icon="clear" alt="clear"
+>>>>>>> 305f342... Fixing errors
 							title="clear"></paper-input>
 						<paper-input id="pass" name="pass" label="Contraseña"
 							type="password"> <iron-icon icon="fingerprint"
@@ -212,6 +220,13 @@ paper-input iron-icon {
 						<iron-icon icon="settings-phone" prefix></iron-icon> <paper-icon-button
 							suffix onclick="clearPhone()" icon="clear" alt="clear"
 							title="clear"></paper-input>
+<<<<<<< HEAD
+=======
+						<paper-input id="cardnum" name="cardnum" label="Card Number"
+							char-counter maxlength="16"> <iron-icon
+							icon="credit-card" prefix></iron-icon> <paper-icon-button suffix
+							onclick="clearCard()" icon="clear" alt="clear" title="clear"></paper-input>
+>>>>>>> 305f342... Fixing errors
 					</div>
 					<div style="margin-top: 2em;">
 						<div style="display: inline-block; width: 100%; margin: 0 auto">
@@ -249,6 +264,7 @@ paper-input iron-icon {
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
 	<script type="text/javascript">
+<<<<<<< HEAD
 		function clearAll() {
 			document.getElementById("name").value = "";
 			document.getElementById("pass").value = "";
@@ -278,6 +294,37 @@ paper-input iron-icon {
 			document.getElementById("phone").value = "";			
 		}
 	</script>
+=======
+ 		function clearAll() {
+ 			document.getElementById("name").value = "";
+ 			document.getElementById("pass").value = "";
+ 			document.getElementById("email").value = "";
+ 			document.getElementById("address").value = "";
+ 			document.getElementById("phone").value = "";
+ 			document.getElementById("cardnum").value = "";
+ 		}
+ 		
+ 		function clearName() {
+ 			document.getElementById("name").value = "";			      
+ 		}
+ 		
+ 		function clearPass() {
+ 			document.getElementById("pass").value = "";			      
+ 		}
+ 		
+ 		function clearEmail() {
+ 			document.getElementById("email").value = "";			      
+ 		}
+ 		
+ 		function clearAddress() {
+ 			document.getElementById("address").value = "";			      
+ 		}
+ 		
+ 		function clearPhone() {
+ 			document.getElementById("phone").value = "";			      
+ 		}
+ 	</script>
+>>>>>>> 305f342... Fixing errors
 </body>
 
 </html>

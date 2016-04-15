@@ -15,6 +15,7 @@ import es.currexify.server.model.*;
 
 @SuppressWarnings("serial")
 public class TransactionServlet extends HttpServlet {
+<<<<<<< HEAD
 	
 	String[] currencies = {"EUR", "USD"};
 	
@@ -33,13 +34,42 @@ public class TransactionServlet extends HttpServlet {
 //		req.getSession().setAttribute("url", url);
 //		req.getSession().setAttribute("urlLinktext", urlLinktext);
 		
+=======
+
+	String[] currencies = { "EUR", "USD" };
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		 UserService userService = UserServiceFactory.getUserService();
+		 String url = userService.createLoginURL(req.getRequestURI());
+		 String urlLinktext = "Login";
+		 String user = "";
+		 if (req.getUserPrincipal() != null) {
+		 user = req.getUserPrincipal().getName();
+		 url = userService.createLogoutURL(req.getRequestURI());
+		 urlLinktext = "Logout";
+		 }
+		
+		 req.getSession().setAttribute("user", user);
+		 req.getSession().setAttribute("url", url);
+		 req.getSession().setAttribute("urlLinktext", urlLinktext);
+
+>>>>>>> 305f342... Fixing errors
 		req.getSession().setAttribute("currencies", currencies);
 		RequestDispatcher view = req.getRequestDispatcher("transaction.jsp");
 		view.forward(req, resp);
 	}
+<<<<<<< HEAD
 	
 	public void doPost (HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String amount = req.getParameter("amount");
 		resp.getWriter().println(amount);
 	}
   }
+=======
+
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		String amount = req.getParameter("amount");
+		resp.getWriter().println(amount);
+	}
+}
+>>>>>>> 305f342... Fixing errors

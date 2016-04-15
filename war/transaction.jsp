@@ -5,6 +5,7 @@
 
 <!doctype html>
 <!--
+<<<<<<< HEAD
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -13,6 +14,16 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
+=======
+ @license
+ Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+ This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+ The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+ Code distributed by Google as part of the polymer project is also
+ subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ -->
+>>>>>>> 305f342... Fixing errors
 
 <html lang="en">
 
@@ -59,7 +70,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- endbuild -->
 
 <!-- Because this project uses vulcanize this should be your only html import
+<<<<<<< HEAD
        in this file. All other imports should go in elements.html -->
+=======
+        in this file. All other imports should go in elements.html -->
+>>>>>>> 305f342... Fixing errors
 <link rel="import" href="elements/elements.html">
 
 <!-- For shared styles, shared-styles.html import in elements.html -->
@@ -88,6 +103,40 @@ paper-dropdown-menu {
 div.recommended {
 	vertical-align: bottom;
 }
+<<<<<<< HEAD
+=======
+
+#submit {
+	color: white;
+	background-color: #4AAECF;
+	width: 20%;
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	min-width: 5.14em;
+	margin: 0 0.29em;
+	border: none;
+	text-align: center;
+	font: inherit;
+	text-transform: uppercase;
+	outline-width: 0;
+	border-radius: 3px;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	z-index: 0;
+	padding: 0.7em 0.57em;
+	float: right;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
+		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.content {
+	padding: 54px 64px;
+}
+>>>>>>> 305f342... Fixing errors
 </style>
 </head>
 
@@ -105,6 +154,7 @@ div.recommended {
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
 	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
+<<<<<<< HEAD
 	</a> <a data-route="profile" href="{{baseUrl}}profile"> <iron-icon
 			icon="face"></iron-icon> <span>Profile</span>
 	</a> <a data-route="users" href="{{baseUrl}}users"> <iron-icon
@@ -114,6 +164,37 @@ div.recommended {
 	</a> <a data-route="contact" href="{{baseUrl}}contact"> <iron-icon
 			icon="mail"></iron-icon> <span>Contact</span>
 	</a> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
+=======
+	</a> 
+	
+	<c:if test='${user != ""}'>
+		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
+			<span>Profile</span>
+		</a> 
+	</c:if>
+	<c:if test='${user == ""}'>
+		<a data-route="users" href="login"> <iron-icon
+				icon="verified-user"></iron-icon> <span>Login</span>
+		</a>
+	</c:if>
+	<c:if test='${user != ""}'>
+		<a data-route="transaction" href="transaction"> <iron-icon
+			icon="swap-horiz"></iron-icon> <span>Transactions</span>
+		</a>
+	</c:if>
+	<a data-route="contact" href="contact"> <iron-icon
+			icon="mail"></iron-icon> <span>Contact</span>
+	</a>
+	<c:if test='${user != ""}'>
+		<div style="position: absolute; bottom: 0; width: 100%">
+			<hr>
+			<a href="<c:url value="${url}"/>"> <iron-icon
+					icon="subdirectory-arrow-left"></iron-icon> <c:out
+					value="${urlLinktext}" /></a>
+		</div>
+	</c:if>
+	</paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
+>>>>>>> 305f342... Fixing errors
 		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -136,11 +217,17 @@ div.recommended {
 		<form action="transaction" method="post">
 			<div class="row">
 				<div class="column-6">
+<<<<<<< HEAD
 					<paper-input id="amountInput" type="number" name="amount" label="Ingrese Cantidad">
+=======
+					<paper-input id="amountInput" type="number" name="amount"
+						label="Ingrese Cantidad">
+>>>>>>> 305f342... Fixing errors
 					<div suffix>{{currency}}</div>
 					</paper-input>
 				</div>
 				<div class="column-6">
+<<<<<<< HEAD
 					<paper-dropdown-menu label="Type"> 
 						<paper-menu class="dropdown-content" name="currST">
 							<c:forEach items="${currencies}" var="curr">
@@ -148,10 +235,19 @@ div.recommended {
 							</c:forEach>
 						</paper-menu> 
 					</paper-dropdown-menu>
+=======
+					<paper-dropdown-menu label="Type"> <paper-menu
+						class="dropdown-content" name="currST"> <c:forEach
+						items="${currencies}" var="curr">
+						<paper-item>
+						<c:out value="${curr}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+>>>>>>> 305f342... Fixing errors
 				</div>
 			</div>
 			<div class="row">
 				<div class="column-6">
+<<<<<<< HEAD
 					El dinero que vais a percibir es <span style="font-size: 20px; font-weight: 800; margin-left: 10px"><c:out value="${amountInput}"/></span>
 					<span style="font-size: 20px; font-weight: 800"><c:out value="${amountTxed}"/></span>
 				</div>
@@ -171,10 +267,33 @@ div.recommended {
 		</paper-material>
 		</form>
 		
+=======
+					El dinero que vais a percibir es <span
+						style="font-size: 20px; font-weight: 800; margin-left: 10px"><c:out
+							value="${amountInput}" /></span> <span
+						style="font-size: 20px; font-weight: 800"><c:out
+							value="${amountTxed}" /></span>
+				</div>
+				<div class="column-6">
+					<paper-dropdown-menu label="Type"> <paper-menu
+						class="dropdown-content" name="currND"> <c:forEach
+						items="${currencies}" var="curr2">
+						<paper-item>
+						<c:out value="${curr2}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+				</div>
+			</div>
+			<div class="row">
+				<input type="submit" id="submit" value="submit">
+			</div>
+		</paper-material>
+		</form>
+>>>>>>> 305f342... Fixing errors
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
 	<!--
+<<<<<<< HEAD
     <paper-toast id="caching-complete"
                  duration="6000"
                  text="Caching complete! This app will work offline.">
@@ -190,6 +309,23 @@ div.recommended {
       </platinum-sw-cache>
     </platinum-sw-register>
     --> </template>
+=======
+     <paper-toast id="caching-complete"
+                  duration="6000"
+                  text="Caching complete! This app will work offline.">
+     </paper-toast>
+ 
+     <platinum-sw-register auto-register
+                           clients-claim
+                           skip-waiting
+                           base-uri="bower_components/platinum-sw/bootstrap"
+                           on-service-worker-installed="displayInstalledToast">
+       <platinum-sw-cache default-cache-strategy="fastest"
+                          cache-config-file="cache-config.json">
+       </platinum-sw-cache>
+     </platinum-sw-register>
+     --> </template>
+>>>>>>> 305f342... Fixing errors
 
 	<!-- build:js scripts/app.js -->
 	<script src="scripts/app.js"></script>
@@ -197,6 +333,7 @@ div.recommended {
 </body>
 
 <script>
+<<<<<<< HEAD
 	var amountInput, amountTxed;
 	function (inputID) {
 		var amInput = document.getElementById("amountInput").value;
@@ -205,3 +342,13 @@ div.recommended {
 </script>
 
 </html>
+=======
+ 	var amountInput, amountTxed;
+ 	function (inputID) {
+ 		var amInput = document.getElementById("amountInput").value;
+ 		amountInput = amInput;
+ 	}();
+ </script>
+
+</html>
+>>>>>>> 305f342... Fixing errors
