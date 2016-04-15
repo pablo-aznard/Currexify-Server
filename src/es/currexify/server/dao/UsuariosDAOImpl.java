@@ -125,5 +125,28 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		}
 		return true;
 	}
+	
+	@Override 
+	public boolean isUserUnique(EntityManager em, String user) {
+		Query q = em.createQuery("select u from UsuariosModel u where u.name = :name");
+		q.setParameter("name", user);
+		List<UsuariosModel> ums= q.getResultList();
+		if (ums.size() > 0)
+			return false;
+		else
+			return true;
+	}
+	
+	@Override
+	public boolean isEmailUnique(EntityManager em, String email) {
+		Query q = em.createQuery("select u from UsuariosModel u where u.email = :email");
+		q.setParameter("email", email);
+		List<UsuariosModel> ums= q.getResultList();
+		if (ums.size() > 0)
+			return false;
+		else
+			return true;
+		
+	}
 
 }
