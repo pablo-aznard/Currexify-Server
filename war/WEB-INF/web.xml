@@ -9,7 +9,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>es.currexify.server.CurrexifyServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Currexify</servlet-name>"war/WEB-INF/web.xml"
+		<servlet-name>Currexify</servlet-name>
 		<url-pattern>/index</url-pattern>
 	</servlet-mapping>
 	<servlet>
