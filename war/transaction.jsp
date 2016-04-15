@@ -73,52 +73,20 @@ span { @apply (--paper-font-body1);
 	
 }
 
-.img-logo {
-	max-width: 200px;
-	display: block;
-	margin: 0 auto;
-}
-
-#submit {
-	color: white;
-	background-color: #4AAECF;
-	width: 20%;
+.column-6 {
 	display: inline-block;
-	position: relative;
-	box-sizing: border-box;
-	min-width: 5.14em;
-	margin: 0 0.29em;
-	border: none;
-	text-align: center;
-	font: inherit;
-	text-transform: uppercase;
-	outline-width: 0;
-	border-radius: 3px;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-	cursor: pointer;
-	z-index: 0;
-	padding: 0.7em 0.57em;
-	float: right;
-	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
-		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+	padding: 0;
+	margin: 0;
+	border: 0;
+	width: 49.5%;
 }
 
-#clear {
-	color: white;
-	background-color: #4AAECF;
-	width: 20%;
-	float: right;
+paper-dropdown-menu {
+	width: 100%;
 }
 
-.content {
-	padding: 54px 64px;
-}
-
-paper-input iron-icon {
-	margin-right: 20px
+div.recommended {
+	vertical-align: bottom;
 }
 </style>
 </head>
@@ -135,36 +103,17 @@ paper-input iron-icon {
 		class="menu-name"><img src="images/touch/logotipo_tocho.png"
 		style="width: 80px"></span> </paper-toolbar> <!-- Drawer Content --> <paper-menu
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
-	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
+	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
-	</a>
-	<c:if test='${user != ""}'>
-		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
-			<span>Profile</span>
-		</a> 
-	</c:if>
-	<c:if test='${user == ""}'>
-		<a data-route="users" href="login"> <iron-icon
-				icon="verified-user"></iron-icon> <span>Login</span>
-		</a>
-	</c:if>
-	<c:if test='${user != ""}'>
-		<a data-route="transaction" href="transaction"> <iron-icon
+	</a> <a data-route="profile" href="{{baseUrl}}profile"> <iron-icon
+			icon="face"></iron-icon> <span>Profile</span>
+	</a> <a data-route="users" href="{{baseUrl}}users"> <iron-icon
+			icon="verified-user"></iron-icon> <span>Login</span>
+	</a> <a data-route="transaction" href="{{baseUrl}}transaction"> <iron-icon
 			icon="swap-horiz"></iron-icon> <span>Transactions</span>
-		</a>
-	</c:if>
-	<a data-route="contact" href="contact"> <iron-icon
+	</a> <a data-route="contact" href="{{baseUrl}}contact"> <iron-icon
 			icon="mail"></iron-icon> <span>Contact</span>
-	</a>
-	<c:if test='${user != ""}'>
-		<div style="position: absolute; bottom: 0; width: 100%">
-			<hr>
-			<a href="<c:url value="${url}"/>"> <iron-icon
-					icon="subdirectory-arrow-left"></iron-icon> <c:out
-					value="${urlLinktext}" /></a>
-		</div>
-	</c:if>
-	</paper-menu> </paper-scroll-header-panel>  <!-- Main Area --> <paper-scroll-header-panel main
+	</a> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -183,48 +132,45 @@ paper-input iron-icon {
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1">
-		<div style="width: 100%;">
-			<div style="margin: 0 auto;">
-				<img src="../../images/touch/logotipo_tocho.png" class="img-logo">
+		<paper-material>
+		<form action="transaction" method="post">
+			<div class="row">
+				<div class="column-6">
+					<paper-input id="amountInput" type="number" name="amount" label="Ingrese Cantidad">
+					<div suffix>{{currency}}</div>
+					</paper-input>
+				</div>
+				<div class="column-6">
+					<paper-dropdown-menu label="Type"> 
+						<paper-menu class="dropdown-content" name="currST">
+							<c:forEach items="${currencies}" var="curr">
+								<paper-item><c:out value="${curr}"/></paper-item>
+							</c:forEach>
+						</paper-menu> 
+					</paper-dropdown-menu>
+				</div>
 			</div>
-			<div style="width: 90%; margin-left: 5%;">
-
-				<form action="register" method="post">
-					<div>
-						<paper-input id="name" label="Usuario" name="name">
-						<iron-icon icon="account-circle" prefix></iron-icon> <paper-icon-button
-							suffix onclick="clearName()" icon="clear" alt="clear"
-							title="clear"></paper-input>
-						<paper-input id="pass" name="pass" label="Contraseña"
-							type="password"> <iron-icon icon="fingerprint"
-							prefix></iron-icon> <paper-icon-button suffix
-							onclick="clearPass()" icon="clear" alt="clear" title="clear"></paper-input>
-						<paper-input label="E-mail" name="email" id="email">
-						<iron-icon icon="mail" prefix></iron-icon>
-						<paper-icon-button suffix onclick="clearEmail()" icon="clear"
-							alt="clear" title="clear"> </paper-icon-button> </paper-input>
-						<paper-input id="address" name="address" label="Address">
-						<iron-icon icon="home" prefix></iron-icon> <paper-icon-button
-							suffix onclick="clearAddress()" icon="clear" alt="clear"
-							title="clear"></paper-input>
-						<paper-input id="phone" label="Phone" name="phone" type="number">
-						<iron-icon icon="settings-phone" prefix></iron-icon> <paper-icon-button
-							suffix onclick="clearPhone()" icon="clear" alt="clear"
-							title="clear"></paper-input>
-					</div>
-					<div style="margin-top: 2em;">
-						<div style="display: inline-block; width: 100%; margin: 0 auto">
-							<paper-button id="clear" raised onclick="clearAll()">Clear
-							fields</paper-button>
-							<input type="submit" value="submit" id="submit">
-						</div>
-					</div>
-
-				</form>
+			<div class="row">
+				<div class="column-6">
+					El dinero que vais a percibir es <span style="font-size: 20px; font-weight: 800; margin-left: 10px"><c:out value="${amountInput}"/></span>
+					<span style="font-size: 20px; font-weight: 800"><c:out value="${amountTxed}"/></span>
+				</div>
+				<div class="column-6">
+					<paper-dropdown-menu label="Type"> 
+						<paper-menu class="dropdown-content" name="currND">
+							<c:forEach items="${currencies}" var="curr2">
+								<paper-item><c:out value="${curr2}"/></paper-item>
+							</c:forEach>
+						</paper-menu> 
+					</paper-dropdown-menu>
+				</div>
 			</div>
-		</div>
+			<div class="row">
+				<input type="submit" value="submit">
+			</div>
 		</paper-material>
+		</form>
+		
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
@@ -248,36 +194,14 @@ paper-input iron-icon {
 	<!-- build:js scripts/app.js -->
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
-	<script type="text/javascript">
-		function clearAll() {
-			document.getElementById("name").value = "";
-			document.getElementById("pass").value = "";
-			document.getElementById("email").value = "";
-			document.getElementById("address").value = "";
-			document.getElementById("phone").value = "";
-			document.getElementById("cardnum").value = "";
-		}
-		
-		function clearName() {
-			document.getElementById("name").value = "";			
-		}
-		
-		function clearPass() {
-			document.getElementById("pass").value = "";			
-		}
-		
-		function clearEmail() {
-			document.getElementById("email").value = "";			
-		}
-		
-		function clearAddress() {
-			document.getElementById("address").value = "";			
-		}
-		
-		function clearPhone() {
-			document.getElementById("phone").value = "";			
-		}
-	</script>
 </body>
+
+<script>
+	var amountInput, amountTxed;
+	function (inputID) {
+		var amInput = document.getElementById("amountInput").value;
+		amountInput = amInput;
+	}();
+</script>
 
 </html>
