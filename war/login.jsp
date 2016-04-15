@@ -79,6 +79,33 @@ span { @apply (--paper-font-body1);
 	margin: 0 auto;
 }
 
+#submit {
+	color: white;
+	background-color: #4AAECF;
+	width: 20%;
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	min-width: 5.14em;
+	margin: 0 0.29em;
+	border: none;
+	text-align: center;
+	font: inherit;
+	text-transform: uppercase;
+	outline-width: 0;
+	border-radius: 3px;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	z-index: 0;
+	padding: 0.7em 0.57em;
+	float: right;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
+		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
 .content {
 	padding: 54px 64px;
 }
@@ -97,20 +124,31 @@ span { @apply (--paper-font-body1);
 		class="menu-name"><img src="images/touch/logotipo_tocho.png"
 		style="width: 80px"></span> </paper-toolbar> <!-- Drawer Content --> <paper-menu
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
-	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
+	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
-	</a> <a data-route="profile" href="{{baseUrl}}profile"> <iron-icon
-			icon="face"></iron-icon> <span>Profile</span>
-	</a> <a data-route="users" href="{{baseUrl}}users"> <iron-icon
-			icon="verified-user"></iron-icon> <span>Login</span>
-	</a> <a data-route="transaction" href="{{baseUrl}}transaction"> <iron-icon
-			icon="swap-horiz"></iron-icon> <span>Transactions</span>
-	</a> <a data-route="contact" href="{{baseUrl}}contact"> <iron-icon
-			icon="mail"></iron-icon> <span>Contact</span>
-	</a> </paper-menu> </paper-scroll-header-panel> 
-	<!-- Main Area --> 
-	<paper-scroll-header-panel
-		main id="headerPanelMain" condenses keep-condensed-header>
+	</a> <c:if test='${user != ""}'>
+		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
+			<span>Profile</span>
+		</a>
+	</c:if> <c:if test='${user == ""}'>
+		<a data-route="users" href="login"> <iron-icon
+				icon="verified-user"></iron-icon> <span>Login</span>
+		</a>
+	</c:if> <c:if test='${user != ""}'>
+		<a data-route="transaction" href="transaction"> <iron-icon
+				icon="swap-horiz"></iron-icon> <span>Transactions</span>
+		</a>
+	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
+		<span>Contact</span>
+	</a> <c:if test='${user != ""}'>
+		<div style="position: absolute; bottom: 0; width: 100%">
+			<hr>
+			<a href="<c:url value="${url}"/>"> <iron-icon
+					icon="subdirectory-arrow-left"></iron-icon> <c:out
+					value="${urlLinktext}" /></a>
+		</div>
+	</c:if> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
+		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
 
@@ -134,20 +172,27 @@ span { @apply (--paper-font-body1);
 				<img src="../../images/touch/logotipo_tocho.png" class="img-logo">
 			</div>
 			<div style="width: 90%; margin-left: 5%;">
-				<div>
-			<form action="login" method="post">
-					<paper-input label="Usuario" name="user"></paper-input>
-					<paper-input label="Contraseña" name="pass" type="password"></paper-input>
-    				<input type="submit" value="submit"> 
-				</form> 
-				</div>
-				<div style="margin-top: 2em;">
-					<div style="display: inline-block; width: 49.5%">
-						<paper-checkbox>Mantener sesión iniciada</paper-checkbox>
-						<p>
-							<span>¿No estás registrado?<a href="register.jsp">Regístrate</a></span>
-						</p>
+				<c:if test='${user != ""}'>
+					Estás identificado con el siguiente E-mail: <c:out value="${user}" />
+				</c:if>
+				<c:if test='${user == ""}'>
+					<div>
+						<form action="login" method="post">
+							<paper-input label="Usuario" name="user"></paper-input>
+							<paper-input label="Contraseña" name="pass" type="password"></paper-input>
+							<input type="submit" id="submit" value="submit">
+						</form>
 					</div>
+				</c:if>
+				<div style="margin-top: 2em;">
+					<c:if test='${user == ""}'>
+						<div style="display: inline-block; width: 49.5%">
+							<paper-checkbox>Mantener sesión iniciada</paper-checkbox>
+							<p>
+								<span>¿No estás registrado?<a href="register.jsp">Regístrate</a></span>
+							</p>
+						</div>
+					</c:if>
 					<div style="display: inline-block; width: 49.5%">
 						<a href="<c:url value="${url}"/>"><paper-button raised
 								style="color: white; background-color: #4AAECF; width: 25%; float:right;">

@@ -77,16 +77,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		class="menu-name"><img src="images/touch/logotipo_tocho.png"
 		style="width: 80px"></span> </paper-toolbar> <!-- Drawer Content --> <paper-menu
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
-	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
+	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
-	</a> <a data-route="profile" href="{{baseUrl}}profile"> <iron-icon
-			icon="face"></iron-icon> <span>Profile</span>
-	</a> <a href="login"> <iron-icon icon="verified-user"></iron-icon> <span>Login</span>
-	</a> <a data-route="transaction" href="{{baseUrl}}transaction"> <iron-icon
-			icon="swap-horiz"></iron-icon> <span>Transactions</span>
-	</a> <a data-route="contact" href="{{baseUrl}}contact"> <iron-icon
+	</a>
+	<a data-route="users" href="login"> <iron-icon
+				icon="verified-user"></iron-icon> <span>Login</span>
+	</a>
+	<a data-route="contact" href="contact"> <iron-icon
 			icon="mail"></iron-icon> <span>Contact</span>
-	</a> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
+	</a> </paper-menu> </paper-scroll-header-panel>  <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
