@@ -17,6 +17,13 @@ public class CurrencyExRateDAOImpl implements CurrencyExRateDAO {
 			instance = new CurrencyExRateDAOImpl();
 		return instance;
 	}
+	@Override
+	public CurrencyExRateModel createCurrencyExRate(EntityManager em, CurrencyExRateModel cer) {
+		em.getTransaction().begin();
+		em.persist(cer);
+		em.getTransaction().commit();
+		return cer;
+	}
 	
 	@Override
 	public CurrencyExRateModel createCurrencyExRate(EntityManager em, double euroEx, String currency) {
