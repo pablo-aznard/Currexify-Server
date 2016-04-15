@@ -35,18 +35,21 @@ public class Register extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String user = request.getParameter("user");
+	    String user = request.getParameter("name");
 	    String pass = request.getParameter("pass");
 	    String email = request.getParameter("email");
 	    String address = request.getParameter("address");
 	    String phone = request.getParameter("phone");
-	    String cardnum = request.getParameter("cardnum");
 		
 		EntityManager em = EMFService.get().createEntityManager();
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-		if(udao.isUserUnique(em, user) && udao.isEmailUnique(em, email)){
-			UsuariosModel um = new UsuariosModel(user, pass, email, address, phone, cardnum);
+		if(udao.isEmailUnique(em, email)){
+			UsuariosModel um = new UsuariosModel(user, pass, email, address, phone);
 			udao.createUser(em, um);
+			//AQUI PONER USUARIO REGISTRADO
+		}
+		else{
+			//AQUI MENSAJE DE EMAIL UTILIZADO
 		}
 		em.close();
 		
