@@ -104,34 +104,28 @@ span { @apply (--paper-font-body1);
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
 	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
-	</a>
-	<c:if test='${user != ""}'>
+	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
 			<span>Profile</span>
-		</a> 
-	</c:if>
-	<c:if test='${user == ""}'>
+		</a>
+	</c:if> <c:if test='${user == ""}'>
 		<a data-route="users" href="login"> <iron-icon
 				icon="verified-user"></iron-icon> <span>Login</span>
 		</a>
-	</c:if>
-	<c:if test='${user != ""}'>
+	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-			icon="swap-horiz"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transactions</span>
 		</a>
-	</c:if>
-	<a data-route="contact" href="contact"> <iron-icon
-			icon="mail"></iron-icon> <span>Contact</span>
-	</a>
-	<c:if test='${user != ""}'>
+	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
+		<span>Contact</span>
+	</a> <c:if test='${user != ""}'>
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
 			<a href="<c:url value="${url}"/>"> <iron-icon
 					icon="subdirectory-arrow-left"></iron-icon> <c:out
 					value="${urlLinktext}" /></a>
 		</div>
-	</c:if>
-	</paper-menu> </paper-scroll-header-panel>  <!-- Main Area --> <paper-scroll-header-panel main
+	</c:if> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -150,9 +144,9 @@ span { @apply (--paper-font-body1);
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1">
-		WIP
-		</paper-material>
+		<paper-material elevation="1" style="text-align:center"> 
+			<h1>Estamos trabajando en ello</h1>
+			<img style="height: 500px; width: 500px" src="images/wip.png"> </paper-material>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
