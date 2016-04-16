@@ -38,9 +38,9 @@ public class TransactionServlet extends HttpServlet {
 		 req.getSession().setAttribute("url", url);
 		 req.getSession().setAttribute("urlLinktext", urlLinktext);
 		req.getSession().setAttribute("currencies", currencies);
-		
-		JSONArray jArray = new JSONArray();		
+
 		JSONObject json = new JSONObject();
+		List<String> jray = new ArrayList<String>();
 		
 		try {
 			EntityManager em = EMFService.get().createEntityManager();
@@ -48,19 +48,15 @@ public class TransactionServlet extends HttpServlet {
 			this.usuario = udao.readUserByEmail(em, user);
 			List<HistoryModel> umh = usuario.getHistories();
 			for(HistoryModel hm : umh){
-				String currentCurrency;
-				json.put("quantity", hm.getAmount()+this.getCurrencySymbol(hm.getCoin()));
+				double finalValue = Math.round(hm.getAmount() * 100.0 ) / 100.0;
+				json.put("quantity", finalValue+this.getCurrencySymbol(hm.getCoin()));
 				json.put("type", hm.getType());
 				json.put("user", usuario.getEmail());
-				//AÑADIR CAMPO DATE
+				jray.add(json.toString());
 			}
 			
-			
-			for (int i=0; i<3; i++) {
-				jArray.put(json);
-			}
 			em.close();
-			String jsonText = jArray.toString();
+			String jsonText = jray.toString();
 			req.getSession().setAttribute("history", jsonText);
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -85,12 +81,6 @@ public class TransactionServlet extends HttpServlet {
 		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, Double.parseDouble(amount), "saliente", new Date());
 		HistoryModel toHm = new HistoryModel(usuario.getCardN(), to, getConverted(from, to, Double.parseDouble(amount)), 
 				"entrante", new Date());
-		System.out.println(usuario.getCardN());
-		System.out.println(from);
-		System.out.println(to);
-		System.out.println(amount);
-		System.out.println(getConverted(from, to, Double.parseDouble(amount)));
-		System.out.println(new Date());
 		udao.addHistoryToUser(em, fromHm, udao.readUserByEmail(em, usuario.getEmail()));
 		udao.addHistoryToUser(em, toHm, udao.readUserByEmail(em, usuario.getEmail()));
 		
@@ -101,11 +91,11 @@ public class TransactionServlet extends HttpServlet {
 	private String getCurrencySymbol(String currencyName) {
 		switch(currencyName){
 		case "EUR":
-			return "€";
+			return "â‚¬";
 		case "USD":
 			return "$";
 		case "GBP":
-			return "£";
+			return "Â£";
 		default: 
 			return "";
 		}

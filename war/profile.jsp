@@ -61,8 +61,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- Because this project uses vulcanize this should be your only html import
        in this file. All other imports should go in elements.html -->
 <link rel="import" href="elements/elements.html">
-<link rel="import"
-	href="bower_components/transaction-table/transaction-table.html">
 
 <!-- For shared styles, shared-styles.html import in elements.html -->
 <style is="custom-style" include="shared-styles"></style>
@@ -167,7 +165,7 @@ span { @apply (--paper-font-body1);
 				</div>
 			</div>
 		</div>
-		<transaction-table title="Transactions"></transaction-table> </paper-material>
+		<currencies-list title="Budget of currencies" currencies='<c:out value="${budget}"/>'></currencies-list> </paper-material>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
