@@ -71,13 +71,17 @@ public class TransactionServlet extends HttpServlet {
 		String from = req.getParameter("currST");
 		String to = req.getParameter("currND");
 		if(from.equals(to) || amount.trim() == "") {
-			resp.sendRedirect("transaction");
+			resp.sendRedirect("transaction");//mensaje esto no se puede hacer
 			return;
 		}
 		EntityManager em = EMFService.get().createEntityManager();
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 		List<HistoryModel> umh = usuario.getHistories();
-		
+		if(!hasMoney(from, Double.valueOf(amount))){
+			resp.sendRedirect("transaction");//mensaje de no hay money
+			return;
+		}
+			
 		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, Double.parseDouble(amount), "saliente", new Date());
 		HistoryModel toHm = new HistoryModel(usuario.getCardN(), to, getConverted(from, to, Double.parseDouble(amount)), 
 				"entrante", new Date());
@@ -111,6 +115,7 @@ public class TransactionServlet extends HttpServlet {
 		
 		em.close();
 		resp.sendRedirect("transaction");
+		
 	}
 	
 	private String getCurrencySymbol(String currencyName) {
@@ -124,6 +129,20 @@ public class TransactionServlet extends HttpServlet {
 		default: 
 			return "";
 		}
+	}
+	
+	private boolean hasMoney(String currency,double amount){
+		EntityManager em = EMFService.get().createEntityManager();
+		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+		UsuariosModel u1 = udao.readUserByEmail(em, usuario.getEmail());
+		List<CurrencyBudgetModel> cbml = u1.getUserCurrencies();
+		em.close();
+		for(CurrencyBudgetModel a: cbml){
+			if(a.getCurrency().equals(currency)){
+				return a.getBudget()>=amount;
+			}
+		}
+		return false;
 	}
 	
 	private double getConverted(String from, String to, double oAmount){
