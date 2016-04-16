@@ -65,55 +65,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- For shared styles, shared-styles.html import in elements.html -->
 <style is="custom-style" include="shared-styles"></style>
 <style>
-:host {
-	display: block;
-}
-
 span { @apply (--paper-font-body1);
 	
 }
 
-.column-6 {
-	display: inline-block;
-	padding: 0;
-	margin: 0;
-	border: 0;
-	width: 49.5%;
+.img-profile {
+	width: 76px;
+	height: 76px;
+	border-radius: 38px;
 }
 
-paper-dropdown-menu {
-	width: 100%;
+.name {
+	margin-bottom: 10px;
+	font-size: 18px;
 }
 
-div.recommended {
-	vertical-align: bottom;
-}
-
-#submit {
-	color: white;
-	background-color: #4AAECF;
-	width: 20%;
-	display: inline-block;
-	position: relative;
-	box-sizing: border-box;
-	min-width: 5.14em;
-	margin: 0 0.29em;
-	border: none;
-	text-align: center;
-	font: inherit;
-	text-transform: uppercase;
-	outline-width: 0;
-	border-radius: 3px;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-	cursor: pointer;
-	z-index: 0;
-	padding: 0.7em 0.57em;
-	float: right;
-	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
-		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+.notify {
+	font-size: 12px;
 }
 
 .content {
@@ -134,10 +102,9 @@ div.recommended {
 		class="menu-name"><img src="images/touch/logotipo_tocho.png"
 		style="width: 80px"></span> </paper-toolbar> <!-- Drawer Content --> <paper-menu
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
-	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
+	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
 	</a>
-	
 	<c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
 			<span>Profile</span>
@@ -164,7 +131,7 @@ div.recommended {
 					value="${urlLinktext}" /></a>
 		</div>
 	</c:if>
-	</paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
+	</paper-menu> </paper-scroll-header-panel>  <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -183,47 +150,9 @@ div.recommended {
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material>
-		<form action="transaction" method="post">
-			<div class="row">
-				<div class="column-6">
-					<paper-input id="amountInput" type="number" name="amount"
-						label="Ingrese Cantidad" onkeydown="amountChanged(this.value)">
-					<div suffix>{{currency}}</div>
-					</paper-input>
-				</div>
-				<div class="column-6">
-					<paper-dropdown-menu label="Type"> <paper-menu
-						class="dropdown-content" attr-for-selected="value"
-						selected="{{disk}}"> <c:forEach items="${currencies}"
-						var="curr">
-						<paper-item value="<c:out value="${curr}"/>">
-						<c:out value="${curr}" /></paper-item>
-					</c:forEach> </paper-menu> </paper-dropdown-menu>
-					<input type="hidden" name="currST" value="{{disk}}">
-				</div>
-			</div>
-			<div class="row">
-				<div class="column-6">
-					El dinero que vas a percibir es: WIP<!-- <span id="amountChanged"
-						style="font-size: 20px; font-weight: 800"></span>-->
-				</div>
-				<div class="column-6">
-					<paper-dropdown-menu label="Type"> <paper-menu
-						class="dropdown-content" attr-for-selected="value"
-						selected="{{disk2}}"> <c:forEach
-						items="${currencies}" var="curr2">
-						<paper-item value="<c:out value="${curr2}"/>">
-						<c:out value="${curr2}" /></paper-item>
-					</c:forEach> </paper-menu> </paper-dropdown-menu>
-					<input type="hidden" name="currND" value="{{disk2}}">
-				</div>
-			</div>
-			<input type="submit" value="submit" id="submit">
-			<transaction-table style="margin-top:50px" title="History"
-				transactions='<c:out value="${history}"/>'> </transaction-table>
+		<paper-material elevation="1">
+		WIP
 		</paper-material>
-		</form>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
@@ -248,12 +177,5 @@ div.recommended {
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
 </body>
-
-<script>
-	function amountChanged(val) {
-		var change = 1.05;
-		document.getElementById("amountChanged").innerHTML = val * change;
-	}
-</script>
 
 </html>

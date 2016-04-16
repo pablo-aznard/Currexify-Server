@@ -9,53 +9,95 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import"
+	href="../../bower_components/paper-styles/typography.html">
 
-<dom-module id="transaction-table">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
+<dom-module id="transaction-table"> <template>
+<style>
+:host {
+	display: block;
+}
 
-      span {
-        @apply(--paper-font-body1);
-      }
-    </style>
-    <div style="width: 100%; margin-top: 20px">
-        <div style="background-color: #666; color: white; width: 100%; padding: 10px"><span>{{title}}</span></div>
-        <template is="dom-repeat" items="{{transactions}}" as="item">
-            <div style="padding:10px; width: 100%; background-color: #EEE; border-bottom: 1px solid #ccc">
-                <span style="margin-right: 60px; float: left;">{{item.user}}</span>
-                <span style="margin-right: 30px; float: right;">{{item.quantity}}</span>
-                <span style="margin-right: 30px; float: right;">{{item.type}}</span>
-                <div style="clear: both"></div>
-            </div>
-        </template>
-    </div>
-</template>
-  <script>
-    (function() {
-      'use strict';
+span { @apply (--paper-font-body1);
+	
+}
 
-      Polymer({
-        is: 'transaction-table',
+.rojo {
+	color: #ff0000
+}
 
-        properties: {
-            title: {
-                type: "String",
-                value: "Transactions"
-            },
-            transactions: {
-                type: Array,
-                value: [{"user":"Pablo Pavo", "type":"0.95", "quantity":"200€"},{"user":"Nacho Cano", "type":"0.05", "quantity":"300€"},{"user":"William Tell", "type":"2.95", "quantity":"500€"}]
-            }
-        },
+.verde {
+	color: #00ff00
+}
+</style>
+<div style="width: 100%; margin-top: 20px">
+	<div
+		style="background-color: #666; color: white; width: 100%; padding: 10px">
+		<span>{{title}}</span>
+	</div>
+	<template is="dom-repeat" items="{{transactions}}" as="item">
+	<table
+		style="padding: 10px; width: 100%; background-color: #EEE; border-bottom: 1px solid #ccc">
+		<tr>
+			<td style="width:30%"><span style="margin-right: 60px; float: left;">{{item.user}}</span></td>
+			<td style="width:30%"><span class$="{{checkType(item.type)}}"
+				style="margin-right: 30px; float: right;">{{item.type}}</span></td>
+			<td style="width:30%"><span class$="{{checkType(item.type)}}"
+				style="margin-right: 30px; float: right;">{{checkMoves(item.type)}}{{item.quantity}}</span></td>
+		</tr>
+	</table>
+	</template>
+</div>
+</template> <script>
+	(function() {
+		'use strict';
 
-        ready: function() {
-          var that = this;
-        }
-      });
-    })();
-  </script>
-</dom-module>
+		Polymer({
+			is : 'transaction-table',
+
+			properties : {
+				title : {
+					type : "String",
+					value : "Transactions"
+				},
+				transactions : {
+					type : Array,
+					value : [ {
+						"user" : "Pablo Pavo",
+						"type" : "0.95",
+						"quantity" : "200€"
+					}, {
+						"user" : "Nacho Cano",
+						"type" : "0.05",
+						"quantity" : "300€"
+					}, {
+						"user" : "William Tell",
+						"type" : "2.95",
+						"quantity" : "500€"
+					} ]
+				}
+			},
+
+			ready : function() {
+				var that = this;
+			},
+
+			checkType : function(type) {
+				if (type == "saliente") {
+					return "rojo"
+				} else {
+					return "verde"
+				}
+
+			},
+
+			checkMoves : function(type) {
+				if (type == "saliente") {
+					return "-"
+				} else {
+					return "+"
+				}
+			}
+		});
+	})();
+</script> </dom-module>
