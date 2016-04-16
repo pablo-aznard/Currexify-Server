@@ -136,35 +136,28 @@ div.recommended {
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
 	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
-	</a>
-	
-	<c:if test='${user != ""}'>
+	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
 			<span>Profile</span>
-		</a> 
-	</c:if>
-	<c:if test='${user == ""}'>
+		</a>
+	</c:if> <c:if test='${user == ""}'>
 		<a data-route="users" href="login"> <iron-icon
 				icon="verified-user"></iron-icon> <span>Login</span>
 		</a>
-	</c:if>
-	<c:if test='${user != ""}'>
+	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-			icon="swap-horiz"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transactions</span>
 		</a>
-	</c:if>
-	<a data-route="contact" href="contact"> <iron-icon
-			icon="mail"></iron-icon> <span>Contact</span>
-	</a>
-	<c:if test='${user != ""}'>
+	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
+		<span>Contact</span>
+	</a> <c:if test='${user != ""}'>
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
 			<a href="<c:url value="${url}"/>"> <iron-icon
 					icon="subdirectory-arrow-left"></iron-icon> <c:out
 					value="${urlLinktext}" /></a>
 		</div>
-	</c:if>
-	</paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
+	</c:if> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -184,7 +177,8 @@ div.recommended {
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
 		<paper-material>
-		<form action="transaction" method="post">
+		<form action="transaction" method="post" name="Form"
+			onsubmit="return validateForm()">
 			<div class="row">
 				<div class="column-6">
 					<paper-input id="amountInput" type="number" name="amount"
@@ -197,15 +191,16 @@ div.recommended {
 						class="dropdown-content" attr-for-selected="value"
 						selected="{{disk}}"> <c:forEach items="${currencies}"
 						var="curr">
-						<paper-item value="<c:out value="${curr}"/>">
-						<c:out value="${curr}" /></paper-item>
+						<paper-item value="<c:out value="${curr}"/>"> <c:out
+							value="${curr}" /></paper-item>
 					</c:forEach> </paper-menu> </paper-dropdown-menu>
 					<input type="hidden" name="currST" value="{{disk}}">
 				</div>
 			</div>
 			<div class="row">
 				<div class="column-6">
-					El dinero que vas a percibir es: WIP<!-- <span id="amountChanged"
+					El dinero que vas a percibir es: WIP
+					<!-- <span id="amountChanged"
 						style="font-size: 20px; font-weight: 800"></span>-->
 				</div>
 				<div class="column-6">
@@ -213,8 +208,8 @@ div.recommended {
 						class="dropdown-content" attr-for-selected="value"
 						selected="{{disk2}}"> <c:forEach
 						items="${currencies}" var="curr2">
-						<paper-item value="<c:out value="${curr2}"/>">
-						<c:out value="${curr2}" /></paper-item>
+						<paper-item value="<c:out value="${curr2}"/>"> <c:out
+							value="${curr2}" /></paper-item>
 					</c:forEach> </paper-menu> </paper-dropdown-menu>
 					<input type="hidden" name="currND" value="{{disk2}}">
 				</div>
@@ -250,6 +245,34 @@ div.recommended {
 </body>
 
 <script>
+	window.onload = getUrlVars;
+	function getUrlVars() {
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+				function(m, key, value) {
+					vars[key] = value;
+				});
+		if (vars.error == "true")
+			alert("No tienes suficiente dinero para crear esa transacción")
+		else if (vars.equal == "true")
+			alert("Las monedas de cambio no pueden ser iguales")
+	}
+
+	function validateForm() {
+		var amount = document.forms["Form"]["amount"].value;
+		var from = document.forms["Form"]["currST"].value;
+		var to = document.forms["Form"]["currND"].value;
+
+		if(!amount){
+			alert("Debe introducir una cantidad válida")
+			return false;
+		}
+		if (!from || !to || from == to) {
+			alert("Debes elegir unas divisas y ser distintas");
+			return false;
+		}
+	}
+
 	function amountChanged(val) {
 		var change = 1.05;
 		document.getElementById("amountChanged").innerHTML = val * change;
