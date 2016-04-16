@@ -45,7 +45,7 @@ public class CurrencyExRateDAOImpl implements CurrencyExRateDAO {
 	
 	@Override
 	public CurrencyExRateModel readCurrencyExRatesByCurrency(EntityManager em, String currency) {
-		Query q = em.createQuery("select c from CurrencyExRateModel where c.currency = :currency");
+		Query q = em.createQuery("select c from CurrencyExRateModel c where c.currency = :currency");
 		q.setParameter("currency", currency);
 		CurrencyExRateModel res = null;
 		List<CurrencyExRateModel> cerml= q.getResultList();

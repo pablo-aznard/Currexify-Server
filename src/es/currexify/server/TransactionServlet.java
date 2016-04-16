@@ -74,7 +74,10 @@ public class TransactionServlet extends HttpServlet {
 		String amount = req.getParameter("amount");
 		String from = req.getParameter("currST");
 		String to = req.getParameter("currND");
-		
+		if(from.equals(to) || amount.trim() == "") {
+			resp.sendRedirect("transaction");
+			return;
+		}
 		EntityManager em = EMFService.get().createEntityManager();
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 		List<HistoryModel> umh = usuario.getHistories();
@@ -82,10 +85,17 @@ public class TransactionServlet extends HttpServlet {
 		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, Double.parseDouble(amount), "saliente", new Date());
 		HistoryModel toHm = new HistoryModel(usuario.getCardN(), to, getConverted(from, to, Double.parseDouble(amount)), 
 				"entrante", new Date());
-		udao.addHistoryToUser(em, fromHm, usuario);
-		udao.addHistoryToUser(em, toHm, usuario);
+		System.out.println(usuario.getCardN());
+		System.out.println(from);
+		System.out.println(to);
+		System.out.println(amount);
+		System.out.println(getConverted(from, to, Double.parseDouble(amount)));
+		System.out.println(new Date());
+		udao.addHistoryToUser(em, fromHm, udao.readUserByEmail(em, usuario.getEmail()));
+		udao.addHistoryToUser(em, toHm, udao.readUserByEmail(em, usuario.getEmail()));
+		
 		em.close();
-		resp.getWriter().println(amount + " " + from + " " + to);
+		resp.sendRedirect("transaction");
 	}
 	
 	private String getCurrencySymbol(String currencyName) {
@@ -106,20 +116,20 @@ public class TransactionServlet extends HttpServlet {
 		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
 		double cAmount = 0.0;
 		
-		if (from == "EUR") {
+		if (from.equals("EUR")) {
 			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, to);
 			cAmount = oAmount*cer.getEuroEx();
 		}
-		else if (to == "EUR") {
+		else if (to.equals("EUR")) {
 			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, from);
 			cAmount = oAmount/cer.getEuroEx();
 		}
-		else if (from == "USD" ) {
+		else if (from.equals("USD" )) {
 			CurrencyExRateModel cer1 = cerdao.readCurrencyExRatesByCurrency(em, from);
 			CurrencyExRateModel cer2 = cerdao.readCurrencyExRatesByCurrency(em, to);
 			cAmount = oAmount/cer1.getEuroEx()*cer2.getEuroEx();
 		}
-		else if (from == "GBP") {
+		else if (from.equals("GBP")) {
 			CurrencyExRateModel cer1 = cerdao.readCurrencyExRatesByCurrency(em, from);
 			CurrencyExRateModel cer2 = cerdao.readCurrencyExRatesByCurrency(em, to);
 			cAmount = oAmount/cer1.getEuroEx()*cer2.getEuroEx();

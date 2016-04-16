@@ -19,7 +19,7 @@ public class Login extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		EntityManager em = EMFService.get().createEntityManager();
 		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
-		if(cerdao.readCurrencyExRates(em).size() != 0) {
+		if(cerdao.readCurrencyExRates(em).size() == 0) {
 			CurrencyExRateModel cer1 = new CurrencyExRateModel(1.128, "USD");
 			CurrencyExRateModel cer2 = new CurrencyExRateModel(0.796, "GBP");
 			cerdao.createCurrencyExRate(em, cer1);
