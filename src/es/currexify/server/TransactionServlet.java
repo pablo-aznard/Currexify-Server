@@ -30,7 +30,7 @@ public class TransactionServlet extends HttpServlet {
 		 String user = "";
 		 if (req.getUserPrincipal() != null) {
 		 user = req.getUserPrincipal().getName();
-		 url = userService.createLogoutURL(req.getRequestURI());
+		 url = userService.createLogoutURL("http://1-dot-isst-grupo06-socialex.appspot.com");
 		 urlLinktext = "Logout";
 		 }
 		
@@ -121,11 +121,11 @@ public class TransactionServlet extends HttpServlet {
 	private String getCurrencySymbol(String currencyName) {
 		switch(currencyName){
 		case "EUR":
-			return "â‚¬";
+			return "€";
 		case "USD":
 			return "$";
 		case "GBP":
-			return "Â£";
+			return "£";
 		default: 
 			return "";
 		}

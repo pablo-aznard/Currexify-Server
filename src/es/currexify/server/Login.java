@@ -26,12 +26,12 @@ public class Login extends HttpServlet {
 			cerdao.createCurrencyExRate(em, cer2);
 		}
 		UserService userService = UserServiceFactory.getUserService();
-		String url = userService.createLoginURL(req.getRequestURI());
+		String url = userService.createLoginURL("http://1-dot-isst-grupo06-socialex.appspot.com");
 		String urlLinktext = "Login";
 		String user = "";
 		if (req.getUserPrincipal() != null) {
 			user = req.getUserPrincipal().getName();
-			url = userService.createLogoutURL(req.getRequestURI());
+			url = userService.createLogoutURL("index");
 			urlLinktext = "Logout";
 		}
 
