@@ -23,7 +23,7 @@ public class ContactServlet extends HttpServlet {
 		String user = "";
 		if (req.getUserPrincipal() != null) {
 			user = req.getUserPrincipal().getName();
-			url = userService.createLogoutURL(req.getRequestURI());
+			url = userService.createLogoutURL("http://1-dot-isst-grupo06-socialex.appspot.com");
 			urlLinktext = "Logout";
 		}
 
