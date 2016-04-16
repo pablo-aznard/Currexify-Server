@@ -21,7 +21,7 @@ public class Login extends HttpServlet {
 		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
 		if(cerdao.readCurrencyExRates(em).size() != 0) {
 			CurrencyExRateModel cer1 = new CurrencyExRateModel(1.128, "USD");
-			CurrencyExRateModel cer2 = new CurrencyExRateModel(0.796, "POUND");
+			CurrencyExRateModel cer2 = new CurrencyExRateModel(0.796, "GBP");
 			cerdao.createCurrencyExRate(em, cer1);
 			cerdao.createCurrencyExRate(em, cer2);
 		}

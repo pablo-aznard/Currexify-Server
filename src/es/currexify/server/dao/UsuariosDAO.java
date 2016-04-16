@@ -16,6 +16,7 @@ public interface UsuariosDAO {
 	public List<UsuariosModel> readUsers(EntityManager em);
 	public UsuariosModel readUserById(EntityManager em, Long id);
 	public UsuariosModel readUserByName(EntityManager em, String name);
+	public UsuariosModel readUserByEmail(EntityManager em, String email);
 	public boolean updateUsuario(EntityManager em, UsuariosModel um);
 	public boolean deleteUsuarioById(EntityManager em, Long id);
 	public boolean addHistoryToUser(EntityManager em, HistoryModel hm, UsuariosModel um);

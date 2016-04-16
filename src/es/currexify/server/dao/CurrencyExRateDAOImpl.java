@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import es.currexify.server.model.CurrencyExRateModel;
+import es.currexify.server.model.UsuariosModel;
 
 public class CurrencyExRateDAOImpl implements CurrencyExRateDAO {
 
@@ -40,6 +41,18 @@ public class CurrencyExRateDAOImpl implements CurrencyExRateDAO {
 		Query q = em.createQuery("select c from CurrencyExRateModel c");
 		List<CurrencyExRateModel> cerms = q.getResultList();
 		return cerms;
+	}
+	
+	@Override
+	public CurrencyExRateModel readCurrencyExRatesByCurrency(EntityManager em, String currency) {
+		Query q = em.createQuery("select c from CurrencyExRateModel where c.currency = :currency");
+		q.setParameter("currency", currency);
+		CurrencyExRateModel res = null;
+		List<CurrencyExRateModel> cerml= q.getResultList();
+		if (cerml.size() > 0)
+			res = (CurrencyExRateModel) (q.getResultList().get(0));
+		
+		return res; 
 	}
 
 	@Override

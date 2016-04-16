@@ -3,6 +3,7 @@ package es.currexify.server;
 import java.io.IOException;
 import java.util.*;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -19,7 +20,8 @@ import es.currexify.server.model.*;
 @SuppressWarnings("serial")
 public class TransactionServlet extends HttpServlet {
 
-	String[] currencies = { "EUR", "USD" };
+	String[] currencies = { "EUR", "USD", "GBP"};
+	private UsuariosModel usuario;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		 UserService userService = UserServiceFactory.getUserService();
@@ -41,14 +43,23 @@ public class TransactionServlet extends HttpServlet {
 		JSONObject json = new JSONObject();
 		
 		try {
-			json.put("quantity", "300â‚¬");
-			json.put("type", "0.95");
-			json.put("user", "Pablo Pavo");
+			EntityManager em = EMFService.get().createEntityManager();
+			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+			this.usuario = udao.readUserByEmail(em, user);
+			List<HistoryModel> umh = usuario.getHistories();
+			for(HistoryModel hm : umh){
+				String currentCurrency;
+				json.put("quantity", hm.getAmount()+this.getCurrencySymbol(hm.getCoin()));
+				json.put("type", hm.getType());
+				json.put("user", usuario.getEmail());
+				//AÑADIR CAMPO DATE
+			}
+			
 			
 			for (int i=0; i<3; i++) {
 				jArray.put(json);
 			}
-			
+			em.close();
 			String jsonText = jArray.toString();
 			req.getSession().setAttribute("history", jsonText);
 		} catch (JSONException e) {
@@ -63,6 +74,58 @@ public class TransactionServlet extends HttpServlet {
 		String amount = req.getParameter("amount");
 		String from = req.getParameter("currST");
 		String to = req.getParameter("currND");
+		
+		EntityManager em = EMFService.get().createEntityManager();
+		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+		List<HistoryModel> umh = usuario.getHistories();
+		
+		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, Double.parseDouble(amount), "saliente", new Date());
+		HistoryModel toHm = new HistoryModel(usuario.getCardN(), to, getConverted(from, to, Double.parseDouble(amount)), 
+				"entrante", new Date());
+		udao.addHistoryToUser(em, fromHm, usuario);
+		udao.addHistoryToUser(em, toHm, usuario);
+		em.close();
 		resp.getWriter().println(amount + " " + from + " " + to);
 	}
+	
+	private String getCurrencySymbol(String currencyName) {
+		switch(currencyName){
+		case "EUR":
+			return "€";
+		case "USD":
+			return "$";
+		case "GBP":
+			return "£";
+		default: 
+			return "";
+		}
+	}
+	
+	private double getConverted(String from, String to, double oAmount){
+		EntityManager em = EMFService.get().createEntityManager();
+		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
+		double cAmount = 0.0;
+		
+		if (from == "EUR") {
+			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, to);
+			cAmount = oAmount*cer.getEuroEx();
+		}
+		else if (to == "EUR") {
+			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, from);
+			cAmount = oAmount/cer.getEuroEx();
+		}
+		else if (from == "USD" ) {
+			CurrencyExRateModel cer1 = cerdao.readCurrencyExRatesByCurrency(em, from);
+			CurrencyExRateModel cer2 = cerdao.readCurrencyExRatesByCurrency(em, to);
+			cAmount = oAmount/cer1.getEuroEx()*cer2.getEuroEx();
+		}
+		else if (from == "GBP") {
+			CurrencyExRateModel cer1 = cerdao.readCurrencyExRatesByCurrency(em, from);
+			CurrencyExRateModel cer2 = cerdao.readCurrencyExRatesByCurrency(em, to);
+			cAmount = oAmount/cer1.getEuroEx()*cer2.getEuroEx();
+		}
+		return cAmount;
+	}
+	
+	
   }

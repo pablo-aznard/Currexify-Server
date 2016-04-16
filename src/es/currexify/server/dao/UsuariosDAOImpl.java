@@ -72,6 +72,19 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		
 		return res; 
 	}
+	
+	@Override
+	public UsuariosModel readUserByEmail(EntityManager em, String email) {
+		
+		Query q = em.createQuery("select u from UsuariosModel u where u.email = :email");
+		q.setParameter("email", email);
+		UsuariosModel res = null;
+		List<UsuariosModel> ums= q.getResultList();
+		if (ums.size() > 0)
+			res = (UsuariosModel) (q.getResultList().get(0));
+		
+		return res; 
+	}
 
 	@Override
 	public boolean updateUsuario(EntityManager em, UsuariosModel um) {
