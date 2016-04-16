@@ -35,26 +35,25 @@ public class Profile extends HttpServlet {
 			url = userService.createLogoutURL(req.getRequestURI());
 			urlLinktext = "Logout";
 		}
-
+		
 		try {
 			EntityManager em = EMFService.get().createEntityManager();
 			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 			this.usuario = udao.readUserByEmail(em, user);
-			List<CurrencyBudgetModel> cbm = usuario.getUserCurrencies();
-			for (CurrencyBudgetModel cb : cbm) {
-				json.put("currency", cb.getCurrency());
-				json.put("quantity", cb.getBudget());
+			List<CurrencyBudgetModel> ucbm = usuario.getUserCurrencies();
+			for(CurrencyBudgetModel cbm : ucbm){
+				double finalValue = Math.round(cbm.getBudget() * 100.0 ) / 100.0;
+				json.put("quantity",finalValue);
+				json.put("currency", String.valueOf(cbm.getCurrency()));
 				jray.add(json.toString());
 			}
 			
 			em.close();
-
 			String jsonText = jray.toString();
 			req.getSession().setAttribute("currencies", jsonText);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
 
 		req.getSession().setAttribute("user", user);
 		req.getSession().setAttribute("url", url);
