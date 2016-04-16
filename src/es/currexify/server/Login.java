@@ -43,9 +43,9 @@ public class Login extends HttpServlet {
 		if(user!="" && udao.isEmailUnique(em, user)){
 			UsuariosModel um = new UsuariosModel("","",user,"","669598554");
 			udao.createUser(em, um);
-			CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(um.getCardN(), "EURO", 1000.0);
+			CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(um.getCardN(), "EUR", 1000.0);
 			CurrencyBudgetModel cbm2 = new CurrencyBudgetModel(um.getCardN(), "USD", 0.0);
-			CurrencyBudgetModel cbm3 = new CurrencyBudgetModel(um.getCardN(), "POUND", 0.0);
+			CurrencyBudgetModel cbm3 = new CurrencyBudgetModel(um.getCardN(), "GBP", 0.0);
 			udao.addCurrencyBudgetToUser(em, cbm1, um);
 			udao.addCurrencyBudgetToUser(em, cbm2, um);
 			udao.addCurrencyBudgetToUser(em, cbm3, um);

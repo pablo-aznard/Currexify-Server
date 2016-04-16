@@ -85,14 +85,33 @@ public class TransactionServlet extends HttpServlet {
 		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, Double.parseDouble(amount), "saliente", new Date());
 		HistoryModel toHm = new HistoryModel(usuario.getCardN(), to, getConverted(from, to, Double.parseDouble(amount)), 
 				"entrante", new Date());
-		System.out.println(usuario.getCardN());
-		System.out.println(from);
-		System.out.println(to);
-		System.out.println(amount);
-		System.out.println(getConverted(from, to, Double.parseDouble(amount)));
-		System.out.println(new Date());
 		udao.addHistoryToUser(em, fromHm, udao.readUserByEmail(em, usuario.getEmail()));
 		udao.addHistoryToUser(em, toHm, udao.readUserByEmail(em, usuario.getEmail()));
+		
+		UsuariosModel uTemp = udao.readUserByEmail(em, usuario.getEmail());
+	
+		List<CurrencyBudgetModel> cbml = uTemp.getUserCurrencies();
+		for(CurrencyBudgetModel a: cbml){
+			System.out.println(a.getBudget()+" "+a.getCurrency());
+			if(a.getCurrency().equals(from)){
+				double newBudget = a.getBudget()-Double.valueOf(amount);
+				a.setBudget(newBudget);
+			}
+			else if(a.getCurrency().equals(to)){
+				double newBudget = a.getBudget()+toHm.getAmount();
+				a.setBudget(newBudget);
+			}
+		}
+		uTemp.setUserCurrencies(cbml);
+		udao.updateUsuario(em, uTemp);
+		
+		uTemp = udao.readUserByEmail(em, usuario.getEmail());
+		cbml = uTemp.getUserCurrencies();
+		for(CurrencyBudgetModel a: cbml){
+			System.out.println(a.getBudget()+" "+a.getCurrency());
+			
+		}
+
 		
 		em.close();
 		resp.sendRedirect("transaction");
