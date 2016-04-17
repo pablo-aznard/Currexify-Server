@@ -32,10 +32,13 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 			String address, String phone) {
 		UsuariosModel um = null;
 		
-		em.getTransaction().begin();
-		um = new UsuariosModel(name, password, email, address, phone);
-		em.persist(um);
-		em.getTransaction().commit();
+		if (readUserByEmail(em, email) == null) {
+			em.getTransaction().begin();
+			um = new UsuariosModel(name, password, email, address, phone);
+			
+			em.persist(um);
+			em.getTransaction().commit();
+		}
 		
 		return um;
 	}
