@@ -13,6 +13,6 @@ public interface CurrencyExRateDAO {
 	public List<CurrencyExRateModel> readCurrencyExRates(EntityManager em);
 	public CurrencyExRateModel readCurrencyExRatesByCurrency(EntityManager em, String currency);
 	public boolean updateCurrencyExRate(EntityManager em, CurrencyExRateModel cerm);
-	public boolean deleteCurrencyExRateById(EntityManager em, Long id);
+	public boolean deleteCurrencyExRate(EntityManager em, CurrencyExRateModel cbm);
 
 }

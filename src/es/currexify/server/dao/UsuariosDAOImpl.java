@@ -125,16 +125,11 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	}
 
 	@Override
-	public boolean deleteUsuarioById(EntityManager em, Long id) {
+	public boolean deleteUsuario(EntityManager em, UsuariosModel um) {
 		
 		em.getTransaction().begin();
-		try {
-			UsuariosModel todo = em.find(UsuariosModel.class, id);
-		 	em.remove(todo);
-		} finally {
-			em.getTransaction().commit();
-			
-		}
+		em.remove(um);
+		em.getTransaction().commit();
 		return true;
 	}
 	

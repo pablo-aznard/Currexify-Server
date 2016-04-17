@@ -64,14 +64,10 @@ public class CurrencyExRateDAOImpl implements CurrencyExRateDAO {
 	}
 
 	@Override
-	public boolean deleteCurrencyExRateById(EntityManager em, Long id) {
+	public boolean deleteCurrencyExRate(EntityManager em, CurrencyExRateModel cbm) {
 		em.getTransaction().begin();
-		try {
-			CurrencyExRateModel all = em.find(CurrencyExRateModel.class, id);
-			em.remove(all);
-			} finally {
-				em.getTransaction().commit();
-			}
+		em.remove(cbm);
+		em.getTransaction().commit();
 		return true;
 	}
 	
