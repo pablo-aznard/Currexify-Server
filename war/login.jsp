@@ -144,8 +144,7 @@ span { @apply (--paper-font-body1);
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
 			<a href="<c:url value="${url}"/>"> <iron-icon
-					icon="subdirectory-arrow-left"></iron-icon> <c:out
-					value="${urlLinktext}" /></a>
+					icon="subdirectory-arrow-left"></iron-icon> <c:out value='${urlLinktext}' /></a>
 		</div>
 	</c:if> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
@@ -193,7 +192,7 @@ span { @apply (--paper-font-body1);
 							</p>
 						</div>
 					</c:if>
-					<div style="display: inline-block; width: 49.5%">
+					<div style="display: inline-block; width: 59.5%">
 						<a href="<c:url value="${url}"/>"><paper-button raised
 								style="color: white; background-color: #4AAECF; width: 25%; float:right;">
 							<c:out value="${urlLinktext}" /></paper-button></a>

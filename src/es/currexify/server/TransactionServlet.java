@@ -24,19 +24,19 @@ public class TransactionServlet extends HttpServlet {
 	private UsuariosModel usuario;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		 UserService userService = UserServiceFactory.getUserService();
-		 String url = userService.createLoginURL(req.getRequestURI());
-		 String urlLinktext = "Login";
-		 String user = "";
-		 if (req.getUserPrincipal() != null) {
-		 user = req.getUserPrincipal().getName();
-		 url = userService.createLogoutURL("http://1-dot-isst-grupo06-socialex.appspot.com");
-		 urlLinktext = "Logout";
-		 }
-		
-		 req.getSession().setAttribute("user", user);
-		 req.getSession().setAttribute("url", url);
-		 req.getSession().setAttribute("urlLinktext", urlLinktext);
+		UserService userService = UserServiceFactory.getUserService();
+		String url = userService.createLoginURL(req.getRequestURI());
+		String urlLinktext = "Login";
+		String user = "";
+		if (req.getUserPrincipal() != null) {
+			user = req.getUserPrincipal().getName();
+			url = userService.createLogoutURL("https://isst-grupo06-socialex.appspot.com");
+			urlLinktext = "Logout";
+		}
+
+		req.getSession().setAttribute("user", user);
+		req.getSession().setAttribute("url", url);
+		req.getSession().setAttribute("urlLinktext", urlLinktext);
 		req.getSession().setAttribute("currencies", currencies);
 
 		JSONObject json = new JSONObject();
@@ -118,7 +118,7 @@ public class TransactionServlet extends HttpServlet {
 	private String getCurrencySymbol(String currencyName) {
 		switch (currencyName) {
 		case "EUR":
-			return "�";
+			return "€";
 		case "USD":
 			return "$";
 		case "GBP":

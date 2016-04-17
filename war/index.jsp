@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <!doctype html>
 <!--
 @license
@@ -80,12 +85,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
 	</a>
-	<a data-route="users" href="login"> <iron-icon
+	<c:if test='${user != ""}'>
+		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
+			<span>Profile</span>
+		</a>
+	</c:if> <c:if test='${user == ""}'>
+		<a data-route="users" href="login"> <iron-icon
 				icon="verified-user"></iron-icon> <span>Login</span>
-	</a>
-	<a data-route="contact" href="contact"> <iron-icon
-			icon="mail"></iron-icon> <span>Contact</span>
-	</a> </paper-menu> </paper-scroll-header-panel>  <!-- Main Area --> <paper-scroll-header-panel main
+		</a>
+	</c:if> <c:if test='${user != ""}'>
+		<a data-route="transaction" href="transaction"> <iron-icon
+				icon="swap-horiz"></iron-icon> <span>Transactions</span>
+		</a>
+	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
+		<span>Contact</span>
+	</a> <c:if test='${user != ""}'>
+		<div style="position: absolute; bottom: 0; width: 100%">
+			<hr>
+			<a href="<c:url value='${url}'/>"> <iron-icon
+					icon="subdirectory-arrow-left"></iron-icon> <c:out
+					value="${urlLinktext}" /></a>
+		</div>
+	</c:if>
+	</paper-menu> </paper-scroll-header-panel>  <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -157,7 +179,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			</div>
 			<div class="spend col" title="">
 				<h2 class="heading">Viaja</h2>
-				<p>Enviamos a cada usuario una tarjeta MasterCardÂ®&nbsp;de
+				<p>Enviamos a cada usuario una tarjeta MasterCard®&nbsp;de
 					prepago de Currexify gratuita, lo que te permitirá utilizar tu
 					dinero en cualquier punto que acepte MasterCard.</p>
 			</div>

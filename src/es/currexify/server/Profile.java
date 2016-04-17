@@ -32,7 +32,7 @@ public class Profile extends HttpServlet {
 
 		if (req.getUserPrincipal() != null) {
 			user = req.getUserPrincipal().getName();
-			url = userService.createLogoutURL("http://1-dot-isst-grupo06-socialex.appspot.com");
+			url = userService.createLogoutURL("https://isst-grupo06-socialex.appspot.com");
 			urlLinktext = "Logout";
 		}
 		
