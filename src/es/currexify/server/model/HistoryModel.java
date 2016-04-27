@@ -17,21 +17,33 @@ public class HistoryModel implements Serializable {
 	private Key key;
 	@Column(name="CARD_N")
 	private String cardN;
-	@Column(name="COIN")
-	private String coin;
+	@Column(name="SOURCE_COIN")
+	private String sCoin;
+	@Column(name="DEST_COIN")
+	private String dCoin;
 	@Column(name="AMOUNT")
 	private double amount;
 	@Column(name="TYPE")
 	private String type;
-	@Column(name="DATE")
-	private Date date;
+	@Column (name="STATE")
+	private String state;
+	@Column(name="ORIGIN_DATE")
+	private Date oDate;
+	@Column(name="END_DATE")
+	private Date eDate;
+	
 		
-	public HistoryModel(String cardN, String coin, double amount, String type, Date date) {
+	public HistoryModel(String cardN, String sCoin, String dCoin, 
+			double amount, String type, String state, Date oDate, 
+			Date eDate) {
 		this.cardN = cardN;
-		this.coin = coin;
+		this.sCoin = sCoin;
+		this.dCoin = dCoin;
 		this.amount = amount;
 		this.type = type;
-		this.date = date;
+		this.state = state;
+		this.oDate = oDate;
+		this.eDate = eDate;
 	}
 	
 	public Key getId() {
@@ -46,11 +58,17 @@ public class HistoryModel implements Serializable {
 	public void setCardN(String cardN) {
 		this.cardN = cardN;
 	}
-	public String getCoin() {
-		return coin;
+	public String getSCoin() {
+		return sCoin;
 	}
-	public void setCoin(String coin) {
-		this.coin = coin;
+	public void setSCoin(String sCoin) {
+		this.sCoin = sCoin;
+	}
+	public String getDCoin() {
+		return dCoin;
+	}
+	public void setDCoin(String dCoin) {
+		this.dCoin = dCoin;
 	}
 	public double getAmount() {
 		return amount;
@@ -64,10 +82,25 @@ public class HistoryModel implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public Date getDate() {
-		return date;
+
+	public String getState() {
+		return state;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Date getODate() {
+		return oDate;
+	}
+	public void setODate(Date oDate) {
+		this.oDate = oDate;
+	}
+	public Date getEDate() {
+		return eDate;
+	}
+	public void setEDate(Date eDate) {
+		this.eDate = eDate;
 	}
 }

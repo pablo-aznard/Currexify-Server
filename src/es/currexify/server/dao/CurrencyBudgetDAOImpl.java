@@ -24,16 +24,6 @@ public class CurrencyBudgetDAOImpl implements CurrencyBudgetDAO {
 		em.getTransaction().commit();
 		return cbm;
 	}
-	
-	@Override
-	public CurrencyBudgetModel createCurrencyBudget(EntityManager em, String cardN, String currency, double budget) {
-		CurrencyBudgetModel cbm = null;
-		em.getTransaction().begin();
-		cbm = new CurrencyBudgetModel(cardN, currency, budget);
-		em.persist(cbm);
-		em.getTransaction().commit();
-		return cbm;
-	}
 
 	@Override
 	public List<CurrencyBudgetModel> readCurrencyBudgetByCardN(EntityManager em, String cardN) {

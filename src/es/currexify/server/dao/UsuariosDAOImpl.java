@@ -28,22 +28,6 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	}
 	
 	@Override
-	public UsuariosModel createUser(EntityManager em, String name, String password, String email,
-			String address, String phone) {
-		UsuariosModel um = null;
-		
-		if (readUserByEmail(em, email) == null) {
-			em.getTransaction().begin();
-			um = new UsuariosModel(name, password, email, address, phone);
-			
-			em.persist(um);
-			em.getTransaction().commit();
-		}
-		
-		return um;
-	}
-
-	@Override
 	public List<UsuariosModel> readUsers(EntityManager em) {
 		Query q = em.createQuery("select u from UsuariosModel u");
 		List<UsuariosModel> res = q.getResultList();

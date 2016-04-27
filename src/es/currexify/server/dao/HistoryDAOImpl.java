@@ -26,22 +26,20 @@ public class HistoryDAOImpl implements HistoryDAO {
 		em.getTransaction().commit();
 		return hm;
 	}
-	
-	@Override
-	public HistoryModel createHistory(EntityManager em, String cardN, String coin, double amount, String type, Date date) {
-		HistoryModel hm = null;
-		em.getTransaction().begin();
-		hm = new HistoryModel(cardN, coin, amount, type, date);
-		em.persist(hm);
-		em.getTransaction().commit();
-		return hm;
-	}
 
 	@Override
 	public List<HistoryModel> readHistory(EntityManager em) {
 		Query q = em.createQuery("select m from HistoryModel m");
 		List<HistoryModel> hm = q.getResultList();
 		return hm;
+	}
+	
+	@Override
+	public List<HistoryModel> readPendingHistory(EntityManager em) {
+		Query q = em.createQuery("select h from HistoryModel h where h.state = :state");
+		q.setParameter("state", "pendiente");
+		List<HistoryModel> res = q.getResultList();
+		return res; 
 	}
 	
 	@Override
