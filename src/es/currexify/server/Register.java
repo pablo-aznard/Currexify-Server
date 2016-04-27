@@ -34,8 +34,9 @@ public class Register extends HttpServlet {
 		view.forward(req, resp);
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String user = request.getParameter("name");
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("ENTRA");
+		String user = request.getParameter("name");
 	    String pass = request.getParameter("pass");
 	    String email = request.getParameter("email");
 	    String address = request.getParameter("address");
@@ -46,10 +47,14 @@ public class Register extends HttpServlet {
 		if(udao.isEmailUnique(em, email)){
 			UsuariosModel um = new UsuariosModel(user, pass, email, address, phone);
 			udao.createUser(em, um);
-			//AQUI PONER USUARIO REGISTRADO
+			CurrencyBudgetModel cbm = new CurrencyBudgetModel(um.getCardN(), "EUR", 1000.0);
+			udao.addCurrencyBudgetToUser(em, cbm, um);
+			System.out.println("ENTRA AL UNIQUE");
+			response.sendRedirect("login");
 		}
 		else{
-			//AQUI MENSAJE DE EMAIL UTILIZADO
+			System.out.println("NO ENTRA AL UNIQUE");
+			response.sendRedirect("register?error=true");
 		}
 		em.close();
 		
