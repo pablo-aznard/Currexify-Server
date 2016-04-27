@@ -116,22 +116,6 @@ div.recommended {
 		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
-.button-bottom {
-	position: absolute;
-	bottom: 20px;
-	right: 20px;
-}
-
-paper-fab {
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
-paper-fab.blue { 
-	--paper-fab-background: #2196F3; 
-	--paper-fab-keyboard-focus-background: #2196F3;
-}
-
 .content {
 	padding: 54px 64px;
 }
@@ -192,11 +176,59 @@ paper-fab.blue {
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1"> <transaction-table
-			style="margin-top:50px" title="History"
-			transactions='<c:out value="${history}"/>'> </transaction-table> 
-		</a> </paper-material>
-	</div>
+		<paper-material>
+		<form action="newtransaction" method="post" name="Form"
+			onsubmit="return validateForm()">
+			<div class="row">
+				<div class="column-6">
+					<paper-input id="amountInput" type="number" name="amount"
+						label="Ingrese Cantidad" onkeydown="amountChanged(this.value)">
+					<div suffix>{{currency}}</div>
+					</paper-input>
+				</div>
+				<div class="column-6">
+					<paper-dropdown-menu label="Type"> <paper-menu
+						class="dropdown-content" attr-for-selected="value"
+						selected="{{disk}}"> <c:forEach items="${currencies}"
+						var="curr">
+						<paper-item value="<c:out value="${curr}"/>"> <c:out
+							value="${curr}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+					<input type="hidden" name="currST" value="{{disk}}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="column-6">
+					<paper-dropdown-menu label="Time to complete"> <paper-menu
+						class="dropdown-content" attr-for-selected="value"
+						selected="{{timer}}"> <c:forEach
+						items="${times}" var="time">
+						<paper-item value="<c:out value="${time}"/>"> <c:out
+							value="${time}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+					<input type="hidden" name="time" value="{{timer}}">
+				</div>
+				<div class="column-6">
+					<paper-dropdown-menu label="Type"> <paper-menu
+						class="dropdown-content" attr-for-selected="value"
+						selected="{{disk2}}"> <c:forEach
+						items="${currencies}" var="curr2">
+						<paper-item value="<c:out value="${curr2}"/>"> <c:out
+							value="${curr2}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+					<input type="hidden" name="currND" value="{{disk2}}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="column-6">
+						El dinero que vas a percibir es: WIP
+						<!-- <span id="amountChanged"
+							style="font-size: 20px; font-weight: 800"></span>-->
+				</div>
+			</div>
+			<input type="submit" value="submit" id="submit">
+		</paper-material>
+		</form>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
@@ -216,9 +248,6 @@ paper-fab.blue {
       </platinum-sw-cache>
     </platinum-sw-register>
     --> </template>
-			
-		<a class="button-bottom" href="/newtransaction"> <paper-fab icon="add" title="add"
-				class="blue"></paper-fab>
 
 	<!-- build:js scripts/app.js -->
 	<script src="scripts/app.js"></script>
@@ -244,7 +273,7 @@ paper-fab.blue {
 		var from = document.forms["Form"]["currST"].value;
 		var to = document.forms["Form"]["currND"].value;
 
-		if (!amount) {
+		if(!amount){
 			alert("Debe introducir una cantidad válida")
 			return false;
 		}

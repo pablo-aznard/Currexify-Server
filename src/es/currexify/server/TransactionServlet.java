@@ -66,55 +66,6 @@ public class TransactionServlet extends HttpServlet {
 		view.forward(req, resp);
 	}
 
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		String amount = req.getParameter("amount");
-		String from = req.getParameter("currST");
-		String to = req.getParameter("currND");
-		if (from.equals(to) || amount.trim() == "") {
-			resp.sendRedirect("transaction?equal=true");// mensaje esto no se
-														// puede hacer
-			return;
-		}
-		EntityManager em = EMFService.get().createEntityManager();
-		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-		List<HistoryModel> umh = usuario.getHistories();
-		if (!hasMoney(from, Double.valueOf(amount))) {
-			resp.sendRedirect("transaction?error=true");// mensaje de no hay
-														// money
-			return;
-		}
-
-		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, Double.parseDouble(amount), "saliente",
-				new Date());
-		HistoryModel toHm = new HistoryModel(usuario.getCardN(), to, getConverted(from, to, Double.parseDouble(amount)),
-				"entrante", new Date());
-		udao.addHistoryToUser(em, fromHm, udao.readUserByEmail(em, usuario.getEmail()));
-		udao.addHistoryToUser(em, toHm, udao.readUserByEmail(em, usuario.getEmail()));
-
-		UsuariosModel uTemp = udao.readUserByEmail(em, usuario.getEmail());
-
-		List<CurrencyBudgetModel> cbml = uTemp.getUserCurrencies();
-		for (CurrencyBudgetModel a : cbml) {
-			System.out.println(a.getBudget() + " " + a.getCurrency());
-			if (a.getCurrency().equals(from)) {
-				double newBudget = a.getBudget() - Double.valueOf(amount);
-				a.setBudget(newBudget);
-			} else if (a.getCurrency().equals(to)) {
-				double newBudget = a.getBudget() + toHm.getAmount();
-				a.setBudget(newBudget);
-			}
-		}
-		uTemp.setUserCurrencies(cbml);
-		udao.updateUsuario(em, uTemp);
-
-		uTemp = udao.readUserByEmail(em, usuario.getEmail());
-		cbml = uTemp.getUserCurrencies();
-
-		em.close();
-		resp.sendRedirect("transaction");
-
-	}
-
 	private String getCurrencySymbol(String currencyName) {
 		switch (currencyName) {
 		case "EUR":
@@ -126,43 +77,6 @@ public class TransactionServlet extends HttpServlet {
 		default:
 			return "";
 		}
-	}
-
-	private boolean hasMoney(String currency, double amount) {
-		EntityManager em = EMFService.get().createEntityManager();
-		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-		UsuariosModel u1 = udao.readUserByEmail(em, usuario.getEmail());
-		List<CurrencyBudgetModel> cbml = u1.getUserCurrencies();
-		em.close();
-		for (CurrencyBudgetModel a : cbml) {
-			if (a.getCurrency().equals(currency)) {
-				return a.getBudget() >= amount;
-			}
-		}
-		return false;
-	}
-
-	private double getConverted(String from, String to, double oAmount) {
-		EntityManager em = EMFService.get().createEntityManager();
-		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
-		double cAmount = 0.0;
-
-		if (from.equals("EUR")) {
-			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, to);
-			cAmount = oAmount * cer.getEuroEx();
-		} else if (to.equals("EUR")) {
-			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, from);
-			cAmount = oAmount / cer.getEuroEx();
-		} else if (from.equals("USD")) {
-			CurrencyExRateModel cer1 = cerdao.readCurrencyExRatesByCurrency(em, from);
-			CurrencyExRateModel cer2 = cerdao.readCurrencyExRatesByCurrency(em, to);
-			cAmount = oAmount / cer1.getEuroEx() * cer2.getEuroEx();
-		} else if (from.equals("GBP")) {
-			CurrencyExRateModel cer1 = cerdao.readCurrencyExRatesByCurrency(em, from);
-			CurrencyExRateModel cer2 = cerdao.readCurrencyExRatesByCurrency(em, to);
-			cAmount = oAmount / cer1.getEuroEx() * cer2.getEuroEx();
-		}
-		return cAmount;
 	}
 
 }

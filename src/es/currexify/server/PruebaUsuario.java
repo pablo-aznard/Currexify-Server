@@ -17,7 +17,7 @@ public class PruebaUsuario extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/plain");
 		
-		//CREACIÓN
+		//CREACIÃ“N
 		EntityManager em = EMFService.get().createEntityManager(); 
 		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
 		CurrencyExRateModel cer1 = new CurrencyExRateModel(1.28, "USDTEST");
@@ -38,7 +38,7 @@ public class PruebaUsuario extends HttpServlet {
 		CurrencyBudgetModel cbm = new CurrencyBudgetModel(um1.getCardN(), "USDTEST", 50.0);
 		umdao.addCurrencyBudgetToUser(em, cbm, um1);
 		
-		resp.getWriter().println("---CREACIÓN---");
+		resp.getWriter().println("---CREACIÃ“N---");
 		resp.getWriter().println("User ID: "+um1.getId());
 		resp.getWriter().println("User Name: "+um1.getName());
 		resp.getWriter().println("User Password: "+um1.getPassword());
@@ -58,7 +58,7 @@ public class PruebaUsuario extends HttpServlet {
 		resp.getWriter().println("Currency Budget Currency: "+cbm.getCurrency());
 		resp.getWriter().println("Currency Budget Amount: "+cbm.getBudget());
 		
-		//ACTUALIZACIÓN
+		//ACTUALIZACIÃ“N
 		
 		um1.setName("Perico Actualizado");
 		umdao.updateUsuario(em, um1);
@@ -70,7 +70,7 @@ public class PruebaUsuario extends HttpServlet {
 		umdao.addCurrencyBudgetToUser(em, cbm1, um1);
 		
 		resp.getWriter().println(" ");
-		resp.getWriter().println("---ACTUALIZACIÓN---");
+		resp.getWriter().println("---ACTUALIZACIÃ“N---");
 		resp.getWriter().println("User Name Updated: "+um1.getName());
 		resp.getWriter().println("----------");
 		resp.getWriter().println("New History IDs: "+hm1.getId());
@@ -93,7 +93,7 @@ public class PruebaUsuario extends HttpServlet {
 		HistoryDAOImpl hmdao = HistoryDAOImpl.getInstance();
 		resp.getWriter().println("Users Table Size: "+umdao.readUsers(em).size());
 		resp.getWriter().println("Histories Table Size: "+hmdao.readHistory(em).size());
-		if(umdao.readUsers(em).size() == 0) 
+		if(umdao.readUserByEmail(em, um.getEmail()) == null) 
 			resp.getWriter().println("USUARIO BORRADO CORRECTAMENTE");
 		
 		cer1 = cerdao.readCurrencyExRatesByCurrency(em, "USDTEST");
@@ -102,7 +102,7 @@ public class PruebaUsuario extends HttpServlet {
 		cerdao.deleteCurrencyExRate(em, cer1);
 		cerdao.deleteCurrencyExRate(em, cer2);
 		resp.getWriter().println("Currency Rates Table Size: "+cerdao.readCurrencyExRates(em).size());
-		if(cerdao.readCurrencyExRates(em).size() == 0)
+		if(cerdao.readCurrencyExRates(em).size() == 2)
 			resp.getWriter().println("RATIOS DE CAMBIO BORRADOS CORRECTAMENTE");
 		em.close();
 	}
