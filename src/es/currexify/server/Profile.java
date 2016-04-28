@@ -23,37 +23,37 @@ public class Profile extends HttpServlet {
 	private UsuariosModel usuario;
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		UserService userService = UserServiceFactory.getUserService();
-		String url = userService.createLoginURL(req.getRequestURI());
+		String url = "";
 		String urlLinktext = "Login";
 		String user = "";
 		JSONObject json = new JSONObject();
 		List<String> jray = new ArrayList<String>();
+		
+		String email = (String) req.getSession().getAttribute("login");
 
-		if (req.getUserPrincipal() != null) {
-			user = req.getUserPrincipal().getName();
-			url = userService.createLogoutURL("https://isst-grupo06-socialex.appspot.com");
+		if (email != null) {
+			try {
+				EntityManager em = EMFService.get().createEntityManager();
+				UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+				usuario = udao.readUserByEmail(em, email);
+				List<CurrencyBudgetModel> ucbm = usuario.getUserCurrencies();
+				for(CurrencyBudgetModel cbm : ucbm){
+					double finalValue = Math.round(cbm.getBudget() * 100.0 ) / 100.0;
+					json.put("quantity",finalValue);
+					json.put("currency", String.valueOf(cbm.getCurrency()));
+					jray.add(json.toString());
+				}
+				
+				em.close();
+				String jsonText = jray.toString();
+				req.getSession().setAttribute("currencies", jsonText);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}	
+			user = usuario.getName();
+			url = "/logout";
 			urlLinktext = "Logout";
 		}
-		
-		try {
-			EntityManager em = EMFService.get().createEntityManager();
-			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-			this.usuario = udao.readUserByEmail(em, user);
-			List<CurrencyBudgetModel> ucbm = usuario.getUserCurrencies();
-			for(CurrencyBudgetModel cbm : ucbm){
-				double finalValue = Math.round(cbm.getBudget() * 100.0 ) / 100.0;
-				json.put("quantity",finalValue);
-				json.put("currency", String.valueOf(cbm.getCurrency()));
-				jray.add(json.toString());
-			}
-			
-			em.close();
-			String jsonText = jray.toString();
-			req.getSession().setAttribute("currencies", jsonText);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}	
 
 		req.getSession().setAttribute("user", user);
 		req.getSession().setAttribute("url", url);

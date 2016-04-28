@@ -17,13 +17,21 @@ import es.currexify.server.model.*;
 @SuppressWarnings("serial")
 public class Register extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		UserService userService = UserServiceFactory.getUserService();
-		String url = userService.createLoginURL(req.getRequestURI());
+		String url = "";
 		String urlLinktext = "Login";
 		String user = "";
-		if (req.getUserPrincipal() != null) {
-			user = req.getUserPrincipal().getName();
-			url = userService.createLogoutURL("https://isst-grupo06-socialex.appspot.com");
+		EntityManager em = EMFService.get().createEntityManager();
+		
+		String email = (String) req.getSession().getAttribute("login");
+		UsuariosModel usuario;
+
+		if (email != null) {
+			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+			usuario = udao.readUserByEmail(em, email);
+				
+			em.close();
+			user = usuario.getName();
+			url = "/logout";
 			urlLinktext = "Logout";
 		}
 
@@ -47,13 +55,15 @@ public class Register extends HttpServlet {
 		if(udao.isEmailUnique(em, email)){
 			UsuariosModel um = new UsuariosModel(user, pass, email, address, phone);
 			udao.createUser(em, um);
-			CurrencyBudgetModel cbm = new CurrencyBudgetModel(um.getCardN(), "EUR", 1000.0);
-			udao.addCurrencyBudgetToUser(em, cbm, um);
-			System.out.println("ENTRA AL UNIQUE");
+			CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(um.getCardN(), "EUR", 1000.0);
+			CurrencyBudgetModel cbm2 = new CurrencyBudgetModel(um.getCardN(), "USD", 0.0);
+			CurrencyBudgetModel cbm3 = new CurrencyBudgetModel(um.getCardN(), "GBP", 0.0);
+			udao.addCurrencyBudgetToUser(em, cbm1, um);
+			udao.addCurrencyBudgetToUser(em, cbm2, um);
+			udao.addCurrencyBudgetToUser(em, cbm3, um);
 			response.sendRedirect("login");
 		}
 		else{
-			System.out.println("NO ENTRA AL UNIQUE");
 			response.sendRedirect("register?error=true");
 		}
 		em.close();

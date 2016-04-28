@@ -24,13 +24,37 @@ public class TransactionServlet extends HttpServlet {
 	private UsuariosModel usuario;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		UserService userService = UserServiceFactory.getUserService();
-		String url = userService.createLoginURL(req.getRequestURI());
+		String url = "";
 		String urlLinktext = "Login";
 		String user = "";
-		if (req.getUserPrincipal() != null) {
-			user = req.getUserPrincipal().getName();
-			url = userService.createLogoutURL("https://isst-grupo06-socialex.appspot.com");
+		
+		String email = (String) req.getSession().getAttribute("login");
+
+		JSONObject json = new JSONObject();
+		List<String> jray = new ArrayList<String>();
+
+		if (email != null) {
+			try {
+				EntityManager em = EMFService.get().createEntityManager();
+				UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+				this.usuario = udao.readUserByEmail(em, email);
+				List<HistoryModel> umh = usuario.getHistories();
+				for (HistoryModel hm : umh) {
+					double finalValue = Math.round(hm.getAmount() * 100.0) / 100.0;
+					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getCoin()));
+					json.put("type", hm.getType());
+					json.put("user", usuario.getEmail());
+					jray.add(json.toString());
+				}
+	
+				em.close();
+				String jsonText = jray.toString();
+				req.getSession().setAttribute("history", jsonText);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			user = usuario.getName();
+			url = "/logout";
 			urlLinktext = "Logout";
 		}
 
@@ -38,30 +62,6 @@ public class TransactionServlet extends HttpServlet {
 		req.getSession().setAttribute("url", url);
 		req.getSession().setAttribute("urlLinktext", urlLinktext);
 		req.getSession().setAttribute("currencies", currencies);
-
-		JSONObject json = new JSONObject();
-		List<String> jray = new ArrayList<String>();
-
-		try {
-			EntityManager em = EMFService.get().createEntityManager();
-			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-			this.usuario = udao.readUserByEmail(em, user);
-			List<HistoryModel> umh = usuario.getHistories();
-			for (HistoryModel hm : umh) {
-				double finalValue = Math.round(hm.getAmount() * 100.0) / 100.0;
-				json.put("quantity", finalValue + this.getCurrencySymbol(hm.getCoin()));
-				json.put("type", hm.getType());
-				json.put("user", usuario.getEmail());
-				jray.add(json.toString());
-			}
-
-			em.close();
-			String jsonText = jray.toString();
-			req.getSession().setAttribute("history", jsonText);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
 		RequestDispatcher view = req.getRequestDispatcher("transaction.jsp");
 		view.forward(req, resp);
 	}

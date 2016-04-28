@@ -18,12 +18,21 @@ import es.currexify.server.model.*;
 public class ContactServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		UserService userService = UserServiceFactory.getUserService();
-		String url = userService.createLoginURL(req.getRequestURI());
+		String url = "";
 		String urlLinktext = "Login";
 		String user = "";
-		if (req.getUserPrincipal() != null) {
-			user = req.getUserPrincipal().getName();
-			url = userService.createLogoutURL("https://isst-grupo06-socialex.appspot.com");
+		EntityManager em = EMFService.get().createEntityManager();
+		
+		String email = (String) req.getSession().getAttribute("login");
+		UsuariosModel usuario;
+
+		if (email != null) {
+			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+			usuario = udao.readUserByEmail(em, email);
+				
+			em.close();
+			user = usuario.getName();
+			url = "/logout";
 			urlLinktext = "Logout";
 		}
 

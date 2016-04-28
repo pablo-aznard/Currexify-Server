@@ -29,6 +29,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>es.currexify.server.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+	<servlet>
 	    <servlet-name>Transaction</servlet-name>
 	    <servlet-class>es.currexify.server.TransactionServlet</servlet-class>
 	</servlet>
