@@ -8,9 +8,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
-import com.google.appengine.labs.repackaged.org.json.JSONArray;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 
@@ -41,7 +38,7 @@ public class TransactionServlet extends HttpServlet {
 				List<HistoryModel> umh = usuario.getHistories();
 				for (HistoryModel hm : umh) {
 					double finalValue = Math.round(hm.getAmount() * 100.0) / 100.0;
-					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getCoin()));
+					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getSCoin()));
 					json.put("type", hm.getType());
 					json.put("user", usuario.getEmail());
 					jray.add(json.toString());

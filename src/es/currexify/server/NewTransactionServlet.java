@@ -23,6 +23,7 @@ public class NewTransactionServlet extends HttpServlet {
 	String[] currencies = { "EUR", "USD", "GBP" };
 	String[] times = {"Instant -- 1.5%", "3 days -- 1.3%", "7 days -- 1%"};
 	private UsuariosModel usuario;
+	Calendar cal = Calendar.getInstance();
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String url = "";
@@ -42,7 +43,7 @@ public class NewTransactionServlet extends HttpServlet {
 				List<HistoryModel> umh = usuario.getHistories();
 				for (HistoryModel hm : umh) {
 					double finalValue = Math.round(hm.getAmount() * 100.0) / 100.0;
-					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getCoin()));
+					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getSCoin()));
 					json.put("type", hm.getType());
 					json.put("user", usuario.getEmail());
 					jray.add(json.toString());
@@ -86,13 +87,16 @@ public class NewTransactionServlet extends HttpServlet {
 			return;
 		}
 
-		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, Double.parseDouble(amount), "saliente",
-				new Date());
-		HistoryModel toHm = new HistoryModel(usuario.getCardN(), to, getConverted(from, to, Double.parseDouble(amount), time),
-				"entrante", new Date());
+		int days = 0;
+		if (time == times[1])
+			days = 3;
+		if (time == times[2])
+			days = 7;
+		cal.add(cal.DATE, days);
+		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, to, Double.parseDouble(amount), "bloqueado",
+				"pendiente", new Date(), cal.getTime());
 		udao.addHistoryToUser(em, fromHm, udao.readUserByEmail(em, usuario.getEmail()));
-		udao.addHistoryToUser(em, toHm, udao.readUserByEmail(em, usuario.getEmail()));
-
+		cal.add(cal.DATE, days*-1);
 		UsuariosModel uTemp = udao.readUserByEmail(em, usuario.getEmail());
 
 		List<CurrencyBudgetModel> cbml = uTemp.getUserCurrencies();
@@ -100,10 +104,9 @@ public class NewTransactionServlet extends HttpServlet {
 			System.out.println(a.getBudget() + " " + a.getCurrency());
 			if (a.getCurrency().equals(from)) {
 				double newBudget = a.getBudget() - Double.valueOf(amount);
+				double newBlocked = a.getBlocked() + Double.valueOf(amount);
 				a.setBudget(newBudget);
-			} else if (a.getCurrency().equals(to)) {
-				double newBudget = a.getBudget() + toHm.getAmount();
-				a.setBudget(newBudget);
+				a.setBlocked(newBlocked);
 			}
 		}
 		uTemp.setUserCurrencies(cbml);

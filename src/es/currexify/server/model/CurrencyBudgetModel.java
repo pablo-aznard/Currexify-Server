@@ -20,11 +20,14 @@ public class CurrencyBudgetModel implements Serializable {
 	private String currency;
 	@Column(name="BUDGET")
 	private double budget;
+	@Column(name="BLOCKED")
+	private double blocked;
 	
 	public CurrencyBudgetModel(String cardN, String currency, double budget) {
 		this.cardN = cardN;
 		this.currency = currency;
 		this.budget = budget;
+		this.blocked = 0.0;
 	}
 	public Key getId() {
 		return key;
@@ -49,5 +52,11 @@ public class CurrencyBudgetModel implements Serializable {
 	}
 	public void setBudget(double budget) {
 		this.budget = budget;
+	}
+	public double getBlocked() {
+		return blocked;
+	}
+	public void setBlocked(double blocked) {
+		this.blocked = blocked;
 	}
 }
