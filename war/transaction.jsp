@@ -118,18 +118,7 @@ div.recommended {
 
 .button-bottom {
 	position: absolute;
-	bottom: 20px;
 	right: 20px;
-}
-
-paper-fab {
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
-paper-fab.blue { 
-	--paper-fab-background: #2196F3; 
-	--paper-fab-keyboard-focus-background: #2196F3;
 }
 
 .content {
@@ -190,9 +179,13 @@ paper-fab.blue {
 	<div class="bottom bottom-container">
 		<div class="bottom-title">Social Exchange para todos</div>
 	</div>
+	
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1"> <transaction-table
+		<paper-material elevation="1"> 
+		<a class="button-bottom" href="/newtransaction"> <paper-button title="New Transaction">New Transaction</paper-button></a>
+				</br>
+		<transaction-table
 			style="margin-top:50px" title="History"
 			transactions='<c:out value="${history}"/>'> </transaction-table> 
 		</a> </paper-material>
@@ -216,9 +209,6 @@ paper-fab.blue {
       </platinum-sw-cache>
     </platinum-sw-register>
     --> </template>
-			
-		<a class="button-bottom" href="/newtransaction"> <paper-fab icon="add" title="add"
-				class="blue"></paper-fab>
 
 	<!-- build:js scripts/app.js -->
 	<script src="scripts/app.js"></script>

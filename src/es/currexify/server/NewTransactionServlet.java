@@ -32,29 +32,12 @@ public class NewTransactionServlet extends HttpServlet {
 		
 		String email = (String) req.getSession().getAttribute("login");
 
-		JSONObject json = new JSONObject();
-		List<String> jray = new ArrayList<String>();
-
 		if (email != null) {
-			try {
-				EntityManager em = EMFService.get().createEntityManager();
-				UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-				usuario = udao.readUserByEmail(em, email);
-				List<HistoryModel> umh = usuario.getHistories();
-				for (HistoryModel hm : umh) {
-					double finalValue = Math.round(hm.getAmount() * 100.0) / 100.0;
-					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getSCoin()));
-					json.put("type", hm.getType());
-					json.put("user", usuario.getEmail());
-					jray.add(json.toString());
-				}
-	
-				em.close();
-				String jsonText = jray.toString();
-				req.getSession().setAttribute("history", jsonText);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+			EntityManager em = EMFService.get().createEntityManager();
+			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+			usuario = udao.readUserByEmail(em, email);
+			
+			em.close();
 			user = usuario.getName();
 			url = "/logout";
 			urlLinktext = "Logout";

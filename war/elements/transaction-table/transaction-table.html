@@ -29,6 +29,10 @@ span { @apply (--paper-font-body1);
 .verde {
 	color: #4CAF50
 }
+
+.neutral {
+	color: #777
+}
 </style>
 <div style="width: 100%; margin-top: 20px">
 	<div
@@ -85,16 +89,18 @@ span { @apply (--paper-font-body1);
 			checkType : function(type) {
 				if (type == "saliente") {
 					return "rojo"
-				} else {
+				} else if (type == "entrante"){
 					return "verde"
+				} else if (type == "bloqueado") {
+					return "neutral"
 				}
 
 			},
 
 			checkMoves : function(type) {
-				if (type == "saliente") {
+				if (type == "saliente" || type == "bloqueado") {
 					return "-"
-				} else {
+				} else if (type == "entrante"){
 					return "+"
 				}
 			}

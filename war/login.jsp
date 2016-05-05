@@ -192,12 +192,6 @@ span { @apply (--paper-font-body1);
 							</p>
 						</div>
 					</c:if>
-					<div style="display: inline-block; width: 59.5%">
-						<a href="<c:url value="${url}"/>"><paper-button raised
-								style="color: white; background-color: #4AAECF; width: 25%; float:right;">
-							<c:out value="${urlLinktext}" /></paper-button></a>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
