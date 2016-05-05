@@ -75,10 +75,14 @@ public class NewTransactionServlet extends HttpServlet {
 			days = 3;
 		if (time == times[2])
 			days = 7;
-		cal.add(cal.DATE, days);
+		cal.add(cal.MINUTE, days);
 		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, Double.parseDouble(amount), "bloqueado", new Date());
 		udao.addHistoryToUser(em, fromHm, udao.readUserByEmail(em, usuario.getEmail()));
-		cal.add(cal.DATE, days*-1);
+		
+		TransactionModel tm = new TransactionModel(usuario.getCardN(), from, to, Double.parseDouble(amount), cal.getTime());
+		udao.addTransactionToUser(em, tm, udao.readUserByEmail(em, usuario.getEmail()));
+		
+		cal.add(cal.MINUTE, days*-1);
 		UsuariosModel uTemp = udao.readUserByEmail(em, usuario.getEmail());
 
 		List<CurrencyBudgetModel> cbml = uTemp.getUserCurrencies();

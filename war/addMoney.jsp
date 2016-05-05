@@ -217,7 +217,7 @@ div.recommended {
 			</div>
 			<div class="row">
 				<div class="column-6">
-					<paper-input id="expirate" label="Expirate date" name="expirate">
+					<paper-input id="expirate" label="Expiration date" name="expirate">
 						<paper-icon-button
 							suffix onclick="clearExpirate()" icon="clear" alt="clear"
 							title="clear">

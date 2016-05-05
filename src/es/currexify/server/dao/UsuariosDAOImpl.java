@@ -160,10 +160,7 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		Query q = em.createQuery("select u from UsuariosModel u where u.email = :email");
 		q.setParameter("email", email);
 		List<UsuariosModel> ums= q.getResultList();
-		if (ums.size() > 0)
-			return false;
-		else
-			return true;
+		return !(ums.size() > 0);
 		
 	}
 

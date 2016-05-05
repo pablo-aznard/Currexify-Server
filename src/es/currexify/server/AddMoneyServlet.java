@@ -50,24 +50,20 @@ public class AddMoneyServlet extends HttpServlet {
 	    String expirate = request.getParameter("expirate");
 	    String cvv = request.getParameter("cvv");
 	    String quantity = request.getParameter("quantity");
-		
+
 		EntityManager em = EMFService.get().createEntityManager();
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-		if(udao.isEmailUnique(em, user)){
-			UsuariosModel um = udao.readUserByName(em, user);
-			CurrencyBudgetDAOImpl cbdao = CurrencyBudgetDAOImpl.getInstance();
-			List<CurrencyBudgetModel> cbms = cbdao.readCurrencyBudgetByCardN(em, um.getCardN());
-			for(CurrencyBudgetModel cbm: cbms){
-				if(cbm.getCurrency().equals("EUR")){
-					cbm.setBudget(cbm.getBudget() + Double.parseDouble(quantity));
-					cbdao.updateCurrencyBudget(em, cbm);
-				}
+		UsuariosModel um = udao.readUserByName(em, user);
+		List<CurrencyBudgetModel> cbms = um.getUserCurrencies();
+		for (CurrencyBudgetModel cbm : cbms) {
+			if (cbm.getCurrency().equals("EUR")) {
+				cbm.setBudget(cbm.getBudget() + Double.parseDouble(quantity));
 			}
-			response.sendRedirect("profile");
 		}
-		else{
-			response.sendRedirect("profile?error=true");
-		}
+		um.setUserCurrencies(cbms);
+		udao.updateUsuario(em, um);
+		response.sendRedirect("profile");
+
 		em.close();
 		
 		
