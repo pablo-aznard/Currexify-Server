@@ -23,16 +23,33 @@ public class TransactionModel implements Serializable {
 	private String dCoin;
 	@Column(name = "AMOUNT")
 	private double amount;
+	@Column(name = "AMOUNT_LEFT")
+	private double amountLeft;
 	@Column(name = "END_DATE")
 	private Date eDate;
-
+	@Column(name = "FRIEND_ID")
+	private Long friendId;
+	
 	public TransactionModel(String cardN, String sCoin, String dCoin,
 			double amount, Date eDate) {
 		this.cardN = cardN;
 		this.sCoin = sCoin;
 		this.dCoin = dCoin;
 		this.amount = amount;
+		this.amountLeft = amount;
 		this.eDate = eDate;
+		this.friendId = 0L;
+	}
+	
+	public TransactionModel(String cardN, String sCoin, String dCoin,
+			double amount, Date eDate, Long friendId) {
+		this.cardN = cardN;
+		this.sCoin = sCoin;
+		this.dCoin = dCoin;
+		this.amount = amount;
+		this.amountLeft = amount;
+		this.eDate = eDate;
+		this.friendId = friendId;
 	}
 
 	public Key getId() {
@@ -74,6 +91,14 @@ public class TransactionModel implements Serializable {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+	
+	public double getAmountLeft() {
+		return amountLeft;
+	}
+	
+	public void setAmountLeft(double amountLeft) {
+		this.amountLeft = amountLeft;
+	}
 
 	public Date getEDate() {
 		return eDate;
@@ -81,5 +106,13 @@ public class TransactionModel implements Serializable {
 
 	public void setEDate(Date eDate) {
 		this.eDate = eDate;
+	}
+	
+	public Long getFriendId(){
+		return friendId;
+	}
+	
+	public void setFriendId(Long friendId) {
+		this.friendId = friendId;
 	}
 }
