@@ -110,6 +110,30 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		
 		return true;
 	}
+	
+	public boolean addTransactionToUser(EntityManager em, TransactionModel tm, UsuariosModel um) {
+		
+		em.getTransaction().begin();
+		List<TransactionModel> tml = um.getUserTransactions();
+		tml.add(tm);
+		um.setUserTransactions(tml);
+		em.merge(um);
+		em.getTransaction().commit();
+		
+		return true;
+	}
+	
+	public boolean deleteUserTransaction(EntityManager em, TransactionModel tm, UsuariosModel um) {
+		
+		em.getTransaction().begin();
+		List<TransactionModel> tml = um.getUserTransactions();
+		tml.remove(tm);
+		um.setUserTransactions(tml);
+		em.merge(um);
+		em.getTransaction().commit();
+		
+		return true;
+	}
 
 	@Override
 	public boolean deleteUsuario(EntityManager em, UsuariosModel um) {

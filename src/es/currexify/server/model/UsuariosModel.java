@@ -32,6 +32,9 @@ public class UsuariosModel implements Serializable {
 	@OneToMany
 	@JoinColumn(name="USER_CURRENCIES")
 	private List<CurrencyBudgetModel> userCurrencies;
+	@OneToMany
+	@JoinColumn(name="USER_TRANSACTIONS")
+	private List<TransactionModel> userTransactions;
 		
 	public UsuariosModel(String name, String password, 
 			String email, String address, String phone) {
@@ -104,4 +107,11 @@ public class UsuariosModel implements Serializable {
 	public void setUserCurrencies(List<CurrencyBudgetModel> userCurrencies){
 		this.userCurrencies = userCurrencies;
 	}
+	public List<TransactionModel> getUserTransactions() {
+		return userTransactions;
+	}
+	public void setUserTransactions(List<TransactionModel> userTransactions) {
+		this.userTransactions = userTransactions;
+	}
+	
 }
