@@ -35,7 +35,7 @@ public class PruebaUsuario extends HttpServlet {
 		resp.getWriter().println("");
 		
 
-		HistoryModel hm = new HistoryModel(um.getCardN(), "EUR", "GBP", 10.0, "entrante", "prendiente", new Date(), new Date());
+		HistoryModel hm = new HistoryModel(um.getCardN(), "EUR", 10.0, "entrante", new Date());
 		umdao.addHistoryToUser(em, hm, um1);
 		
 		CurrencyBudgetModel cbm = new CurrencyBudgetModel(um1.getCardN(), "USDTEST", 50.0);
@@ -51,12 +51,10 @@ public class PruebaUsuario extends HttpServlet {
 		resp.getWriter().println("----------");
 		resp.getWriter().println("History IDs: "+hm.getId());
 		resp.getWriter().println("History User Card Number: "+hm.getCardN());
-		resp.getWriter().println("History Coin: "+hm.getSCoin());
-		resp.getWriter().println("History Coin: "+hm.getDCoin());
+		resp.getWriter().println("History Coin: "+hm.getCoin());
 		resp.getWriter().println("History Amount: "+hm.getAmount());
 		resp.getWriter().println("History Type: "+hm.getType());
-		resp.getWriter().println("History Origin Date: "+hm.getODate());
-		resp.getWriter().println("History End Date: "+hm.getEDate());
+		resp.getWriter().println("History Date: "+hm.getDate());
 		resp.getWriter().println("----------");
 		resp.getWriter().println("Currency Budget IDs: "+cbm.getId());
 		resp.getWriter().println("Currency Budget Card Number: "+cbm.getCardN());
@@ -68,7 +66,7 @@ public class PruebaUsuario extends HttpServlet {
 		um1.setName("Perico Actualizado");
 		umdao.updateUsuario(em, um1);
 		
-		HistoryModel hm1 = new HistoryModel(um.getCardN(), "GBP", "EUR", 20.0, "entrante", "completada", new Date(), new Date());
+		HistoryModel hm1 = new HistoryModel(um.getCardN(), "GBP", 20.0, "entrante", new Date());
 		umdao.addHistoryToUser(em, hm1, um1);
 		
 		CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(um1.getCardN(), "GBPTEST", 20.0);
@@ -80,12 +78,10 @@ public class PruebaUsuario extends HttpServlet {
 		resp.getWriter().println("----------");
 		resp.getWriter().println("New History IDs: "+hm1.getId());
 		resp.getWriter().println("New History User Card Number: "+hm1.getCardN());
-		resp.getWriter().println("New History Coin: "+hm1.getSCoin());
-		resp.getWriter().println("New History Coin: "+hm1.getDCoin());
+		resp.getWriter().println("New History Coin: "+hm1.getCoin());
 		resp.getWriter().println("New History Amount: "+hm1.getAmount());
 		resp.getWriter().println("New History Type: "+hm1.getType());
-		resp.getWriter().println("New History Date: "+hm1.getODate());
-		resp.getWriter().println("New History Date: "+hm1.getEDate());
+		resp.getWriter().println("New History Date: "+hm1.getDate());
 		resp.getWriter().println("----------");
 		resp.getWriter().println("New Currency Budget IDs: "+cbm1.getId());
 		resp.getWriter().println("New Currency Budget Card Number: "+cbm1.getCardN());

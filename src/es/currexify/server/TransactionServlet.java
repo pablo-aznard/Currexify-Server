@@ -38,7 +38,7 @@ public class TransactionServlet extends HttpServlet {
 				List<HistoryModel> umh = usuario.getHistories();
 				for (HistoryModel hm : umh) {
 					double finalValue = Math.round(hm.getAmount() * 100.0) / 100.0;
-					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getSCoin()));
+					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getCoin()));
 					json.put("type", hm.getType());
 					json.put("user", usuario.getEmail());
 					jray.add(json.toString());
