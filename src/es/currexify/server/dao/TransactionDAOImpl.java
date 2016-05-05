@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import es.currexify.server.model.TransactionModel;
-import es.currexify.server.model.UsuariosModel;
 
 public class TransactionDAOImpl implements TransactionDAO {
 	

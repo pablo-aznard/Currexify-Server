@@ -87,6 +87,11 @@ span { @apply (--paper-font-body1);
 .content {
 	padding: 54px 64px;
 }
+
+.button-bottom {
+	position: absolute;
+	right: 20px;
+}
 </style>
 </head>
 
@@ -150,7 +155,10 @@ span { @apply (--paper-font-body1);
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1">
+		<paper-material elevation="1"> 
+			<c:if test='${user != ""}'>
+			<a class="button-bottom" href="/addMoney"> <paper-button title="Add Money">Insert Coin</paper-button></a>
+			</c:if>
 		<div style="width: 100%;">
 			<div
 				style="display: inline-block; vertical-align: middle; margin-right: 30px">

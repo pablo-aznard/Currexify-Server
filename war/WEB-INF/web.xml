@@ -77,6 +77,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>Contact</servlet-name>
 		<url-pattern>/contact</url-pattern>
 	</servlet-mapping>
+ 	<servlet>
+		<servlet-name>AddMoney</servlet-name>
+		<servlet-class>es.currexify.server.AddMoneyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddMoney</servlet-name>
+		<url-pattern>/addMoney</url-pattern>
+	</servlet-mapping>
 	<servlet>
 	
 		<servlet-name>Prueba1</servlet-name>

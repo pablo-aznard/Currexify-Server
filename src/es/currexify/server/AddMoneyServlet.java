@@ -15,7 +15,7 @@ import es.currexify.server.dao.*;
 import es.currexify.server.model.*;
 
 @SuppressWarnings("serial")
-public class Register extends HttpServlet {
+public class AddMoneyServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String url = "";
 		String urlLinktext = "Login";
@@ -38,33 +38,35 @@ public class Register extends HttpServlet {
 		req.getSession().setAttribute("user", user);
 		req.getSession().setAttribute("url", url);
 		req.getSession().setAttribute("urlLinktext", urlLinktext);
-		RequestDispatcher view = req.getRequestDispatcher("register.jsp");
+		RequestDispatcher view = req.getRequestDispatcher("addMoney.jsp");
 		view.forward(req, resp);
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ENTRA");
-		String user = request.getParameter("name");
-	    String pass = request.getParameter("pass");
-	    String email = request.getParameter("email");
-	    String address = request.getParameter("address");
-	    String phone = request.getParameter("phone");
+		String user = (String) request.getSession().getAttribute("user");
+		String name = request.getParameter("name");
+	    String cardType = request.getParameter("card");
+	    String cardNum = request.getParameter("cardNumber");
+	    String expirate = request.getParameter("expirate");
+	    String cvv = request.getParameter("cvv");
+	    String quantity = request.getParameter("quantity");
 		
 		EntityManager em = EMFService.get().createEntityManager();
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-		if(udao.isEmailUnique(em, email)){
-			UsuariosModel um = new UsuariosModel(user, pass, email, address, phone);
-			udao.createUser(em, um);
-			CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(um.getCardN(), "EUR", 0.0);
-			CurrencyBudgetModel cbm2 = new CurrencyBudgetModel(um.getCardN(), "USD", 0.0);
-			CurrencyBudgetModel cbm3 = new CurrencyBudgetModel(um.getCardN(), "GBP", 0.0);
-			udao.addCurrencyBudgetToUser(em, cbm1, um);
-			udao.addCurrencyBudgetToUser(em, cbm2, um);
-			udao.addCurrencyBudgetToUser(em, cbm3, um);
-			response.sendRedirect("login");
+		if(udao.isEmailUnique(em, user)){
+			UsuariosModel um = udao.readUserByName(em, user);
+			CurrencyBudgetDAOImpl cbdao = CurrencyBudgetDAOImpl.getInstance();
+			List<CurrencyBudgetModel> cbms = cbdao.readCurrencyBudgetByCardN(em, um.getCardN());
+			for(CurrencyBudgetModel cbm: cbms){
+				if(cbm.getCurrency().equals("EUR")){
+					cbm.setBudget(cbm.getBudget() + Double.parseDouble(quantity));
+					cbdao.updateCurrencyBudget(em, cbm);
+				}
+			}
+			response.sendRedirect("profile");
 		}
 		else{
-			response.sendRedirect("register?error=true");
+			response.sendRedirect("profile?error=true");
 		}
 		em.close();
 		

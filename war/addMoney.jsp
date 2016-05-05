@@ -116,11 +116,6 @@ div.recommended {
 		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
-.button-bottom {
-	position: absolute;
-	right: 20px;
-}
-
 .content {
 	padding: 54px 64px;
 }
@@ -179,16 +174,73 @@ div.recommended {
 	<div class="bottom bottom-container">
 		<div class="bottom-title">Social Exchange para todos</div>
 	</div>
-	
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1"> 
-		<a class="button-bottom" href="/newtransaction"> <paper-button title="New Transaction">New Transaction</paper-button></a>
-		<transaction-table
-			style="margin-top:50px" title="History"
-			transactions='<c:out value="${history}"/>'> </transaction-table> 
-		</a> </paper-material>
-	</div>
+		<paper-material>
+		<form action="addMoney" method="post" name="Form"
+			onsubmit="return validateForm()">
+			<div class="row">
+				<div class="column-6">
+					<paper-listbox selected="{{select}}"> 
+						<paper-item>
+							<img src="https://jobs.visa.com/sites/visa/images/visa_logo_blu.png"
+								style="width:40px; height:20px; border-radius: 2px; margin-right: 10px;">
+							VISA
+						</paper-item>
+						<paper-item>
+							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/2000px-MasterCard_Logo.svg.png"
+								style="width:40px; height:20px; border-radius: 2px; margin-right: 10px;">
+							MASTER CARD
+						</paper-item>
+						<paper-item>
+							<img src="http://paymentweek.com/wp-content/uploads/2015/10/American-Express-copy.png"
+								style="width:40px; height:20px; border-radius: 2px; margin-right: 10px;">
+							AMERICAN EXPRESS
+						</paper-item>
+					</paper-listbox>
+					
+					<input type="hidden" name="card" value="{{select}}">
+				</div>
+				<div class="column-6">
+					<paper-input id="name" label="Enter your full name" name="name">
+						<paper-icon-button
+							suffix onclick="clearName()" icon="clear" alt="clear"
+							title="clear">
+					</paper-input>
+					<paper-input id="card" type="number" label="Card Number" name="cardNumber" maxlength="16">
+						<iron-icon icon="credit-card" prefix></iron-icon>
+						<paper-icon-button
+							suffix onclick="clearCardNumber()" icon="clear" alt="clear"
+							title="clear">
+					</paper-input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column-6">
+					<paper-input id="expirate" label="Expirate date" name="expirate">
+						<paper-icon-button
+							suffix onclick="clearExpirate()" icon="clear" alt="clear"
+							title="clear">
+					</paper-input>
+				</div>
+				<div class="column-6">
+					<paper-input id="cvv" type="number" label="CVV" name="cvv" maxlength="3">
+						<paper-icon-button
+							suffix onclick="clearCvv()" icon="clear" alt="clear"
+							title="clear">
+					</paper-input>
+				</div>
+			</div>
+			<div class="row">
+				<paper-input id="quantity" type="number" label="Enter a quantity" name="quantity">
+					<paper-icon-button
+						suffix onclick="clearQuantity()" icon="clear" alt="clear"
+						title="clear">
+				</paper-input>
+			</div>
+			<input type="submit" value="submit" id="submit">
+		</paper-material>
+		</form>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
@@ -215,38 +267,28 @@ div.recommended {
 </body>
 
 <script>
-	window.onload = getUrlVars;
-	function getUrlVars() {
-		var vars = {};
-		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
-				function(m, key, value) {
-					vars[key] = value;
-				});
-		if (vars.error == "true")
-			alert("No tienes suficiente dinero para crear esa transacción")
-		else if (vars.equal == "true")
-			alert("Las monedas de cambio no pueden ser iguales")
-	}
 
-	function validateForm() {
-		var amount = document.forms["Form"]["amount"].value;
-		var from = document.forms["Form"]["currST"].value;
-		var to = document.forms["Form"]["currND"].value;
 
-		if (!amount) {
-			alert("Debe introducir una cantidad válida")
-			return false;
-		}
-		if (!from || !to || from == to) {
-			alert("Debes elegir unas divisas y ser distintas");
-			return false;
-		}
+	function clearCardNumber() {
+		document.getElementById("card").value = "";
 	}
-
-	function amountChanged(val) {
-		var change = 1.05;
-		document.getElementById("amountChanged").innerHTML = val * change;
+	
+	function clearCvv() {
+		document.getElementById("cvv").value = "";
 	}
+	
+	function clearName() {
+		document.getElementById("name").value = "";
+	}
+	
+	function clearExpirate() {
+		document.getElementById("expirate").value = "";
+	}
+	
+	function clearQuantity() {
+		document.getElementById("quantity").value = "";
+	}
+	
 </script>
 
 </html>

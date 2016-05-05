@@ -182,7 +182,7 @@ div.recommended {
 			<div class="row">
 				<div class="column-6">
 					<paper-input id="amountInput" type="number" name="amount"
-						label="Ingrese Cantidad" onkeydown="amountChanged(this.value)">
+						label="Enter the quantity" onkeydown="amountChanged(this.value)">
 					<div suffix>{{currency}}</div>
 					</paper-input>
 				</div>
