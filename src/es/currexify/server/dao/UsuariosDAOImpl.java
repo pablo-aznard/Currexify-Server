@@ -1,5 +1,6 @@
 package es.currexify.server.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -140,6 +141,7 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		
 		em.getTransaction().begin();
 		List<TransactionModel> tml = um.getUserTransactions();
+		if (tml == null) tml = new ArrayList<TransactionModel>();
 		tml.add(tm);
 		um.setUserTransactions(tml);
 		em.merge(um);

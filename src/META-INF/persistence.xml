@@ -10,6 +10,7 @@
       	<class>es.currexify.server.model.CurrencyExRateModel</class>
       	<class>es.currexify.server.model.HistoryModel</class>
       	<class>es.currexify.server.model.UsuariosModel</class>
+      	<class>es.currexify.server.model.TransactionModel</class>
         <properties>
             <property name="datanucleus.NontransactionalRead" value="true"/>
             <property name="datanucleus.NontransactionalWrite" value="true"/>
