@@ -1,6 +1,7 @@
 package es.currexify.server.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -83,6 +84,30 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		
 		return true;
 
+	}
+	
+	@Override
+	public boolean addFriend(EntityManager em, UsuariosModel um, String friend) {
+		
+		em.getTransaction().begin();
+		Set<String> userFriends = um.getFriends();
+		userFriends.add(friend);
+		em.merge(um);
+		em.getTransaction().commit();
+		
+		return true;
+	}
+	
+	@Override
+	public boolean deleteFriend(EntityManager em, UsuariosModel um, String friend) {
+		
+		em.getTransaction().begin();
+		Set<String> userFriends = um.getFriends();
+		userFriends.remove(friend);
+		em.merge(um);
+		em.getTransaction().commit();
+		
+		return true;
 	}
 	
 	@Override

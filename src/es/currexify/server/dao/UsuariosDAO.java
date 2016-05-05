@@ -14,6 +14,8 @@ public interface UsuariosDAO {
 	public UsuariosModel readUserByEmail(EntityManager em, String email);
 	public boolean updateUsuario(EntityManager em, UsuariosModel um);
 	public boolean deleteUsuario(EntityManager em, UsuariosModel um);
+	public boolean addFriend(EntityManager em, UsuariosModel um, String friend);
+	public boolean deleteFriend(EntityManager em, UsuariosModel um, String friend);
 	public boolean addHistoryToUser(EntityManager em, HistoryModel hm, UsuariosModel um);
 	public boolean addCurrencyBudgetToUser(EntityManager em, CurrencyBudgetModel cbm, UsuariosModel um);
 	public boolean addTransactionToUser(EntityManager em, TransactionModel tm, UsuariosModel um);

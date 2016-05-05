@@ -26,6 +26,8 @@ public class UsuariosModel implements Serializable {
 	private String phone;
 	@Column(name="CARD_N")
 	private String cardN;
+	@Column(name="FRIENDS")
+	private Set<String> friends;
 	@OneToMany
 	@JoinColumn(name="USER_HISTORY")
 	private List<HistoryModel> histories;
@@ -94,6 +96,12 @@ public class UsuariosModel implements Serializable {
 	}
 	public void setCardN(String cardN) {
 		this.cardN = cardN;
+	}
+	public Set<String> getFriends() {
+		return friends;
+	}
+	public void setFriends(Set<String> friends) {
+		this.friends = friends;
 	}
 	public List<HistoryModel> getHistories(){
 		return histories;
