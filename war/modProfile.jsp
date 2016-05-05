@@ -65,31 +65,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- For shared styles, shared-styles.html import in elements.html -->
 <style is="custom-style" include="shared-styles"></style>
 <style>
+:host {
+	display: block;
+}
+
 span { @apply (--paper-font-body1);
 	
 }
 
-.img-profile {
-	width: 76px;
-	height: 76px;
-	border-radius: 38px;
+.img-logo {
+	max-width: 200px;
+	display: block;
+	margin: 0 auto;
 }
 
-.name {
-	margin-bottom: 10px;
-	font-size: 18px;
+#submit {
+	color: white;
+	background-color: #4AAECF;
+	width: 20%;
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	min-width: 5.14em;
+	margin: 0 0.29em;
+	border: none;
+	text-align: center;
+	font: inherit;
+	text-transform: uppercase;
+	outline-width: 0;
+	border-radius: 3px;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	z-index: 0;
+	padding: 0.7em 0.57em;
+	float: right;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
+		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
-.notify {
-	font-size: 12px;
+#clear {
+	color: white;
+	background-color: #4AAECF;
+	width: 20%;
+	float: right;
+}
+
+paper-input iron-icon {
+	margin-right: 20px
 }
 
 .content {
 	padding: 54px 64px;
 }
 
-.button-bottom {
-	float: right;
+paper-input iron-icon {
+	margin-right: 20px
 }
 </style>
 </head>
@@ -108,34 +141,28 @@ span { @apply (--paper-font-body1);
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
 	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
-	</a>
-	<c:if test='${user != ""}'>
+	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
 			<span>Profile</span>
-		</a> 
-	</c:if>
-	<c:if test='${user == ""}'>
+		</a>
+	</c:if> <c:if test='${user == ""}'>
 		<a data-route="users" href="login"> <iron-icon
 				icon="verified-user"></iron-icon> <span>Login</span>
 		</a>
-	</c:if>
-	<c:if test='${user != ""}'>
+	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-			icon="swap-horiz"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transactions</span>
 		</a>
-	</c:if>
-	<a data-route="contact" href="contact"> <iron-icon
-			icon="mail"></iron-icon> <span>Contact</span>
-	</a>
-	<c:if test='${user != ""}'>
+	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
+		<span>Contact</span>
+	</a> <c:if test='${user != ""}'>
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
 			<a href="<c:url value="${url}"/>"> <iron-icon
 					icon="subdirectory-arrow-left"></iron-icon> <c:out
 					value="${urlLinktext}" /></a>
 		</div>
-	</c:if>
-	</paper-menu> </paper-scroll-header-panel>  <!-- Main Area --> <paper-scroll-header-panel main
+	</c:if> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -154,26 +181,47 @@ span { @apply (--paper-font-body1);
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1"> 
-			<c:if test='${user != ""}'>
-			<a class="button-bottom" href="/modificar"> <paper-button title="Modify Profile">Modify Profile</paper-button></a>
-			<a class="button-bottom" href="/addMoney"> <paper-button title="Add Money">Insert Coin</paper-button></a>
-			</c:if>
+		<paper-material elevation="1">
 		<div style="width: 100%;">
-			<div
-				style="display: inline-block; vertical-align: middle; margin-right: 30px">
-				<img src="images/touch/user-default.png" class="img-profile">
+			<div style="margin: 0 auto;">
+				<img src="../../images/touch/logotipo_tocho.png" class="img-logo">
 			</div>
-			<div style="display: inline-block;">
-				<div class="name">
-					<span><c:out value="${user}" /></span>
-				</div>
-				<div class="notify">
-					Notificaciones de cambio: <c:out value="${notificaciones}" />
-				</div>
+			<div style="width: 90%; margin-left: 5%;">
+
+				<form action="modificar" method="post">
+					<div>
+						<paper-input id="name" label="Usuario" name="name" value="<c:url value="${name}"/>">
+						<iron-icon icon="account-circle" prefix></iron-icon> <paper-icon-button
+							suffix onclick="clearName()" icon="clear" alt="clear"
+							title="clear"></paper-input>
+						<paper-input id="pass" name="pass" label="Contraseña"
+							type="password" value="<c:url value="${pass}"/>"> <iron-icon icon="fingerprint"
+							prefix></iron-icon> <paper-icon-button suffix
+							onclick="clearPass()" icon="clear" alt="clear" title="clear"></paper-input>
+						<paper-input label="E-mail" name="email" id="email" value="<c:url value="${email}"/>">
+						<iron-icon icon="mail" prefix></iron-icon> <paper-icon-button
+							suffix onclick="clearEmail()" icon="clear" alt="clear"
+							title="clear"> </paper-icon-button> </paper-input>
+						<paper-input id="address" name="address" label="Address" value="<c:url value="${address}"/>">
+						<iron-icon icon="home" prefix></iron-icon> <paper-icon-button
+							suffix onclick="clearAddress()" icon="clear" alt="clear"
+							title="clear"></paper-input>
+						<gold-phone-input label="Spanish phone number" label="Phone" name="phone" country-code="34"
+							phone-number-pattern="XXX-XXX-XXX" id="phone"  auto-validate  value="<c:url value="${phone}"/>">
+						</gold-phone-input>
+					</div>
+					<div style="margin-top: 2em;">
+						<div style="display: inline-block; width: 100%; margin: 0 auto">
+							<paper-button id="clear" raised onclick="clearAll()">Clear
+							fields</paper-button>
+							<input type="submit" value="submit" id="submit">
+						</div>
+					</div>
+
+				</form>
 			</div>
 		</div>
-		<currencies-list title="Budget of currencies" currencies='<c:out value="${currencies}"/>'></currencies-list> </paper-material>
+		</paper-material>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
@@ -197,6 +245,36 @@ span { @apply (--paper-font-body1);
 	<!-- build:js scripts/app.js -->
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
+	<script type="text/javascript">
+		function clearAll() {
+			document.getElementById("name").value = "";
+			document.getElementById("pass").value = "";
+			document.getElementById("email").value = "";
+			document.getElementById("address").value = "";
+			document.getElementById("phone").value = "";
+			document.getElementById("cardnum").value = "";
+		}
+
+		function clearName() {
+			document.getElementById("name").value = "";
+		}
+
+		function clearPass() {
+			document.getElementById("pass").value = "";
+		}
+
+		function clearEmail() {
+			document.getElementById("email").value = "";
+		}
+
+		function clearAddress() {
+			document.getElementById("address").value = "";
+		}
+
+		function clearPhone() {
+			document.getElementById("phone").value = "";
+		}
+	</script>
 </body>
 
 </html>

@@ -15,7 +15,7 @@ import es.currexify.server.dao.*;
 import es.currexify.server.model.*;
 
 @SuppressWarnings("serial")
-public class Register extends HttpServlet {
+public class ModifyServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String url = "";
 		String urlLinktext = "Login";
@@ -33,12 +33,17 @@ public class Register extends HttpServlet {
 			user = usuario.getName();
 			url = "/logout";
 			urlLinktext = "Logout";
+			req.getSession().setAttribute("name", usuario.getName());
+			req.getSession().setAttribute("pass", usuario.getPassword());
+			req.getSession().setAttribute("email", usuario.getEmail());
+			req.getSession().setAttribute("address", usuario.getAddress());
+			req.getSession().setAttribute("phone", usuario.getPhone());
 		}
 
 		req.getSession().setAttribute("user", user);
 		req.getSession().setAttribute("url", url);
 		req.getSession().setAttribute("urlLinktext", urlLinktext);
-		RequestDispatcher view = req.getRequestDispatcher("register.jsp");
+		RequestDispatcher view = req.getRequestDispatcher("modProfile.jsp");
 		view.forward(req, resp);
 	}
 	
@@ -51,19 +56,20 @@ public class Register extends HttpServlet {
 		
 		EntityManager em = EMFService.get().createEntityManager();
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+		System.out.println(udao.isEmailUnique(em, email));
 		if(udao.isEmailUnique(em, email)){
-			UsuariosModel um = new UsuariosModel(user, pass, email, address, phone);
-			udao.createUser(em, um);
-			CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(um.getCardN(), "EUR", 0.0);
-			CurrencyBudgetModel cbm2 = new CurrencyBudgetModel(um.getCardN(), "USD", 0.0);
-			CurrencyBudgetModel cbm3 = new CurrencyBudgetModel(um.getCardN(), "GBP", 0.0);
-			udao.addCurrencyBudgetToUser(em, cbm1, um);
-			udao.addCurrencyBudgetToUser(em, cbm2, um);
-			udao.addCurrencyBudgetToUser(em, cbm3, um);
-			response.sendRedirect("login");
+			UsuariosModel um = udao.readUserByEmail(em, (String)request.getSession().getAttribute("email"));
+			um.setName(user);
+			um.setPassword(pass);
+			um.setEmail(email);
+			um.setAddress(address);
+			um.setPhone(phone);
+			udao.updateUsuario(em, um);
+			request.getSession().setAttribute("login", um.getEmail());
+			response.sendRedirect("profile");
 		}
 		else{
-			response.sendRedirect("register?error=true");
+			response.sendRedirect("modificar?error=true");
 		}
 		em.close();
 		
