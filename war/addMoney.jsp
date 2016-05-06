@@ -148,6 +148,10 @@ div.recommended {
 		<a data-route="transaction" href="transaction"> <iron-icon
 				icon="swap-horiz"></iron-icon> <span>Transactions</span>
 		</a>
+	</c:if> <c:if test='${user != ""}'>
+		<a data-route="friends" href="friends"> <iron-icon
+				icon="account-circle"></iron-icon> <span>Friend Zone</span>
+		</a>
 	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
 		<span>Contact</span>
 	</a> <c:if test='${user != ""}'>
@@ -177,8 +181,7 @@ div.recommended {
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
 		<paper-material>
-		<form action="addMoney" method="post" name="Form"
-			onsubmit="return validateForm()">
+		<form action="addMoney" method="post" name="Form">
 			<div class="row">
 				<div class="column-6">
 					<paper-listbox selected="{{select}}"> 

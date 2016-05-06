@@ -73,10 +73,20 @@ span { @apply (--paper-font-body1);
 	
 }
 
-.img-logo {
-	max-width: 200px;
-	display: block;
-	margin: 0 auto;
+.column-6 {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	width: 49.5%;
+}
+
+paper-dropdown-menu {
+	width: 100%;
+}
+
+div.recommended {
+	vertical-align: bottom;
 }
 
 #submit {
@@ -124,7 +134,7 @@ span { @apply (--paper-font-body1);
 		class="menu-name"><img src="images/touch/logotipo_tocho.png"
 		style="width: 80px"></span> </paper-toolbar> <!-- Drawer Content --> <paper-menu
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
-	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
+	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
 	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
@@ -136,11 +146,11 @@ span { @apply (--paper-font-body1);
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-				icon="account-circle"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transactions</span>
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="friends" href="friends"> <iron-icon
-				icon="swap-horiz"></iron-icon> <span>Friend Zone</span>
+				icon="account-circle"></iron-icon> <span>Friend Zone</span>
 		</a>
 	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
 		<span>Contact</span>
@@ -148,7 +158,8 @@ span { @apply (--paper-font-body1);
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
 			<a href="<c:url value="${url}"/>"> <iron-icon
-					icon="subdirectory-arrow-left"></iron-icon> <c:out value='${urlLinktext}' /></a>
+					icon="subdirectory-arrow-left"></iron-icon> <c:out
+					value="${urlLinktext}" /></a>
 		</div>
 	</c:if> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
@@ -169,37 +180,27 @@ span { @apply (--paper-font-body1);
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1">
-		<div style="width: 100%;">
-			<div style="margin: 0 auto;">
-				<img src="../../images/touch/logotipo_tocho.png" class="img-logo">
+		<paper-material>
+		<form action="takeMoneyOut" method="post" name="Form">
+			<div class="row">
+				<paper-input id="name" label="Enter your full name" name="name">
+				<paper-icon-button suffix onclick="clearName()" icon="clear"
+					alt="clear" title="clear"></paper-input>
 			</div>
-			<div style="width: 90%; margin-left: 5%;">
-				<c:if test='${user != ""}'>
-					Estás identificado con el siguiente E-mail: <c:out value="${user}" />
-				</c:if>
-				<c:if test='${user == ""}'>
-					<div>
-						<form action="login" method="post">
-							<paper-input label="Usuario" name="user"></paper-input>
-							<paper-input label="Contraseña" name="pass" type="password"></paper-input>
-							<input type="submit" id="submit" value="submit">
-						</form>
-					</div>
-				</c:if>
-				<div style="margin-top: 2em;">
-					<c:if test='${user == ""}'>
-						<div style="display: inline-block; width: 49.5%">
-							<paper-checkbox>Mantener sesión iniciada</paper-checkbox>
-							<p>
-								<span>¿No estás registrado?<a href="register.jsp">Regístrate</a></span>
-							</p>
-						</div>
-					</c:if>
+			<div class="row">
+				<paper-input id="iban" label="Enter your IBAN" name="iban">
+				<paper-icon-button suffix onclick="clearIBAN()" icon="clear"
+					alt="clear" title="clear"></paper-input>
 			</div>
-		</div>
-	</div>
-	</paper-material> </paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
+			<div class="row">
+				<paper-input id="quantity" type="number" label="Enter a quantity"
+					name="quantity"> <paper-icon-button suffix
+					onclick="clearQuantity()" icon="clear" alt="clear" title="clear"></paper-input>
+			</div>
+			<input type="submit" value="submit" id="submit">
+		</paper-material>
+		</form>
+	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
 	<!--
@@ -223,5 +224,30 @@ span { @apply (--paper-font-body1);
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
 </body>
+
+<script>
+	window.onload = getUrlVars;
+	function getUrlVars() {
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+				function(m, key, value) {
+					vars[key] = value;
+				});
+		if (vars.error == "true")
+			alert("No tienes suficiente dinero para sacar esa cantidad")
+	}
+
+	function clearIBAN() {
+		document.getElementById("iban").value = "";
+	}
+
+	function clearName() {
+		document.getElementById("name").value = "";
+	}
+
+	function clearQuantity() {
+		document.getElementById("quantity").value = "";
+	}
+</script>
 
 </html>

@@ -31,14 +31,14 @@ public class PruebaUsuario extends HttpServlet {
 		resp.setContentType("text/plain");
 		
 		//CREACIÓN
-		EntityManager em = EMFService.get().createEntityManager(); 
-		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
-		CurrencyExRateModel cer1 = new CurrencyExRateModel(1.28, "USDTEST");
-		CurrencyExRateModel cer2 = new CurrencyExRateModel(0.96, "GBPTEST");
-		cerdao.createCurrencyExRate(em, cer1);
-		cerdao.createCurrencyExRate(em, cer2);
-		
-		UsuariosDAOImpl umdao = UsuariosDAOImpl.getInstance();
+//		EntityManager em = EMFService.get().createEntityManager(); 
+//		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
+//		CurrencyExRateModel cer1 = new CurrencyExRateModel(1.28, "USDTEST");
+//		CurrencyExRateModel cer2 = new CurrencyExRateModel(0.96, "GBPTEST");
+//		cerdao.createCurrencyExRate(em, cer1);
+//		cerdao.createCurrencyExRate(em, cer2);
+//		
+//		UsuariosDAOImpl umdao = UsuariosDAOImpl.getInstance();
 //		UsuariosModel um = new UsuariosModel("Perico", "qwerasdf", "qwer@asdf.com", "Calle Pinos", "123456789");
 //		umdao.createUser(em, um);
 //		UsuariosModel um1 = umdao.readUserById(em, um.getId());
@@ -120,17 +120,14 @@ public class PruebaUsuario extends HttpServlet {
 //		em.close();
 		
 		// PRUEBA TRANSACCION
-		resp.getWriter().println(" ");
-		resp.getWriter().println("---TRANSACCION---");
-		UsuariosModel um2 = new UsuariosModel("TRANS", "qwerasdf", "qwerty@asdf.com", "Calle Pinos", "123456789");
-		umdao.createUser(em, um2);
-		resp.getWriter().println("");
-		TransactionModel tr = new TransactionModel(um2.getCardN(), "EUR", "GBP", 100, new Date());
-		umdao.addTransactionToUser(em, tr, um2);
-		resp.getWriter().println(tr.getId().getParent().getId()); // COINCIDE CON LA DEL USUARIO
-		resp.getWriter().println(um2.getId()); // ID DEL USUARIO
-		resp.getWriter().println(tr.getId().getId()); // ESTA ES LA ID DE LA TRANSACCION
-	
-		em.close();
+		List<String> emails = new ArrayList<String>();
+		emails.add("eresguay");
+		emails.add("noeresguay");
+		emails.add("guay");
+		for(String str : emails) {
+			System.out.println("String: "+str);
+			if(str.matches("no(.*)"))
+				System.out.println(str);
+		}
 	}
   }

@@ -38,6 +38,22 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/modificar</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>Friends</servlet-name>
+		<servlet-class>es.currexify.server.FriendsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Friends</servlet-name>
+		<url-pattern>/friends</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>SearchFriends</servlet-name>
+		<servlet-class>es.currexify.server.SearchFriendsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SearchFriends</servlet-name>
+		<url-pattern>/searchFriends</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>Login</servlet-name>
 		<servlet-class>es.currexify.server.Login</servlet-class>
 	</servlet>
@@ -92,6 +108,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>AddMoney</servlet-name>
 		<url-pattern>/addMoney</url-pattern>
+	</servlet-mapping>
+ 	<servlet>
+		<servlet-name>TakeMoneyOut</servlet-name>
+		<servlet-class>es.currexify.server.TakeMoneyOutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TakeMoneyOut</servlet-name>
+		<url-pattern>/takeMoneyOut</url-pattern>
 	</servlet-mapping>
 	<servlet>
 	

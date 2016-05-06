@@ -123,6 +123,10 @@ span { @apply (--paper-font-body1);
 		<a data-route="transaction" href="transaction"> <iron-icon
 			icon="swap-horiz"></iron-icon> <span>Transactions</span>
 		</a>
+	</c:if> <c:if test='${user != ""}'>
+		<a data-route="friends" href="friends"> <iron-icon
+				icon="account-circle"></iron-icon> <span>Friend Zone</span>
+		</a>
 	</c:if>
 	<a data-route="contact" href="contact"> <iron-icon
 			icon="mail"></iron-icon> <span>Contact</span>
@@ -158,6 +162,7 @@ span { @apply (--paper-font-body1);
 			<c:if test='${user != ""}'>
 			<a class="button-bottom" href="/modificar"> <paper-button title="Modify Profile">Modify Profile</paper-button></a>
 			<a class="button-bottom" href="/addMoney"> <paper-button title="Add Money">Insert Coin</paper-button></a>
+			<a class="button-bottom" href="/takeMoneyOut"> <paper-button title="Take Money Out">Give me my money</paper-button></a>
 			</c:if>
 		<div style="width: 100%;">
 			<div

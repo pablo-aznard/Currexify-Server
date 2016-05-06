@@ -10,6 +10,8 @@ import javax.servlet.http.*;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.labs.repackaged.org.json.JSONException;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
 
 import es.currexify.server.dao.*;
 import es.currexify.server.model.*;
@@ -19,22 +21,30 @@ public class FriendsServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String url = "";
 		String urlLinktext = "Login";
-		String user = "";
-		EntityManager em = EMFService.get().createEntityManager();
-		
+		String user = "";		
 		String email = (String) req.getSession().getAttribute("login");
-		UsuariosModel usuario;
-
+		
+		JSONObject json = new JSONObject();
+		List<String> jray = new ArrayList<String>();
+		EntityManager em = EMFService.get().createEntityManager();
+		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+		UsuariosModel usuario = udao.readUserByEmail(em, email);
+		Set<String> friends = usuario.getFriends();
+		em.close();
 		if (email != null) {
-			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-			usuario = udao.readUserByEmail(em, email);
-				
-			em.close();
+			try {	
+				for (String friend : friends) {
+					json.put("friend", friend);
+					jray.add(json.toString());
+				}
+				req.getSession().setAttribute("friends", jray);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			user = usuario.getName();
 			url = "/logout";
 			urlLinktext = "Logout";
 		}
-
 		req.getSession().setAttribute("user", user);
 		req.getSession().setAttribute("url", url);
 		req.getSession().setAttribute("urlLinktext", urlLinktext);
