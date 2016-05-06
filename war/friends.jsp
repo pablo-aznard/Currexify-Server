@@ -127,6 +127,44 @@ div.recommended {
 .blue {
 	color: blue;
 }
+
+.no-bg {
+	background-color:transparent;
+	border: none;
+}
+
+table {
+	margin: 25px auto;
+	border-collapse: collapse;
+	border: 1px solid #eee;
+	border-bottom: 2px solic #4AAECF;;
+	box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+	 	0px 10px 20px rgba(0,0,0,0.05),
+	  	0px 20px 20px rgba(0,0,0,0.05),
+	   	0px 30px 20px rgba(0,0,0,0.05);
+}
+
+.name{
+	border: 1px solid #eee;
+	padding: 20px 35px;
+	border-collapse: collapse;
+	background: #4AAECF;;
+	color: white;
+	font-size: 12px;
+}
+
+.header{
+	border: 1px solid #eee;
+	padding: 20px 35px;
+	border-collapse: collapse;
+	background: #4AAECF;;
+	color: white;
+	font-size: 16px;
+	align: center
+}
+table th {
+	padding: 20px 35px;
+}
 </style>
 </head>
 
@@ -189,35 +227,53 @@ div.recommended {
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
 		<paper-material>
-		<form action="searchFriends" method="post" name="Form">
+		<form action="searchFriends" method="post" name="Form" id="ajaxform">
 			<div class="row">
-				<paper-input id="search" label="Enter the email of your friend" name="search">
-					<paper-icon-button
-						suffix onclick="clearSearch()" icon="clear" alt="clear"
-						title="clear">
-				</paper-input>
+				<paper-input id="search" label="Enter the email of your friend"
+					name="search"> <paper-icon-button suffix
+					onclick="clearSearch()" icon="clear" alt="clear" title="clear"></paper-input>
 			</div>
 			<input type="submit" value="submit" id="submit">
 		</form>
-		<table>
+		<div style="width: 100%; clear: both; height:5px; margin:40px;"></div>
+		<table style="width:100%">
+			<tr class="header">
+				<th colspan="2">Results</th>
+			</tr>
 			<c:forEach items="${searchRes}" var="search">
-				<tr>
-					<td><c:out value="${search}"/></td>
-					<td><paper-icon-button onclick="clearSearch()" icon="favorite" alt="AddFriend" class="red"
-						title="Add Friend"></td>
+				<tr style="width:100%">
+					<td class="name" style="width:50%"><c:out value="${search}" /></td>
+					</td>
+					<td align="right" style="width:50%">
+						<form action="friends?type=add" method="post" name="Form">
+							<input type="hidden" name="friend"
+								value="<c:out value="${search}" />">
+								<button type="submit" class="no-bg">Add Friend<iron-icon icon="favorite"
+							alt="AddFriend" class="red" title="Add Friend"></button>
+						</form>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
-		</paper-material>
-		<paper-material elevation="1">
-		<table>
+		<table style="width:100%">
+			<tr class="header">
+				<th colspan="3">Friends Added</th>
+			</tr>
 			<c:forEach items="${friends}" var="friend">
-				<tr>
-					<td><c:out value="${friend}"/></td>
-					<td><paper-icon-button onclick="newTransaction()" icon="add" alt="NewTransaction" class="blue"
-						title="New Transaction"></td>
-					<td><paper-icon-button onclick="removeFriend()" icon="delete" alt="RemoveFriend" class="red"
-						title="Remove Friend"></td>
+				<tr style="width:100%">
+					<td class="name" style="width:30%"><c:out value="${friend}" /></td>
+					<td align="right" style="width:30%">
+						<form action="/newtransaction" method="get" name="Form">
+							<input type="hidden" name="friend"
+								value="<c:out value="${friend}" />"><button type="submit" class="no-bg">New Transaction<iron-icon icon="add"
+							alt="New transaction" class="blue" title="New Transaction"></iron-icon></button>
+						</form></td>
+					<td  align="right" style="width:30%">
+						<form action="friends?type=remove" method="post" name="Form">
+							<input type="hidden" name="friend"
+								value="<c:out value="${friend}" />"><button type="submit" class="no-bg">Remove Friend<iron-icon icon="delete"
+							alt="RemoveFriend" class="red" title="Remove Friend"></iron-icon></button>
+						</form></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -245,14 +301,11 @@ div.recommended {
 	<!-- build:js scripts/app.js -->
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
+
+	<script>
+		function clearSearch() {
+			document.getElementById("search").value = "";
+		}
+	</script>
 </body>
-
-<script>
-
-function clearSearch() {
-	document.getElementById("search").value = "";
-}
-
-</script>
-
 </html>

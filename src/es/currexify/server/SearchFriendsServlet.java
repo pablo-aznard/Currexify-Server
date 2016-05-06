@@ -34,5 +34,6 @@ public class SearchFriendsServlet extends HttpServlet {
 				emails.add(email);
 		}
 		request.getSession().setAttribute("searchRes", emails);
+		response.sendRedirect("friends");
 	}
   }
