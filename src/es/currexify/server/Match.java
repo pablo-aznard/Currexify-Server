@@ -1,6 +1,7 @@
 package es.currexify.server;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+
+
 
 
 
@@ -43,11 +47,47 @@ public class Match extends HttpServlet {
 					double originAmount = trans.getAmountLeft();
 					double left = originAmount;
 					if(trans.getEDate().after(new Date())){                     	 // SE TIENE QUE HACER AHORA
-						// TODO RIGHT NOW
 						for(TransactionModel trans2 : list2) {
 							double destAmount = trans2.getAmountLeft();
-							if (left == destAmount) {
+							double destAmountConverted = getConverted(trans2.getSCoin(), trans2.getDCoin(), destAmount);
+							if (left == destAmountConverted) {
 								//TODO casarlos
+								EntityManager em = EMFService.get().createEntityManager();
+								
+								UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+								UsuariosModel um1 = udao.readUserById(em, trans.getId().getParent().getId());
+								UsuariosModel um2 = udao.readUserById(em, trans2.getId().getParent().getId());
+								
+								HistoryModel hm1s = new HistoryModel(
+										um1.getCardN(), trans.getSCoin(), left, "Saliente", new Date());
+								HistoryModel hm1e = new HistoryModel(
+										um1.getCardN(), trans.getDCoin(), destAmount, "Entrante", new Date());
+								udao.addHistoryToUser(em, hm1s, um1);
+								udao.addHistoryToUser(em, hm1e, um1);
+								
+								HistoryModel hm2s = new HistoryModel(
+										um2.getCardN(), trans2.getSCoin(), destAmount, "Saliente", new Date());
+								HistoryModel hm2e = new HistoryModel(
+										um2.getCardN(), trans2.getDCoin(), left, "Entrante", new Date());
+								udao.addHistoryToUser(em, hm2s, um2);
+								udao.addHistoryToUser(em, hm2e, um2);
+								
+								CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(
+										trans.getCardN(), trans.getDCoin(), destAmount);
+								udao.updateCurrency(em, um1, cbm1);
+								/*List<CurrencyBudgetModel> cbml1 = new ArrayList<CurrencyBudgetModel>();
+								cbml1.add(cbm1);
+								um1.setUserCurrencies(cbml1);
+								*/
+								CurrencyBudgetModel cbm2 = new CurrencyBudgetModel(
+										trans2.getCardN(), trans.getDCoin(), left);
+								udao.updateCurrency(em, um2, cbm2);
+								/*List<CurrencyBudgetModel> cbml2 = new ArrayList<CurrencyBudgetModel>();
+								cbml2.add(cbm2);
+								um1.setUserCurrencies(cbml2);
+								*/
+								em.close();
+								
 							} else {
 								if (left > destAmount) {
 									left -= destAmount;
@@ -91,5 +131,42 @@ public class Match extends HttpServlet {
 			}
 		}
 	}
+	
+	private String getCurrencySymbol(String currencyName) {
+		switch (currencyName) {
+		case "EUR":
+			return "€";
+		case "USD":
+			return "$";
+		case "GBP":
+			return "£";
+		default:
+			return "";
+		}
+	}
+
+	private double getConverted(String from, String to, double oAmount) {
+		EntityManager em = EMFService.get().createEntityManager();
+		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
+		double cAmount = 0.0;
+
+		if (from.equals("EUR")) {
+			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, to);
+			cAmount = oAmount * cer.getEuroEx();
+		} else if (to.equals("EUR")) {
+			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, from);
+			cAmount = oAmount / cer.getEuroEx();
+		} else if (from.equals("USD")) {
+			CurrencyExRateModel cer1 = cerdao.readCurrencyExRatesByCurrency(em, from);
+			CurrencyExRateModel cer2 = cerdao.readCurrencyExRatesByCurrency(em, to);
+			cAmount = oAmount / cer1.getEuroEx() * cer2.getEuroEx();
+		} else if (from.equals("GBP")) {
+			CurrencyExRateModel cer1 = cerdao.readCurrencyExRatesByCurrency(em, from);
+			CurrencyExRateModel cer2 = cerdao.readCurrencyExRatesByCurrency(em, to);
+			cAmount = oAmount / cer1.getEuroEx() * cer2.getEuroEx();
+		}
+		return cAmount;
+	}
+
 	
 }

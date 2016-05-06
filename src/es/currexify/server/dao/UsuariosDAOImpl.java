@@ -88,6 +88,24 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	}
 	
 	@Override
+	public boolean updateCurrency(EntityManager em, UsuariosModel um, CurrencyBudgetModel cbm) {
+
+		em.getTransaction().begin();
+		List<CurrencyBudgetModel> cbml = um.getUserCurrencies();
+		for(CurrencyBudgetModel cbm2 : cbml){
+			if(cbm2.getCurrency().equals(cbm.getCurrency())){
+				cbm2.setBudget(cbm.getBudget());
+				cbm2.setBlocked(cbm.getBlocked());
+			}
+		}
+		um.setUserCurrencies(cbml);
+		em.merge(um);
+		em.getTransaction().commit();
+		return true;
+
+	}
+	
+	@Override
 	public boolean addFriend(EntityManager em, UsuariosModel um, String friend) {
 		
 		em.getTransaction().begin();

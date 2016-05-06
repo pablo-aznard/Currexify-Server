@@ -13,6 +13,7 @@ public interface UsuariosDAO {
 	public UsuariosModel readUserByName(EntityManager em, String name);
 	public UsuariosModel readUserByEmail(EntityManager em, String email);
 	public boolean updateUsuario(EntityManager em, UsuariosModel um);
+	public boolean updateCurrency(EntityManager em, UsuariosModel um, CurrencyBudgetModel cbm);
 	public boolean deleteUsuario(EntityManager em, UsuariosModel um);
 	public boolean addFriend(EntityManager em, UsuariosModel um, String friend);
 	public boolean deleteFriend(EntityManager em, UsuariosModel um, String friend);
