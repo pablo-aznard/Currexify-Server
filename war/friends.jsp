@@ -189,7 +189,7 @@ div.recommended {
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
 		<paper-material>
-		<form action="friends" method="post" name="Form">
+		<form action="searchFriends" method="post" name="Form">
 			<div class="row">
 				<paper-input id="search" label="Enter the email of your friend" name="search">
 					<paper-icon-button
