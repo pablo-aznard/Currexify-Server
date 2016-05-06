@@ -36,7 +36,7 @@ public class Match extends HttpServlet {
 		
 		List<TransactionModel> gbp_usd = transdao.readByCurrency(em, "GBP", "USD");
 		List<TransactionModel> usd_gbp = transdao.readByCurrency(em, "USD", "GBP");
-		
+
 		Comparator<TransactionModel> tmComparator = new Comparator<TransactionModel>() {
 			@Override
 			public int compare(TransactionModel o1, TransactionModel o2) {
