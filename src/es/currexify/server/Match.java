@@ -1,7 +1,10 @@
 package es.currexify.server;
 
 import java.io.IOException;
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +36,36 @@ public class Match extends HttpServlet {
 		
 		List<TransactionModel> gbp_usd = transdao.readByCurrency(em, "GBP", "USD");
 		List<TransactionModel> usd_gbp = transdao.readByCurrency(em, "USD", "GBP");
+	
+		List<TransactionModel> eur_gbp_sorted = new ArrayList<>();
+		List<TransactionModel> gbp_eur_sorted = new ArrayList<>();
+		Collections.copy(eur_gbp_sorted, eur_gbp);
+		Collections.copy(gbp_eur_sorted, gbp_eur);
+		
+		Collections.sort(eur_gbp_sorted, new Comparator<TransactionModel>() {
+			@Override
+			public int compare(TransactionModel o1, TransactionModel o2) {
+				int result = 0;
+				for (int i=0; i<3; i++) {
+					switch (i) {
+					case 0:
+						result = new Integer(o1.getEDate().getYear()).compareTo(new Integer(o2.getEDate().getYear()));
+						break;
+					case 1:
+						result = new Integer(o1.getEDate().getMonth()).compareTo(new Integer(o2.getEDate().getMonth()));
+						break;
+					case 2:
+						result = new Integer(o1.getEDate().getDate()).compareTo(new Integer(o2.getEDate().getDate()));
+						break;
+					default:
+						break;
+					}
+					if (result == 0) continue;
+					else break;
+				}
+				return result;
+			}
+		});
 		
 		doMatch(eur_gbp, gbp_eur);
 	}
