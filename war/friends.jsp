@@ -73,10 +73,20 @@ span { @apply (--paper-font-body1);
 	
 }
 
-.img-logo {
-	max-width: 200px;
-	display: block;
-	margin: 0 auto;
+.column-6 {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	width: 49.5%;
+}
+
+paper-dropdown-menu {
+	width: 100%;
+}
+
+div.recommended {
+	vertical-align: bottom;
 }
 
 #submit {
@@ -109,6 +119,14 @@ span { @apply (--paper-font-body1);
 .content {
 	padding: 54px 64px;
 }
+
+.red {
+	color: red;
+}
+
+.blue {
+	color: blue;
+}
 </style>
 </head>
 
@@ -124,7 +142,7 @@ span { @apply (--paper-font-body1);
 		class="menu-name"><img src="images/touch/logotipo_tocho.png"
 		style="width: 80px"></span> </paper-toolbar> <!-- Drawer Content --> <paper-menu
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
-	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
+	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
 	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
@@ -136,11 +154,11 @@ span { @apply (--paper-font-body1);
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-				icon="account-circle"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transactions</span>
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="friends" href="friends"> <iron-icon
-				icon="swap-horiz"></iron-icon> <span>Friend Zone</span>
+				icon="account-circle"></iron-icon> <span>Friend Zone</span>
 		</a>
 	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
 		<span>Contact</span>
@@ -148,7 +166,8 @@ span { @apply (--paper-font-body1);
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
 			<a href="<c:url value="${url}"/>"> <iron-icon
-					icon="subdirectory-arrow-left"></iron-icon> <c:out value='${urlLinktext}' /></a>
+					icon="subdirectory-arrow-left"></iron-icon> <c:out
+					value="${urlLinktext}" /></a>
 		</div>
 	</c:if> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
@@ -169,37 +188,41 @@ span { @apply (--paper-font-body1);
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
+		<paper-material>
+		<form action="friends" method="post" name="Form">
+			<div class="row">
+				<paper-input id="search" label="Enter the email of your friend" name="search">
+					<paper-icon-button
+						suffix onclick="clearSearch()" icon="clear" alt="clear"
+						title="clear">
+				</paper-input>
+			</div>
+			<input type="submit" value="submit" id="submit">
+		</form>
+		<table>
+			<c:forEach items="${searchRes}" var="search">
+				<tr>
+					<td><c:out value="${search}"/></td>
+					<td><paper-icon-button onclick="clearSearch()" icon="favorite" alt="AddFriend" class="red"
+						title="Add Friend"></td>
+				</tr>
+			</c:forEach>
+		</table>
+		</paper-material>
 		<paper-material elevation="1">
-		<div style="width: 100%;">
-			<div style="margin: 0 auto;">
-				<img src="../../images/touch/logotipo_tocho.png" class="img-logo">
-			</div>
-			<div style="width: 90%; margin-left: 5%;">
-				<c:if test='${user != ""}'>
-					Estás identificado con el siguiente E-mail: <c:out value="${user}" />
-				</c:if>
-				<c:if test='${user == ""}'>
-					<div>
-						<form action="login" method="post">
-							<paper-input label="Usuario" name="user"></paper-input>
-							<paper-input label="Contraseña" name="pass" type="password"></paper-input>
-							<input type="submit" id="submit" value="submit">
-						</form>
-					</div>
-				</c:if>
-				<div style="margin-top: 2em;">
-					<c:if test='${user == ""}'>
-						<div style="display: inline-block; width: 49.5%">
-							<paper-checkbox>Mantener sesión iniciada</paper-checkbox>
-							<p>
-								<span>¿No estás registrado?<a href="register.jsp">Regístrate</a></span>
-							</p>
-						</div>
-					</c:if>
-			</div>
-		</div>
-	</div>
-	</paper-material> </paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
+		<table>
+			<c:forEach items="${friends}" var="friend">
+				<tr>
+					<td><c:out value="${friend}"/></td>
+					<td><paper-icon-button onclick="newTransaction()" icon="add" alt="NewTransaction" class="blue"
+						title="New Transaction"></td>
+					<td><paper-icon-button onclick="removeFriend()" icon="delete" alt="RemoveFriend" class="red"
+						title="Remove Friend"></td>
+				</tr>
+			</c:forEach>
+		</table>
+		</paper-material>
+	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
 	<!--
@@ -223,5 +246,13 @@ span { @apply (--paper-font-body1);
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
 </body>
+
+<script>
+
+function clearSearch() {
+	document.getElementById("search").value = "";
+}
+
+</script>
 
 </html>

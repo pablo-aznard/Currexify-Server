@@ -45,6 +45,7 @@ public class FriendsServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String user = (String) request.getSession().getAttribute("user");
 		String friend = (String) request.getParameter("friend");
+		String search = (String) request.getParameter("search");
 		String add = (String) request.getParameter("add");
 		
 		EntityManager em = EMFService.get().createEntityManager();
