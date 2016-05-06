@@ -65,31 +65,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- For shared styles, shared-styles.html import in elements.html -->
 <style is="custom-style" include="shared-styles"></style>
 <style>
+:host {
+	display: block;
+}
+
 span { @apply (--paper-font-body1);
 	
 }
 
-.img-profile {
-	width: 76px;
-	height: 76px;
-	border-radius: 38px;
+.column-6 {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	width: 49.5%;
 }
 
-.name {
-	margin-bottom: 10px;
-	font-size: 18px;
+paper-dropdown-menu {
+	width: 100%;
 }
 
-.notify {
-	font-size: 12px;
+div.recommended {
+	vertical-align: bottom;
+}
+
+#submit {
+	color: white;
+	background-color: #4AAECF;
+	width: 20%;
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	min-width: 5.14em;
+	margin: 0 0.29em;
+	border: none;
+	text-align: center;
+	font: inherit;
+	text-transform: uppercase;
+	outline-width: 0;
+	border-radius: 3px;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	z-index: 0;
+	padding: 0.7em 0.57em;
+	float: right;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
+		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
 .content {
 	padding: 54px 64px;
-}
-
-.button-bottom {
-	float: right;
 }
 </style>
 </head>
@@ -106,40 +134,34 @@ span { @apply (--paper-font-body1);
 		class="menu-name"><img src="images/touch/logotipo_tocho.png"
 		style="width: 80px"></span> </paper-toolbar> <!-- Drawer Content --> <paper-menu
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
-	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
+	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
-	</a>
-	<c:if test='${user != ""}'>
+	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
 			<span>Profile</span>
-		</a> 
-	</c:if>
-	<c:if test='${user == ""}'>
+		</a>
+	</c:if> <c:if test='${user == ""}'>
 		<a data-route="users" href="login"> <iron-icon
 				icon="verified-user"></iron-icon> <span>Login</span>
 		</a>
-	</c:if>
-	<c:if test='${user != ""}'>
+	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-			icon="swap-horiz"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transactions</span>
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="friends" href="friends"> <iron-icon
 				icon="account-circle"></iron-icon> <span>Friend Zone</span>
 		</a>
-	</c:if>
-	<a data-route="contact" href="contact"> <iron-icon
-			icon="mail"></iron-icon> <span>Contact</span>
-	</a>
-	<c:if test='${user != ""}'>
+	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
+		<span>Contact</span>
+	</a> <c:if test='${user != ""}'>
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
 			<a href="<c:url value="${url}"/>"> <iron-icon
 					icon="subdirectory-arrow-left"></iron-icon> <c:out
 					value="${urlLinktext}" /></a>
 		</div>
-	</c:if>
-	</paper-menu> </paper-scroll-header-panel>  <!-- Main Area --> <paper-scroll-header-panel main
+	</c:if> </paper-menu> </paper-scroll-header-panel> <!-- Main Area --> <paper-scroll-header-panel main
 		id="headerPanelMain" condenses keep-condensed-header>
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -158,27 +180,26 @@ span { @apply (--paper-font-body1);
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1"> 
-			<c:if test='${user != ""}'>
-			<a class="button-bottom" href="/modificar"> <paper-button title="Modify Profile">Modify Profile</paper-button></a>
-			<a class="button-bottom" href="/addMoney"> <paper-button title="Add Money">Insert Coin</paper-button></a>
-			<a class="button-bottom" href="/takeMoneyOut"> <paper-button title="Take Money Out">Give me my money</paper-button></a>
-			</c:if>
-		<div style="width: 100%;">
-			<div
-				style="display: inline-block; vertical-align: middle; margin-right: 30px">
-				<img src="images/touch/user-default.png" class="img-profile">
+		<paper-material>
+		<form action="takeMoneyOut" method="post" name="Form">
+			<div class="row">
+				<paper-input id="name" label="Enter your full name" name="name">
+				<paper-icon-button suffix onclick="clearName()" icon="clear"
+					alt="clear" title="clear"></paper-input>
 			</div>
-			<div style="display: inline-block;">
-				<div class="name">
-					<span><c:out value="${user}" /></span>
-				</div>
-				<div class="notify">
-					Notificaciones de cambio: <c:out value="${notificaciones}" />
-				</div>
+			<div class="row">
+				<paper-input id="iban" label="Enter your IBAN" name="iban">
+				<paper-icon-button suffix onclick="clearIBAN()" icon="clear"
+					alt="clear" title="clear"></paper-input>
 			</div>
-		</div>
-		<currencies-list title="Budget of currencies" currencies='<c:out value="${currencies}"/>'></currencies-list> </paper-material>
+			<div class="row">
+				<paper-input id="quantity" type="number" label="Enter a quantity"
+					name="quantity"> <paper-icon-button suffix
+					onclick="clearQuantity()" icon="clear" alt="clear" title="clear"></paper-input>
+			</div>
+			<input type="submit" value="submit" id="submit">
+		</paper-material>
+		</form>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
@@ -203,5 +224,30 @@ span { @apply (--paper-font-body1);
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
 </body>
+
+<script>
+	window.onload = getUrlVars;
+	function getUrlVars() {
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+				function(m, key, value) {
+					vars[key] = value;
+				});
+		if (vars.error == "true")
+			alert("No tienes suficiente dinero para sacar esa cantidad")
+	}
+
+	function clearIBAN() {
+		document.getElementById("iban").value = "";
+	}
+
+	function clearName() {
+		document.getElementById("name").value = "";
+	}
+
+	function clearQuantity() {
+		document.getElementById("quantity").value = "";
+	}
+</script>
 
 </html>

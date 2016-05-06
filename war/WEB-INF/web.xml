@@ -101,6 +101,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>AddMoney</servlet-name>
 		<url-pattern>/addMoney</url-pattern>
 	</servlet-mapping>
+ 	<servlet>
+		<servlet-name>TakeMoneyOut</servlet-name>
+		<servlet-class>es.currexify.server.TakeMoneyOutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TakeMoneyOut</servlet-name>
+		<url-pattern>/takeMoneyOut</url-pattern>
+	</servlet-mapping>
 	<servlet>
 	
 		<servlet-name>Prueba1</servlet-name>
