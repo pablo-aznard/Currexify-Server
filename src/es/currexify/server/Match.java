@@ -146,6 +146,36 @@ public class Match extends HttpServlet {
 		}
 		return cAmount;
 	}
+	
+	private void updateTransaction(TransactionModel trans, double amount){
+			EntityManager em = EMFService.get().createEntityManager();
+			TransactionDAOImpl tdao = TransactionDAOImpl.getInstance();
+			
+			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+			UsuariosModel um1 = udao.readUserById(em, trans.getId().getParent().getId());
+			
+			if(amount<trans.getAmountLeft()){
+				trans.setAmountLeft(trans.getAmountLeft()-amount);
+				tdao.updateTransaction(em, trans);
+			}
+			else{
+				double totalAmountConverted = getConverted(trans.getSCoin(), trans.getDCoin(), trans.getAmount());
+				HistoryModel hm1s = new HistoryModel(
+						um1.getCardN(), trans.getSCoin(), trans.getAmount(), "Saliente", new Date());
+				HistoryModel hm1e = new HistoryModel(
+						um1.getCardN(), trans.getDCoin(), totalAmountConverted, "Entrante", new Date());
+				
+				CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(
+						trans.getCardN(), trans.getDCoin(), totalAmountConverted);
+				
+				udao.addHistoryToUser(em, hm1s, um1);
+				udao.addHistoryToUser(em, hm1e, um1);
+				udao.updateCurrency(em, um1, cbm1);
+				tdao.deleteTransaction(em, trans);
+			}
+			em.close();
+		
+	}
 
 	
 }
