@@ -1,6 +1,7 @@
 package es.currexify.server.model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,10 +14,12 @@ import javax.persistence.Table;
 import com.google.appengine.api.datastore.Key;
 
 @Entity
-@Table(name="TRANSACTION_MODEL")
-public class TransactionModel implements Serializable {
+@Table(name = "TRANSACTION_MODEL")
+public class TransactionModel implements Serializable,
+		Comparable<TransactionModel> {
 	private static final long serialVersionUID = 1L;
-	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Key key;
 	@Column(name = "CARD_N")
@@ -33,7 +36,7 @@ public class TransactionModel implements Serializable {
 	private Date eDate;
 	@Column(name = "FRIEND_ID")
 	private Long friendId;
-	
+
 	public TransactionModel(String cardN, String sCoin, String dCoin,
 			double amount, Date eDate) {
 		this.cardN = cardN;
@@ -44,7 +47,7 @@ public class TransactionModel implements Serializable {
 		this.eDate = eDate;
 		this.friendId = 0L;
 	}
-	
+
 	public TransactionModel(String cardN, String sCoin, String dCoin,
 			double amount, Date eDate, Long friendId) {
 		this.cardN = cardN;
@@ -95,11 +98,11 @@ public class TransactionModel implements Serializable {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	
+
 	public double getAmountLeft() {
 		return amountLeft;
 	}
-	
+
 	public void setAmountLeft(double amountLeft) {
 		this.amountLeft = amountLeft;
 	}
@@ -111,12 +114,34 @@ public class TransactionModel implements Serializable {
 	public void setEDate(Date eDate) {
 		this.eDate = eDate;
 	}
-	
-	public Long getFriendId(){
+
+	public Long getFriendId() {
 		return friendId;
 	}
-	
+
 	public void setFriendId(Long friendId) {
 		this.friendId = friendId;
 	}
+
+	public static Comparator<TransactionModel> DateComparator = new Comparator<TransactionModel>() {
+
+		public int compare(TransactionModel t1, TransactionModel t2) {
+
+			// ascending order
+			return t1.compareTo(t2);
+
+			// descending order
+			// return fruitName2.compareTo(fruitName1);
+		}
+
+	};
+
+	 @Override
+	 public int compareTo(TransactionModel tm) {
+	 int compareDate = (int) ((TransactionModel) tm).getEDate().getTime();
+	
+	 //ascending order
+	 return (int) (this.eDate.getTime() - compareDate);
+	
+	 }
 }
