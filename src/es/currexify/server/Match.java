@@ -1,7 +1,10 @@
 package es.currexify.server;
 
 import java.io.IOException;
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +36,20 @@ public class Match extends HttpServlet {
 		
 		List<TransactionModel> gbp_usd = transdao.readByCurrency(em, "GBP", "USD");
 		List<TransactionModel> usd_gbp = transdao.readByCurrency(em, "USD", "GBP");
+
+		Comparator<TransactionModel> tmComparator = new Comparator<TransactionModel>() {
+			@Override
+			public int compare(TransactionModel o1, TransactionModel o2) {
+				return o1.getEDate().compareTo(o2.getEDate());
+			}
+		}; 
+		
+		Collections.sort(eur_gbp, tmComparator);
+		Collections.sort(gbp_eur, tmComparator);
+		Collections.sort(eur_usd, tmComparator);
+		Collections.sort(usd_eur, tmComparator);
+		Collections.sort(gbp_usd, tmComparator);
+		Collections.sort(usd_gbp, tmComparator);
 		
 		doMatch(eur_gbp, gbp_eur);
 	}
