@@ -111,7 +111,7 @@ span { @apply (--paper-font-body1);
 	</a>
 	<c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
-			<span>Profile</span>
+			<span>Perfil</span>
 		</a> 
 	</c:if>
 	<c:if test='${user == ""}'>
@@ -121,15 +121,15 @@ span { @apply (--paper-font-body1);
 	</c:if>
 	<c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-			icon="swap-horiz"></iron-icon> <span>Transactions</span>
+			icon="swap-horiz"></iron-icon> <span>Transacciones</span>
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="friends" href="friends"> <iron-icon
-				icon="account-circle"></iron-icon> <span>Friend Zone</span>
+				icon="account-circle"></iron-icon> <span>Amigos</span>
 		</a>
 	</c:if>
 	<a data-route="contact" href="contact"> <iron-icon
-			icon="mail"></iron-icon> <span>Contact</span>
+			icon="mail"></iron-icon> <span>Contacto</span>
 	</a>
 	<c:if test='${user != ""}'>
 		<div style="position: absolute; bottom: 0; width: 100%">
@@ -160,9 +160,9 @@ span { @apply (--paper-font-body1);
 	<div class="content">
 		<paper-material elevation="1"> 
 			<c:if test='${user != ""}'>
-			<a class="button-bottom" href="/modificar"> <paper-button title="Modify Profile">Modify Profile</paper-button></a>
-			<a class="button-bottom" href="/addMoney"> <paper-button title="Add Money">Insert Coin</paper-button></a>
-			<a class="button-bottom" href="/takeMoneyOut"> <paper-button title="Take Money Out">Give me my money</paper-button></a>
+			<a class="button-bottom" href="/modificar"> <paper-button title="Modify Profile">Modificar perfil</paper-button></a>
+			<a class="button-bottom" href="/addMoney"> <paper-button title="Add Money">Ingresar dinero</paper-button></a>
+			<a class="button-bottom" href="/takeMoneyOut"> <paper-button title="Take Money Out">Sacar dinero</paper-button></a>
 			</c:if>
 		<div style="width: 100%;">
 			<div
@@ -172,9 +172,6 @@ span { @apply (--paper-font-body1);
 			<div style="display: inline-block;">
 				<div class="name">
 					<span><c:out value="${user}" /></span>
-				</div>
-				<div class="notify">
-					Notificaciones de cambio: <c:out value="${notificaciones}" />
 				</div>
 			</div>
 		</div>

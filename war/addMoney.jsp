@@ -138,7 +138,7 @@ div.recommended {
 		<span>Home</span>
 	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
-			<span>Profile</span>
+			<span>Perfil</span>
 		</a>
 	</c:if> <c:if test='${user == ""}'>
 		<a data-route="users" href="login"> <iron-icon
@@ -146,14 +146,14 @@ div.recommended {
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-				icon="swap-horiz"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transacciones</span>
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="friends" href="friends"> <iron-icon
-				icon="account-circle"></iron-icon> <span>Friend Zone</span>
+				icon="account-circle"></iron-icon> <span>Amigos</span>
 		</a>
 	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
-		<span>Contact</span>
+		<span>Contacto</span>
 	</a> <c:if test='${user != ""}'>
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
@@ -205,12 +205,12 @@ div.recommended {
 					<input type="hidden" name="card" value="{{select}}">
 				</div>
 				<div class="column-6">
-					<paper-input id="name" label="Enter your full name" name="name">
+					<paper-input id="name" label="Introduzca nombre y apellidos" name="name">
 						<paper-icon-button
 							suffix onclick="clearName()" icon="clear" alt="clear"
 							title="clear">
 					</paper-input>
-					<paper-input id="card" type="number" label="Card Number" name="cardNumber" maxlength="16">
+					<paper-input id="card" type="number" label="Numero de tarjeta" name="cardNumber" maxlength="16">
 						<iron-icon icon="credit-card" prefix></iron-icon>
 						<paper-icon-button
 							suffix onclick="clearCardNumber()" icon="clear" alt="clear"
@@ -220,7 +220,7 @@ div.recommended {
 			</div>
 			<div class="row">
 				<div class="column-6">
-					<paper-input id="expirate" label="Expiration date" name="expirate">
+					<paper-input id="expirate" label="Fecha de expiracion" name="expirate">
 						<paper-icon-button
 							suffix onclick="clearExpirate()" icon="clear" alt="clear"
 							title="clear">
@@ -235,13 +235,28 @@ div.recommended {
 				</div>
 			</div>
 			<div class="row">
-				<paper-input id="quantity" type="number" label="Enter a quantity" name="quantity">
+				<paper-input id="quantity" type="number" label="Introduzca una cantidad" name="quantity">
 					<paper-icon-button
 						suffix onclick="clearQuantity()" icon="clear" alt="clear"
 						title="clear">
 				</paper-input>
 			</div>
-			<input type="submit" value="submit" id="submit">
+			<div class="row">
+					<paper-listbox selected="{{select2}}"> 
+						<paper-item>
+							EUR
+						</paper-item>
+						<paper-item>
+							USD
+						</paper-item>
+						<paper-item>
+							GBP
+						</paper-item>
+					</paper-listbox>
+					
+					<input type="hidden" name="card" value="{{select2}}">
+			</div>
+			<input type="submit" value="Enviar" id="submit">
 		</paper-material>
 		</form>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span

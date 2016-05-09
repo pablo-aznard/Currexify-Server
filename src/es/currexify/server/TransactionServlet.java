@@ -40,6 +40,7 @@ public class TransactionServlet extends HttpServlet {
 					double finalValue = Math.round(hm.getAmount() * 100.0) / 100.0;
 					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getCoin()));
 					json.put("type", hm.getType());
+					json.put("date", hm.getDate());
 					json.put("user", usuario.getEmail());
 					jray.add(json.toString());
 				}
@@ -66,11 +67,11 @@ public class TransactionServlet extends HttpServlet {
 	private String getCurrencySymbol(String currencyName) {
 		switch (currencyName) {
 		case "EUR":
-			return "€";
+			return "ï¿½";
 		case "USD":
 			return "$";
 		case "GBP":
-			return "£";
+			return "ï¿½";
 		default:
 			return "";
 		}

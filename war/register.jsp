@@ -143,7 +143,7 @@ paper-input iron-icon {
 		<span>Home</span>
 	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
-			<span>Profile</span>
+			<span>Perfil</span>
 		</a>
 	</c:if> <c:if test='${user == ""}'>
 		<a data-route="users" href="login"> <iron-icon
@@ -151,14 +151,14 @@ paper-input iron-icon {
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-				icon="swap-horiz"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transacciones</span>
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="friends" href="friends"> <iron-icon
-				icon="account-circle"></iron-icon> <span>Friend Zone</span>
+				icon="account-circle"></iron-icon> <span>Amigos</span>
 		</a>
 	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
-		<span>Contact</span>
+		<span>Contacto</span>
 	</a> <c:if test='${user != ""}'>
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
@@ -206,19 +206,18 @@ paper-input iron-icon {
 						<iron-icon icon="mail" prefix></iron-icon> <paper-icon-button
 							suffix onclick="clearEmail()" icon="clear" alt="clear"
 							title="clear"> </paper-icon-button> </paper-input>
-						<paper-input id="address" name="address" label="Address">
+						<paper-input id="address" name="address" label="Direccion">
 						<iron-icon icon="home" prefix></iron-icon> <paper-icon-button
 							suffix onclick="clearAddress()" icon="clear" alt="clear"
 							title="clear"></paper-input>
-						<gold-phone-input label="Spanish phone number" label="Phone" name="phone" country-code="34"
+						<gold-phone-input label="Numero telefono" label="Phone" name="phone" country-code="34"
 							phone-number-pattern="XXX-XXX-XXX" id="phone"  auto-validate>
 						</gold-phone-input>
 					</div>
 					<div style="margin-top: 2em;">
 						<div style="display: inline-block; width: 100%; margin: 0 auto">
-							<paper-button id="clear" raised onclick="clearAll()">Clear
-							fields</paper-button>
-							<input type="submit" value="submit" id="submit">
+							<paper-button id="clear" raised onclick="clearAll()">Limpiar campos</paper-button>
+							<input type="submit" value="Enviar" id="submit">
 						</div>
 					</div>
 

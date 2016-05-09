@@ -184,7 +184,7 @@ table th {
 		<span>Home</span>
 	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
-			<span>Profile</span>
+			<span>Perfil</span>
 		</a>
 	</c:if> <c:if test='${user == ""}'>
 		<a data-route="users" href="login"> <iron-icon
@@ -192,14 +192,14 @@ table th {
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-				icon="swap-horiz"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transacciones</span>
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="friends" href="friends"> <iron-icon
-				icon="account-circle"></iron-icon> <span>Friend Zone</span>
+				icon="account-circle"></iron-icon> <span>Amigos</span>
 		</a>
 	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
-		<span>Contact</span>
+		<span>Contacto</span>
 	</a> <c:if test='${user != ""}'>
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
@@ -233,12 +233,12 @@ table th {
 					name="search"> <paper-icon-button suffix
 					onclick="clearSearch()" icon="clear" alt="clear" title="clear"></paper-input>
 			</div>
-			<input type="submit" value="submit" id="submit">
+			<input type="submit" value="Enviar" id="submit">
 		</form>
 		<div style="width: 100%; clear: both; height:5px; margin:40px;"></div>
 		<table style="width:100%">
 			<tr class="header">
-				<th colspan="2">Results</th>
+				<th colspan="2">Resultados</th>
 			</tr>
 			<c:forEach items="${searchRes}" var="search">
 				<tr style="width:100%">
@@ -248,7 +248,7 @@ table th {
 						<form action="friends?type=add" method="post" name="Form">
 							<input type="hidden" name="friend"
 								value="<c:out value="${search}" />">
-								<button type="submit" class="no-bg">Add Friend<iron-icon icon="favorite"
+								<button type="submit" class="no-bg">Añadir amigo<iron-icon icon="favorite"
 							alt="AddFriend" class="red" title="Add Friend"></button>
 						</form>
 					</td>
@@ -257,7 +257,7 @@ table th {
 		</table>
 		<table style="width:100%">
 			<tr class="header">
-				<th colspan="3">Friends Added</th>
+				<th colspan="3">Amigos añadidos</th>
 			</tr>
 			<c:forEach items="${friends}" var="friend">
 				<tr style="width:100%">
@@ -265,13 +265,13 @@ table th {
 					<td align="right" style="width:30%">
 						<form action="/newtransaction" method="get" name="Form">
 							<input type="hidden" name="friend"
-								value="<c:out value="${friend}" />"><button type="submit" class="no-bg">New Transaction<iron-icon icon="add"
+								value="<c:out value="${friend}" />"><button type="submit" class="no-bg">Nueva Transacci&oacute;n<iron-icon icon="add"
 							alt="New transaction" class="blue" title="New Transaction"></iron-icon></button>
 						</form></td>
 					<td  align="right" style="width:30%">
 						<form action="friends?type=remove" method="post" name="Form">
 							<input type="hidden" name="friend"
-								value="<c:out value="${friend}" />"><button type="submit" class="no-bg">Remove Friend<iron-icon icon="delete"
+								value="<c:out value="${friend}" />"><button type="submit" class="no-bg">Eliminar<iron-icon icon="delete"
 							alt="RemoveFriend" class="red" title="Remove Friend"></iron-icon></button>
 						</form></td>
 				</tr>

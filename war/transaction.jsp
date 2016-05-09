@@ -143,7 +143,7 @@ div.recommended {
 		<span>Home</span>
 	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
-			<span>Profile</span>
+			<span>Perfil</span>
 		</a>
 	</c:if> <c:if test='${user == ""}'>
 		<a data-route="users" href="login"> <iron-icon
@@ -151,14 +151,14 @@ div.recommended {
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-				icon="swap-horiz"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transacciones</span>
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="friends" href="friends"> <iron-icon
-				icon="account-circle"></iron-icon> <span>Friend Zone</span>
+				icon="account-circle"></iron-icon> <span>Amigos</span>
 		</a>
 	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
-		<span>Contact</span>
+		<span>Contacto</span>
 	</a> <c:if test='${user != ""}'>
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
@@ -187,7 +187,7 @@ div.recommended {
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
 		<paper-material elevation="1"> 
-		<a class="button-bottom" href="/newtransaction"> <paper-button title="New Transaction">New Transaction</paper-button></a>
+		<a class="button-bottom" href="/newtransaction"> <paper-button title="New Transaction">Nueva Transacci&oacute;n</paper-button></a>
 		<transaction-table
 			style="margin-top:50px" title="History"
 			transactions='<c:out value="${history}"/>'> </transaction-table> 

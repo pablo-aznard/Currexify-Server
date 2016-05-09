@@ -138,7 +138,7 @@ div.recommended {
 		<span>Home</span>
 	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
-			<span>Profile</span>
+			<span>Perfil</span>
 		</a>
 	</c:if> <c:if test='${user == ""}'>
 		<a data-route="users" href="login"> <iron-icon
@@ -146,14 +146,14 @@ div.recommended {
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-				icon="swap-horiz"></iron-icon> <span>Transactions</span>
+				icon="swap-horiz"></iron-icon> <span>Transacciones</span>
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="friends" href="friends"> <iron-icon
-				icon="account-circle"></iron-icon> <span>Friend Zone</span>
+				icon="account-circle"></iron-icon> <span>Amigos</span>
 		</a>
 	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
-		<span>Contact</span>
+		<span>Contacto</span>
 	</a> <c:if test='${user != ""}'>
 		<div style="position: absolute; bottom: 0; width: 100%">
 			<hr>
@@ -186,7 +186,7 @@ div.recommended {
 			<div class="row">
 				<div class="column-6">
 					<paper-input id="amountInput" type="number" name="amount"
-						label="Enter the quantity" onkeydown="amountChanged(this.value)">
+						label="Introduzca una cantidad" onkeydown="amountChanged(this.value)">
 					<div suffix>{{currency}}</div>
 					</paper-input>
 				</div>
@@ -223,14 +223,7 @@ div.recommended {
 					<input type="hidden" name="currND" value="{{disk2}}">
 				</div>
 			</div>
-			<div class="row">
-				<div class="column-6">
-						El dinero que vas a percibir es: WIP
-						<!-- <span id="amountChanged"
-							style="font-size: 20px; font-weight: 800"></span>-->
-				</div>
-			</div>
-			<input type="submit" value="submit" id="submit">
+			<input type="submit" value="Enviar" id="submit">
 		</paper-material>
 		</form>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
