@@ -189,7 +189,7 @@ div.recommended {
 		<paper-material elevation="1"> 
 		<a class="button-bottom" href="/newtransaction"> <paper-button title="New Transaction">Nueva Transacci&oacute;n</paper-button></a>
 		<transaction-table
-			style="margin-top:50px" title="History"
+			style="margin-top:50px" title="Historial"
 			transactions='<c:out value="${history}"/>'> </transaction-table> 
 		</a> </paper-material>
 	</div>

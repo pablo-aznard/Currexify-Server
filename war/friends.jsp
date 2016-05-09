@@ -229,7 +229,7 @@ table th {
 		<paper-material>
 		<form action="searchFriends" method="post" name="Form" id="ajaxform">
 			<div class="row">
-				<paper-input id="search" label="Enter the email of your friend"
+				<paper-input id="search" label="Introduzca el email de su amigo"
 					name="search"> <paper-icon-button suffix
 					onclick="clearSearch()" icon="clear" alt="clear" title="clear"></paper-input>
 			</div>

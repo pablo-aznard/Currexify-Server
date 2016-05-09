@@ -40,7 +40,7 @@ public class TransactionServlet extends HttpServlet {
 					double finalValue = Math.round(hm.getAmount() * 100.0) / 100.0;
 					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getCoin()));
 					json.put("type", hm.getType());
-					json.put("date", hm.getDate());
+					json.put("date", hm.getDate().toLocaleString().replace("-", " "));
 					json.put("user", usuario.getEmail());
 					jray.add(json.toString());
 				}

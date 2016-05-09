@@ -206,11 +206,11 @@ paper-input iron-icon {
 						<iron-icon icon="mail" prefix></iron-icon> <paper-icon-button
 							suffix onclick="clearEmail()" icon="clear" alt="clear"
 							title="clear"> </paper-icon-button> </paper-input>
-						<paper-input id="address" name="address" label="Direccion" value="<c:url value="${address}"/>">
+						<paper-input id="address" name="address" label="Dirección" value="<c:url value="${address}"/>">
 						<iron-icon icon="home" prefix></iron-icon> <paper-icon-button
 							suffix onclick="clearAddress()" icon="clear" alt="clear"
 							title="clear"></paper-input>
-						<gold-phone-input label="Numero telefono" label="Phone" name="phone" country-code="34"
+						<gold-phone-input label="Número teléfono" label="Phone" name="phone" country-code="34"
 							phone-number-pattern="XXX-XXX-XXX" id="phone"  auto-validate  value="<c:url value="${phone}"/>">
 						</gold-phone-input>
 					</div>

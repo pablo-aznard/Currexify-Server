@@ -175,7 +175,7 @@ span { @apply (--paper-font-body1);
 				</div>
 			</div>
 		</div>
-		<currencies-list title="Budget of currencies" currencies='<c:out value="${currencies}"/>'></currencies-list> </paper-material>
+		<currencies-list title="Saldo de divisas" currencies='<c:out value="${currencies}"/>'></currencies-list> </paper-material>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
