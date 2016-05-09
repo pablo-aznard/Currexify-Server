@@ -29,6 +29,15 @@ public class TransactionServlet extends HttpServlet {
 
 		JSONObject json = new JSONObject();
 		List<String> jray = new ArrayList<String>();
+		
+		Comparator<HistoryModel> tmComparator = new Comparator<HistoryModel>() {
+			@Override
+			public int compare(HistoryModel o1, HistoryModel o2) {
+				// TODO Auto-generated method stub
+				return o2.getDate().compareTo(o1.getDate());
+			}
+			
+		};
 
 		if (email != null) {
 			try {
@@ -36,6 +45,8 @@ public class TransactionServlet extends HttpServlet {
 				UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 				this.usuario = udao.readUserByEmail(em, email);
 				List<HistoryModel> umh = usuario.getHistories();
+				
+				Collections.sort(umh, tmComparator);
 				for (HistoryModel hm : umh) {
 					double finalValue = Math.round(hm.getAmount() * 100.0) / 100.0;
 					json.put("quantity", finalValue + this.getCurrencySymbol(hm.getCoin()));
