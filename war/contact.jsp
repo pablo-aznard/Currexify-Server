@@ -114,6 +114,19 @@ span { @apply (--paper-font-body1);
 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
 		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
+
+.yellow-button {
+	text-transform:none;
+	color: #eeff41;
+	margin-left: 20px;
+}
+</style>
+
+<style is="custom-style">
+	#send {
+		--paper-toast-background-color: green;
+		--paper-toast-color: white;
+	}
 </style>
 </head>
 
@@ -194,9 +207,11 @@ span { @apply (--paper-font-body1);
 				</tr>
 				<tr style="width:100%">
 					<td style="width:100%">
+			<form action="contact" method="post">
 						<input type="submit" id="submit" label="Enviar">
+			</form>
 					</td>
-				</tr>
+				</tr> 
 		</table>
 		</br>
 		</br>
@@ -207,12 +222,12 @@ span { @apply (--paper-font-body1);
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
-	<!--
-    <paper-toast id="caching-complete"
+    <paper-toast id="send"
                  duration="6000"
-                 text="Caching complete! This app will work offline.">
+                 text="Message send! :)">
+        	<paper-button onclick="send.toggle()" class="yellow-button">Close now!</paper-button>
     </paper-toast>
-
+<!--
     <platinum-sw-register auto-register
                           clients-claim
                           skip-waiting
@@ -229,9 +244,20 @@ span { @apply (--paper-font-body1);
 	<!-- endbuild-->
 	<script src="http://maps.googleapis.com/maps/api/js"></script>
 	<script>
+	window.onload = getUrlVars;
+	function getUrlVars() {
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+				function(m, key, value) {
+					vars[key] = value;
+				});
+		if (vars.send == "true")
+			document.getElementById("send").open();
+	}
+	
 		function initialize() {
 		  var mapProp = {
-		    center:new google.maps.LatLng(40.4526826,-3.768343),
+		    center:new google.maps.LatLng(40.4526826,-3.726343),
 		    zoom:17,
 		    mapTypeId:google.maps.MapTypeId.ROADMAP
 		  };
