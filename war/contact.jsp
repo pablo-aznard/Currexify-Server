@@ -118,7 +118,7 @@ span { @apply (--paper-font-body1);
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="account-circle" href="friends"> <iron-icon
-				icon="swap-horiz"></iron-icon> <span>Amigos</span>
+				icon="account-circle"></iron-icon> <span>Amigos</span>
 		</a>
 	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
 		<span>Contacto</span>

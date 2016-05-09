@@ -16,6 +16,9 @@ import es.currexify.server.model.*;
 
 @SuppressWarnings("serial")
 public class AddMoneyServlet extends HttpServlet {
+	
+	String[] currencies = { "EUR", "USD", "GBP" };
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String url = "";
 		String urlLinktext = "Login";
@@ -37,6 +40,7 @@ public class AddMoneyServlet extends HttpServlet {
 
 		req.getSession().setAttribute("user", user);
 		req.getSession().setAttribute("url", url);
+		req.getSession().setAttribute("currencies", currencies);
 		req.getSession().setAttribute("urlLinktext", urlLinktext);
 		RequestDispatcher view = req.getRequestDispatcher("addMoney.jsp");
 		view.forward(req, resp);
@@ -49,14 +53,17 @@ public class AddMoneyServlet extends HttpServlet {
 	    String cardNum = request.getParameter("cardNumber");
 	    String expirate = request.getParameter("expirate");
 	    String cvv = request.getParameter("cvv");
+	    String currency = request.getParameter("currency");
 	    String quantity = request.getParameter("quantity");
+	    
+	    System.out.println(currency);
 
 		EntityManager em = EMFService.get().createEntityManager();
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 		UsuariosModel um = udao.readUserByName(em, user);
 		List<CurrencyBudgetModel> cbms = um.getUserCurrencies();
 		for (CurrencyBudgetModel cbm : cbms) {
-			if (cbm.getCurrency().equals("GBP")) {
+			if (cbm.getCurrency().equals(currency)) {
 				cbm.setBudget(cbm.getBudget() + Double.parseDouble(quantity));
 			}
 		}

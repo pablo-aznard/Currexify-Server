@@ -136,11 +136,11 @@ span { @apply (--paper-font-body1);
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="transaction" href="transaction"> <iron-icon
-				icon="account-circle"></iron-icon> <span>Transacciones</span>
+				icon="swap-horiz"></iron-icon> <span>Transacciones</span>
 		</a>
 	</c:if> <c:if test='${user != ""}'>
 		<a data-route="friends" href="friends"> <iron-icon
-				icon="swap-horiz"></iron-icon> <span>Amigos</span>
+				icon="account-circle"></iron-icon> <span>Amigos</span>
 		</a>
 	</c:if> <a data-route="contact" href="contact"> <iron-icon icon="mail"></iron-icon>
 		<span>Contacto</span>
@@ -183,7 +183,7 @@ span { @apply (--paper-font-body1);
 						<form action="login" method="post">
 							<paper-input label="Usuario" name="user"></paper-input>
 							<paper-input label="Contraseña" name="pass" type="password"></paper-input>
-							<input type="submit" id="submit" value="submit">
+							<input type="submit" id="submit" value="Enviar">
 						</form>
 					</div>
 				</c:if>

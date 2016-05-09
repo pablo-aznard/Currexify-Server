@@ -242,19 +242,14 @@ div.recommended {
 				</paper-input>
 			</div>
 			<div class="row">
-					<paper-listbox selected="{{select2}}"> 
-						<paper-item>
-							EUR
-						</paper-item>
-						<paper-item>
-							USD
-						</paper-item>
-						<paper-item>
-							GBP
-						</paper-item>
-					</paper-listbox>
-					
-					<input type="hidden" name="card" value="{{select2}}">
+					<paper-dropdown-menu label="Type"> <paper-menu
+						class="dropdown-content" attr-for-selected="value"
+						selected="{{curr}}"> <c:forEach
+						items="${currencies}" var="curr2">
+						<paper-item value="<c:out value="${curr2}"/>"> <c:out
+							value="${curr2}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+					<input type="hidden" name="currency" value="{{curr}}">
 			</div>
 			<input type="submit" value="Enviar" id="submit">
 		</paper-material>

@@ -197,6 +197,16 @@ div.recommended {
 					name="quantity"> <paper-icon-button suffix
 					onclick="clearQuantity()" icon="clear" alt="clear" title="clear"></paper-input>
 			</div>
+			<div class="row">
+					<paper-dropdown-menu label="Type"> <paper-menu
+						class="dropdown-content" attr-for-selected="value"
+						selected="{{curr}}"> <c:forEach
+						items="${currencies}" var="curr2">
+						<paper-item value="<c:out value="${curr2}"/>"> <c:out
+							value="${curr2}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+					<input type="hidden" name="currency" value="{{curr}}">
+			</div>
 			<input type="submit" value="Enviar" id="submit">
 		</paper-material>
 		</form>
