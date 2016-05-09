@@ -34,7 +34,7 @@ public class UsuariosModel implements Serializable {
 	@OneToMany
 	@JoinColumn(name="USER_CURRENCIES")
 	private List<CurrencyBudgetModel> userCurrencies;
-	@OneToMany
+	@OneToMany(orphanRemoval=true)
 	@JoinColumn(name="USER_TRANSACTIONS")
 	private List<TransactionModel> userTransactions;
 		

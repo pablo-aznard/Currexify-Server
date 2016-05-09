@@ -88,6 +88,24 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 	}
 	
 	@Override
+	public boolean updateTransaction(EntityManager em, UsuariosModel um, TransactionModel tm) {
+
+		em.getTransaction().begin();
+		List<TransactionModel> tml = um.getUserTransactions();
+		for(TransactionModel tm2 : tml){
+			if(tm2.getId().equals(tm.getId())){
+				tm2.setAmount(tm.getAmount());
+				tm2.setAmountLeft(tm.getAmountLeft());
+			}
+		}
+		um.setUserTransactions(tml);
+		em.merge(um);
+		em.getTransaction().commit();
+		return true;
+
+	}
+	
+	@Override
 	public boolean updateCurrency(EntityManager em, UsuariosModel um, CurrencyBudgetModel cbm) {
 
 		em.getTransaction().begin();
@@ -163,6 +181,7 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		tml.add(tm);
 		um.setUserTransactions(tml);
 		em.merge(um);
+		em.persist(tm);
 		em.getTransaction().commit();
 		
 		return true;
@@ -172,7 +191,10 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		
 		em.getTransaction().begin();
 		List<TransactionModel> tml = um.getUserTransactions();
-		tml.remove(tm);
+		for(TransactionModel tmt : tml){
+			if (tmt.getId().equals(tm.getId()))
+				tml.remove(tmt);
+		}
 		um.setUserTransactions(tml);
 		em.merge(um);
 		em.getTransaction().commit();

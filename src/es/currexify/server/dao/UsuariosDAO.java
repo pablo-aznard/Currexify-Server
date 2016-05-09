@@ -23,5 +23,7 @@ public interface UsuariosDAO {
 	public boolean deleteUserTransaction(EntityManager em, TransactionModel tm, UsuariosModel um);
 	public boolean isUserUnique(EntityManager em, String user);
 	public boolean isEmailUnique(EntityManager em, String email);
+	boolean updateTransaction(EntityManager em, UsuariosModel um,
+			TransactionModel tm);
 	
 }

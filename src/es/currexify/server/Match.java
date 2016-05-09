@@ -69,10 +69,13 @@ public class Match extends HttpServlet {
 			// if (tm.getEDate().getTime() > new Date().getTime()+90000)
 			totalAmount2 += tm.getAmountLeft();
 		}
-
-		double totalAmount1Conv = getConverted(list1.get(0).getSCoin(), list1
+		double totalAmount1Conv = 0.0;
+		double totalAmount2Conv = 0.0;
+		if(!list1.isEmpty())
+			totalAmount1Conv = getConverted(list1.get(0).getSCoin(), list1
 				.get(0).getDCoin(), totalAmount1);
-		double totalAmount2Conv = getConverted(list2.get(0).getSCoin(), list2
+		if(!list2.isEmpty())
+			totalAmount2Conv = getConverted(list2.get(0).getSCoin(), list2
 				.get(0).getDCoin(), totalAmount2);
 		if (totalAmount1 < totalAmount2Conv) {
 			for (TransactionModel tm : list1) {
@@ -164,7 +167,8 @@ public class Match extends HttpServlet {
 
 		if (amount < trans.getAmountLeft()) {
 			trans.setAmountLeft(trans.getAmountLeft() - amount);
-			tdao.updateTransaction(em, trans);
+			udao.updateTransaction(em, um1
+					, trans);
 		} else {
 			double totalAmountConverted = getConverted(trans.getSCoin(),
 					trans.getDCoin(), trans.getAmount());
@@ -180,7 +184,7 @@ public class Match extends HttpServlet {
 			udao.addHistoryToUser(em, hm1s, um1);
 			udao.addHistoryToUser(em, hm1e, um1);
 			udao.updateCurrency(em, um1, cbm1);
-			tdao.deleteTransaction(em, trans);
+			udao.deleteUserTransaction(em, trans, um1);
 		}
 		em.close();
 
