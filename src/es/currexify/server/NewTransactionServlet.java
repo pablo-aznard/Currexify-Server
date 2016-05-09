@@ -71,15 +71,20 @@ public class NewTransactionServlet extends HttpServlet {
 		}
 
 		int days = 0;
-		if (time == times[1])
+		double charge = 0.015;
+		if (time == times[1]){
 			days = 3;
-		if (time == times[2])
+			charge = 0.013;
+		}
+		if (time == times[2]){
 			days = 7;
+			charge = 0.01;
+		}
 		cal.add(cal.MINUTE, days);
 		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, Double.parseDouble(amount), "bloqueado", new Date());
 		udao.addHistoryToUser(em, fromHm, udao.readUserByEmail(em, usuario.getEmail()));
 		
-		TransactionModel tm = new TransactionModel(usuario.getCardN(), from, to, Double.parseDouble(amount), cal.getTime());
+		TransactionModel tm = new TransactionModel(usuario.getCardN(), from, to, Double.parseDouble(amount), cal.getTime(), charge);
 		udao.addTransactionToUser(em, tm, udao.readUserByEmail(em, usuario.getEmail()));
 		
 		cal.add(cal.MINUTE, days*-1);

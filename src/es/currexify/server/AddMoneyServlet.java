@@ -56,7 +56,7 @@ public class AddMoneyServlet extends HttpServlet {
 		UsuariosModel um = udao.readUserByName(em, user);
 		List<CurrencyBudgetModel> cbms = um.getUserCurrencies();
 		for (CurrencyBudgetModel cbm : cbms) {
-			if (cbm.getCurrency().equals("EUR")) {
+			if (cbm.getCurrency().equals("GBP")) {
 				cbm.setBudget(cbm.getBudget() + Double.parseDouble(quantity));
 			}
 		}

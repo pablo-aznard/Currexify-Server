@@ -1,8 +1,6 @@
 package es.currexify.server;
 
 import java.io.IOException;
-import java.net.NetworkInterface;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -13,8 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.datanucleus.transaction.TransactionManager;
 
 import es.currexify.server.dao.*;
 import es.currexify.server.model.*;
@@ -54,6 +50,8 @@ public class Match extends HttpServlet {
 		Collections.sort(usd_gbp, tmComparator);
 
 		doBetterMatch(eur_gbp, gbp_eur);
+		doBetterMatch(eur_usd, usd_eur);
+		doBetterMatch(gbp_usd, usd_gbp);
 	}
 
 	private void doBetterMatch(List<TransactionModel> list1,
@@ -115,19 +113,6 @@ public class Match extends HttpServlet {
 		return;
 	}
 
-	private String getCurrencySymbol(String currencyName) {
-		switch (currencyName) {
-		case "EUR":
-			return "€";
-		case "USD":
-			return "$";
-		case "GBP":
-			return "£";
-		default:
-			return "";
-		}
-	}
-
 	private double getConverted(String from, String to, double oAmount) {
 		EntityManager em = EMFService.get().createEntityManager();
 		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
@@ -159,7 +144,6 @@ public class Match extends HttpServlet {
 
 	private void updateTransaction(TransactionModel trans, double amount) {
 		EntityManager em = EMFService.get().createEntityManager();
-		TransactionDAOImpl tdao = TransactionDAOImpl.getInstance();
 
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 		UsuariosModel um1 = udao.readUserById(em, trans.getId().getParent()
@@ -175,11 +159,11 @@ public class Match extends HttpServlet {
 			HistoryModel hm1s = new HistoryModel(um1.getCardN(),
 					trans.getSCoin(), trans.getAmount(), "Saliente", new Date());
 			HistoryModel hm1e = new HistoryModel(um1.getCardN(),
-					trans.getDCoin(), totalAmountConverted, "Entrante",
+					trans.getDCoin(), totalAmountConverted*(1-trans.getCharge()), "Entrante",
 					new Date());
 
 			CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(
-					trans.getCardN(), trans.getDCoin(), totalAmountConverted);
+					trans.getCardN(), trans.getDCoin(), totalAmountConverted*(1-trans.getCharge()));
 
 			udao.addHistoryToUser(em, hm1s, um1);
 			udao.addHistoryToUser(em, hm1e, um1);

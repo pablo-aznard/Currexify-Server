@@ -36,9 +36,11 @@ public class TransactionModel implements Serializable,
 	private Date eDate;
 	@Column(name = "FRIEND_ID")
 	private Long friendId;
+	@Column(name = "CHARGE")
+	private double charge;
 
 	public TransactionModel(String cardN, String sCoin, String dCoin,
-			double amount, Date eDate) {
+			double amount, Date eDate, double charge) {
 		this.cardN = cardN;
 		this.sCoin = sCoin;
 		this.dCoin = dCoin;
@@ -46,6 +48,7 @@ public class TransactionModel implements Serializable,
 		this.amountLeft = amount;
 		this.eDate = eDate;
 		this.friendId = 0L;
+		this.charge = charge;
 	}
 
 	public TransactionModel(String cardN, String sCoin, String dCoin,
@@ -122,7 +125,15 @@ public class TransactionModel implements Serializable,
 	public void setFriendId(Long friendId) {
 		this.friendId = friendId;
 	}
+	
+	public double getCharge() {
+		return charge;
+	}
 
+	public void setCharge(double charge) {
+		this.charge = charge;
+	}
+	
 	public static Comparator<TransactionModel> DateComparator = new Comparator<TransactionModel>() {
 
 		public int compare(TransactionModel t1, TransactionModel t2) {
