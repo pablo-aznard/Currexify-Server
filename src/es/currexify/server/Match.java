@@ -170,11 +170,20 @@ public class Match extends HttpServlet {
 			HistoryModel hm1e = new HistoryModel(um1.getCardN(),
 					trans.getDCoin(), totalAmountConverted*(1-trans.getCharge()), "Entrante",
 					new Date());
-
+			
 			CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(
 					trans.getCardN(), trans.getDCoin(), totalAmountConverted*(1-trans.getCharge()));
-
-			udao.addHistoryToUser(em, hm1s, um1);
+			
+			List<HistoryModel> hml = um1.getHistories();
+			for(HistoryModel h: hml){
+				if(h.getType().equals("bloqueado") && h.getAmount()==trans.getAmount()){
+					HistoryDAOImpl hdao = HistoryDAOImpl.getInstance();
+					h.setType("Saliente");
+					hdao.updateHistory(em, h);
+					break;
+				}
+			}
+			//udao.addHistoryToUser(em, hm1s, um1);
 			udao.addHistoryToUser(em, hm1e, um1);
 			udao.updateCurrency(em, um1, cbm1);
 			udao.deleteUserTransaction(em, trans, um1);
