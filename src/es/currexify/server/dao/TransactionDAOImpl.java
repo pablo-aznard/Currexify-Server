@@ -17,6 +17,14 @@ public class TransactionDAOImpl implements TransactionDAO {
 			instance = new TransactionDAOImpl();
 		return instance;
 	}
+	
+	@Override
+	public List<TransactionModel> readTransactions(EntityManager em) {
+		Query q = em.createQuery("select u from TransactionModel u");
+		List<TransactionModel> res = q.getResultList();
+		return res;
+	}
+	
 	@Override
 	public TransactionModel createTransaction(EntityManager em,
 			TransactionModel tm) {

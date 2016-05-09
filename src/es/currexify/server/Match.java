@@ -52,6 +52,15 @@ public class Match extends HttpServlet {
 		doBetterMatch(eur_gbp, gbp_eur);
 		doBetterMatch(eur_usd, usd_eur);
 		doBetterMatch(gbp_usd, usd_gbp);
+		
+		List<TransactionModel> all = transdao.readTransactions(em);
+		Collections.sort(all, tmComparator);
+		for(TransactionModel tmt : all) {
+			if (tmt.getEDate().before(new Date()))
+				updateTransaction(tmt, tmt.getAmountLeft());
+			else 
+				break;
+		}
 	}
 
 	private void doBetterMatch(List<TransactionModel> list1,
