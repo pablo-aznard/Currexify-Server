@@ -10,8 +10,6 @@ public interface TransactionDAO {
 	public TransactionModel createTransaction(EntityManager em, TransactionModel tm);
 	public List<TransactionModel> readTransactions(EntityManager em);
 	public List<TransactionModel> readByCurrency(EntityManager em, String sCoin, String dCoin);
-	public List<TransactionModel> readByFriendId(EntityManager em, Long friendId);
 	public boolean updateTransaction(EntityManager em, TransactionModel tm);
-	public boolean deleteTransaction(EntityManager em, TransactionModel tm);
 
 }

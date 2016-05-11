@@ -45,25 +45,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 	}
 
 	@Override
-	public List<TransactionModel> readByFriendId(EntityManager em, Long friendId) {
-		Query q = em.createQuery("select u from TransactionModel u where u.friendId=:friendId");
-		q.setParameter("friendId", friendId);
-		List<TransactionModel> res = q.getResultList();
-		return res;
-	}
-
-	@Override
 	public boolean updateTransaction(EntityManager em, TransactionModel tm) {
 		em.getTransaction().begin();
 		em.merge(tm);
-		em.getTransaction().commit();
-		return true;
-	}
-
-	@Override
-	public boolean deleteTransaction(EntityManager em, TransactionModel tm) {
-		em.getTransaction().begin();
-		em.remove(tm);
 		em.getTransaction().commit();
 		return true;
 	}

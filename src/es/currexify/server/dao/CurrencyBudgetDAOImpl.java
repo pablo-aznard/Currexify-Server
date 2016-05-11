@@ -43,17 +43,6 @@ public class CurrencyBudgetDAOImpl implements CurrencyBudgetDAO {
 		
 	}
 
-	@Override
-	public boolean deleteCurrencyBudgetById(EntityManager em, Long id) {
-		em.getTransaction().begin();
-		try {
-			CurrencyBudgetModel todo = em.find(CurrencyBudgetModel.class, id);
-		 	em.remove(todo);
-		} finally {
-			em.getTransaction().commit();
-			 em.close();
-		}
-		return true;
-	}
+	
 	
 }

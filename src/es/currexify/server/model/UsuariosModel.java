@@ -46,6 +46,7 @@ public class UsuariosModel implements Serializable {
 		this.address = address;
 		this.phone = phone;
 		this.cardN = generateCardN();
+		this.friends = new HashSet<String>();
 	}
 	
 	private String generateCardN(){
