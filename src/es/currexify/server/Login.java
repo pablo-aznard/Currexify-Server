@@ -59,7 +59,7 @@ public class Login extends HttpServlet {
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 		UsuariosModel um1 = udao.readUserByEmail(em, user);
 		if(um1 != null){
-			if(um1.getPassword().equals(pass)){
+			if(um1.getPassword().equals(UsuariosModel.encrypt(pass))){
 				request.getSession().setAttribute("login", um1.getEmail());
 				response.sendRedirect("profile");	
 			} else {

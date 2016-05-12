@@ -1,6 +1,8 @@
 package es.currexify.server.model;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
 
 import javax.persistence.*;
 
@@ -41,7 +43,7 @@ public class UsuariosModel implements Serializable {
 	public UsuariosModel(String name, String password, 
 			String email, String address, String phone) {
 		this.name = name;
-		this.password = password;
+		this.password = encrypt(password);
 		this.email = email;
 		this.address = address;
 		this.phone = phone;
@@ -123,4 +125,17 @@ public class UsuariosModel implements Serializable {
 		this.userTransactions = userTransactions;
 	}
 	
+	static public String encrypt (String pass) {
+		byte[] bytesOfMessage;
+		byte[] thedigest = null;
+		try {
+			 bytesOfMessage = pass.getBytes("UTF-8");
+			 MessageDigest md = MessageDigest.getInstance("MD5");
+			 thedigest = md.digest(bytesOfMessage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return thedigest.toString();
+	}
 }
