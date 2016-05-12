@@ -43,10 +43,25 @@ public class Profile extends HttpServlet {
 					json.put("currency", String.valueOf(cbm.getCurrency()));
 					jray.add(json.toString());
 				}
+				req.getSession().setAttribute("currencies", jray.toString());
+				
+				List<TransactionModel> tList = usuario.getUserTransactions();
+				System.out.println(tList.get(0).getAmountLeft());
+				json = new JSONObject();
+				jray = new ArrayList<String>();
+				for (TransactionModel tm : tList) {
+					if (tm.getFriendId() == null || tm.getFriendId() == 0)
+						continue;
+					double finalValue = Math.round(tm.getAmountLeft() * 100.0) / 100.0;
+					json.put("quantity", finalValue);
+					json.put("type", tm.getDCoin());
+					json.put("user", udao.readUserById(em, tm.getFriendId()).getEmail());
+					json.put("friend", udao.readUserById(em, tm.getFriendId()).getEmail());
+					jray.add(json.toString());
+				}
+				req.getSession().setAttribute("transactions", jray.toString());
 				
 				em.close();
-				String jsonText = jray.toString();
-				req.getSession().setAttribute("currencies", jsonText);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}	

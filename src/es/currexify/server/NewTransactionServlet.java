@@ -24,6 +24,7 @@ public class NewTransactionServlet extends HttpServlet {
 	String[] times = {"Instant -- 1.5%", "3 days -- 1.3%", "7 days -- 1%"};
 	private UsuariosModel usuario;
 	Calendar cal = Calendar.getInstance();
+	String friend = "";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String url = "";
@@ -41,6 +42,10 @@ public class NewTransactionServlet extends HttpServlet {
 			user = usuario.getName();
 			url = "/logout";
 			urlLinktext = "Logout";
+			
+			if (req.getParameter("friend") != null) {
+				friend = req.getParameter("friend");
+			}
 		}
 
 		req.getSession().setAttribute("user", user);
@@ -62,12 +67,17 @@ public class NewTransactionServlet extends HttpServlet {
 														// puede hacer
 			return;
 		}
+		
 		EntityManager em = EMFService.get().createEntityManager();
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 		if (!hasMoney(from, Double.valueOf(amount))) {
 			resp.sendRedirect("transaction?error=true");// mensaje de no hay
 														// money
 			return;
+		}
+		
+		if (!friend.isEmpty()) {
+			sendRequestToFriend(friend, from, to, Double.parseDouble(amount));
 		}
 
 		int days = 0;
@@ -153,6 +163,10 @@ public class NewTransactionServlet extends HttpServlet {
 
 		if (from.equals("EUR")) {
 			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, to);
+			System.out.println(cer);
+			System.out.println(to);
+			System.out.println(oAmount);
+			System.out.println(cer.getEuroEx());
 			cAmount = oAmount * cer.getEuroEx();
 		} else if (to.equals("EUR")) {
 			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, from);
@@ -168,5 +182,18 @@ public class NewTransactionServlet extends HttpServlet {
 		}
 		return cAmount*((100-percent)/100);
 	}
-
+	
+	private void sendRequestToFriend (String friendName, String from, String to, double oAmount) {
+		EntityManager em = EMFService.get().createEntityManager();
+		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+		UsuariosModel friend = udao.readUserByEmail(em, friendName);
+		TransactionModel tm = new TransactionModel(friend.getCardN(), to, from, getConverted(from, to, oAmount, "Instant -- 1.5%"), new Date(), 0.01);
+		List<TransactionModel> tmList = friend.getUserTransactions();
+		if (tmList == null)
+			tmList = new ArrayList<TransactionModel>();
+		tmList.add(tm);
+		friend.setUserTransactions(tmList);
+		
+		em.close();
+	}
 }

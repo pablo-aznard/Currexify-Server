@@ -47,8 +47,18 @@ span { @apply (--paper-font-body1);
 			<td style="width:24%"><span style="margin-right: 60px; float: left;">{{item.date}}</span></td>
 			<td style="width:24%"><span class$="{{checkType(item.type)}}"
 				style="margin-right: 30px; float: right;">{{item.type}}</span></td>
-			<td style="width:24%"><span class$="{{checkType(item.type)}}"
-				style="margin-right: 30px; float: right;">{{checkMoves(item.type)}}{{item.quantity}}</span></td>
+			<td style="width:24%">
+				<span class$="{{checkType(item.type)}}" style="margin-right: 30px; float: right;">{{checkMoves(item.type)}}{{item.quantity}}</span>
+				<template is="dom-if" if="{{item.friend}}">
+					<span><form action="/newtransaction" method="post">
+						<input type="hidden" name="friend" value="{{item.friend}}">
+						<input type="hidden" name="type" value="{{item.type}}">
+						<input type="hidden" name="amount" value="{{item.quantity}}">
+						<button name="accept">Aceptar transacción</button>
+						<button name="reject">Rechazar transacción</button> 
+					</form></span>
+				</template>	
+			</td>
 		</tr>
 	</table>
 	</template>
