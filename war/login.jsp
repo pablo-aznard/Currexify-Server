@@ -180,9 +180,9 @@ span { @apply (--paper-font-body1);
 				</c:if>
 				<c:if test='${user == ""}'>
 					<div>
-						<form action="login" method="post">
+						<form action="login" method="post" id="login" onsubmit="return validateForm()">
 							<paper-input label="Usuario" name="user"></paper-input>
-							<paper-input label="Contraseña" name="pass" type="password"></paper-input>
+							<paper-input label="Contraseña" name="pass" id="pass" type="password"></paper-input>
 							<input type="submit" id="submit" value="Enviar">
 						</form>
 					</div>
@@ -221,7 +221,27 @@ span { @apply (--paper-font-body1);
 
 	<!-- build:js scripts/app.js -->
 	<script src="scripts/app.js"></script>
+	<script src="scripts/sha3.js"></script>
 	<!-- endbuild-->
+	<script type="text/javascript">
+	window.onload = getUrlVars;
+	function getUrlVars() {
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+				function(m, key, value) {
+					vars[key] = value;
+				});
+		if (vars.error == "true")
+			alert("Usuario o contraseña incorrectos")
+	}
+	
+	function validateForm() {
+		
+		var pass = document.getElementById('pass');
+		pass.value = CryptoJS.SHA3(pass.value);
+		
+	}
+	</script>
 </body>
 
 </html>

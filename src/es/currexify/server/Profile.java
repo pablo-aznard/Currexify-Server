@@ -46,7 +46,6 @@ public class Profile extends HttpServlet {
 				req.getSession().setAttribute("currencies", jray.toString());
 				
 				List<TransactionModel> tList = usuario.getUserTransactions();
-				System.out.println(tList.get(0).getAmountLeft());
 				json = new JSONObject();
 				jray = new ArrayList<String>();
 				for (TransactionModel tm : tList) {

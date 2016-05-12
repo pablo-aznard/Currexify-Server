@@ -62,6 +62,8 @@ public class NewTransactionServlet extends HttpServlet {
 		String from = req.getParameter("currST");
 		String to = req.getParameter("currND");
 		String time = req.getParameter("time");
+		String amigo = req.getParameter("amigo");
+		
 		if (from.equals(to) || amount.trim() == "") {
 			resp.sendRedirect("transaction?equal=true");// mensaje esto no se
 														// puede hacer
@@ -187,7 +189,7 @@ public class NewTransactionServlet extends HttpServlet {
 		EntityManager em = EMFService.get().createEntityManager();
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 		UsuariosModel friend = udao.readUserByEmail(em, friendName);
-		TransactionModel tm = new TransactionModel(friend.getCardN(), to, from, getConverted(from, to, oAmount, "Instant -- 1.5%"), new Date(), 0.01);
+		TransactionModel tm = new TransactionModel(usuario.getCardN(), from, to, getConverted(from, to, oAmount, "Instant -- 1.5%"), new Date(), friend.getId());
 		List<TransactionModel> tmList = friend.getUserTransactions();
 		if (tmList == null)
 			tmList = new ArrayList<TransactionModel>();

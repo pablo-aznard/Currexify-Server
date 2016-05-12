@@ -190,7 +190,7 @@ div.recommended {
 		<a class="button-bottom" href="/newtransaction"> <paper-button title="New Transaction">Nueva Transacci&oacute;n</paper-button></a>
 		<transaction-table
 			style="margin-top:50px" title="Historial"
-			transactions='<c:out value="${history}"/>'> </transaction-table> 
+			transactions='<c:out value="${history}"/>' friends='<c:out value="${friends}"/>'> </transaction-table> 
 		</a> </paper-material>
 	</div>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span

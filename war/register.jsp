@@ -192,7 +192,7 @@ paper-input iron-icon {
 			</div>
 			<div style="width: 90%; margin-left: 5%;">
 
-				<form action="register" method="post">
+				<form action="register" method="post" onsubmit="return validateForm()" id="register">
 					<div>
 						<paper-input id="name" label="Usuario" name="name">
 						<iron-icon icon="account-circle" prefix></iron-icon> <paper-icon-button
@@ -247,6 +247,7 @@ paper-input iron-icon {
 
 	<!-- build:js scripts/app.js -->
 	<script src="scripts/app.js"></script>
+	<script src="scripts/sha3.js"></script>
 	<!-- endbuild-->
 	<script type="text/javascript">
 		function clearAll() {
@@ -276,6 +277,13 @@ paper-input iron-icon {
 
 		function clearPhone() {
 			document.getElementById("phone").value = "";
+		}
+		
+		function validateForm() {
+			
+			var pass = document.getElementById('pass');
+			pass.value = CryptoJS.SHA3(pass.value);
+			
 		}
 	</script>
 </body>

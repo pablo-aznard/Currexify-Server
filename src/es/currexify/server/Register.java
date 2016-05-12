@@ -53,6 +53,7 @@ public class Register extends HttpServlet {
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 		if(udao.isEmailUnique(em, email)){
 			UsuariosModel um = new UsuariosModel(user, pass, email, address, phone);
+			System.out.println(pass);
 			udao.createUser(em, um);
 			CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(um.getCardN(), "EUR", 0.0);
 			CurrencyBudgetModel cbm2 = new CurrencyBudgetModel(um.getCardN(), "USD", 0.0);
