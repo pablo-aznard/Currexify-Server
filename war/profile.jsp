@@ -69,6 +69,12 @@ span { @apply (--paper-font-body1);
 	
 }
 
+#main-paper {
+	padding: 1em;
+	max-width: 55em;
+	margin: auto;
+}
+
 .img-profile {
 	width: 76px;
 	height: 76px;
@@ -158,7 +164,7 @@ span { @apply (--paper-font-body1);
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1"> 
+		<paper-material elevation="1" class="style-scope" id="main-paper"> 
 			<c:if test='${user != ""}'>
 			<a class="button-bottom" href="/modificar"> <paper-button title="Modify Profile">Modificar perfil</paper-button></a>
 			<a class="button-bottom" href="/addMoney"> <paper-button title="Add Money">Ingresar dinero</paper-button></a>

@@ -73,6 +73,27 @@ span { @apply (--paper-font-body1);
 	
 }
 
+#main-paper {
+	padding: 2em 0;
+	margin: auto;
+}
+
+#ajaxform {
+	border-bottom: 1px solid #ccc;
+	padding: 0 1em 2em;
+}
+
+#ajaxform > div.row {
+	display: inline-block;
+	width: 75%;
+}
+
+#ajaxform > input {
+	display: inline-block;
+	top: 1.6em;
+}
+
+
 .column-6 {
 	display: inline-block;
 	padding: 0;
@@ -133,15 +154,24 @@ div.recommended {
 	border: none;
 }
 
+#search-results:not(td) {
+	padding: 0 1em 2em;
+	border-bottom: 1px solid #ccc
+}
+
+#added-friends:not(td) {
+	padding: 0 1em 1em;
+}
+
+#search-results, #added-friends {
+	padding: 0 1em;
+}
+
 table {
 	margin: 25px auto;
 	border-collapse: collapse;
 	border: 1px solid #eee;
-	border-bottom: 2px solic #4AAECF;;
-	box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
-	 	0px 10px 20px rgba(0,0,0,0.05),
-	  	0px 20px 20px rgba(0,0,0,0.05),
-	   	0px 30px 20px rgba(0,0,0,0.05);
+	border-bottom: 2px solic #4AAECF;
 }
 
 .name{
@@ -165,6 +195,8 @@ table {
 table th {
 	padding: 20px 35px;
 }
+
+
 </style>
 </head>
 
@@ -226,7 +258,7 @@ table th {
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material>
+		<paper-material class="style-scope" id="main-paper">
 		<form action="searchFriends" method="post" name="Form" id="ajaxform">
 			<div class="row">
 				<paper-input id="search" label="Introduzca el email de su amigo"
@@ -235,7 +267,7 @@ table th {
 			</div>
 			<input type="submit" value="Enviar" id="submit">
 		</form>
-		<div style="width: 100%; clear: both; height:5px; margin:40px;"></div>
+		<div id="search-results">
 		<table style="width:100%">
 			<tr class="header">
 				<th colspan="2">Resultados</th>
@@ -255,6 +287,8 @@ table th {
 				</tr>
 			</c:forEach>
 		</table>
+		</div>
+		<div id="added-friends">
 		<table style="width:100%">
 			<tr class="header">
 				<th colspan="3">Amigos añadidos</th>
@@ -277,6 +311,7 @@ table th {
 				</tr>
 			</c:forEach>
 		</table>
+		</div>
 		</paper-material>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"

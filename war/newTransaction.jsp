@@ -73,6 +73,12 @@ span { @apply (--paper-font-body1);
 	
 }
 
+#main-paper {
+	padding: 1em 1em 5em;
+	max-width: 55em;
+	margin: auto;
+}
+
 .column-6 {
 	display: inline-block;
 	padding: 0;
@@ -97,7 +103,7 @@ div.recommended {
 	position: relative;
 	box-sizing: border-box;
 	min-width: 5.14em;
-	margin: 0 0.29em;
+	margin: 1em 0.29em 0;
 	border: none;
 	text-align: center;
 	font: inherit;
@@ -180,7 +186,7 @@ div.recommended {
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material>
+		<paper-material class="style-scope" id="main-paper">
 		<form action="newtransaction" method="post" name="Form"
 			onsubmit="return validateForm()">
 			<div class="row">

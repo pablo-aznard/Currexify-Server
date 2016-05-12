@@ -37,10 +37,15 @@ span {
   padding-right: 15px;
 }
 
+.col p {
+	text-align: center;
+}
+
 .col-reg {
   width: 22%;
-  margin-left: 43%;
-  margin-bottom: 40px
+  margin: auto;
+  text-align: center;
+  padding-bottom: 5em;
 }
 
 .col-calculator, .col-lead { 
@@ -122,4 +127,14 @@ a {
 .banner-lead p {
   font-size: 1.5em;
   font-weight: 300;
+}
+
+@media all and (max-width: 75em) {
+	.col {
+		width: 100%;
+	}
+	
+	.col p {
+		padding: 0 3em;
+	}
 }

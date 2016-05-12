@@ -157,17 +157,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			</div>
 		</section>
 		<div class="row">
-			<div class="col-lead">
-				<h2 class="heading">
-					Precios simples y transparentes
-					</h1>
+			<div class="lead-calculator">
+				<div class="col-lead">
+					<h2 class="heading">
+						Precios simples y transparentes
+					</h2>
 					<p>Al intercambiar tu moneda con otros viajeros, te sale más
 						barato. En Currexify pagarás por tu moneda extranjera un 1%, que
 						viene a ser 10 veces menos de lo que te cobrarán en el banco, o en
 						los aeropuertos.</p>
-			</div>
-			<div class="col-calculator">
-				<img src="/images/changes.png" style="width: 100%;">
+				</div>
+				<div class="col-calculator">
+					<img src="/images/changes.png" style="width: 100%;">
+				</div>
 			</div>
 			<div class="load col" title="">
 				<h2 class="heading">Carga</h2>

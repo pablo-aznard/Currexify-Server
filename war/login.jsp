@@ -87,7 +87,7 @@ span { @apply (--paper-font-body1);
 	position: relative;
 	box-sizing: border-box;
 	min-width: 5.14em;
-	margin: 0 0.29em;
+	margin: 2em 0.29em 0;
 	border: none;
 	text-align: center;
 	font: inherit;
@@ -108,6 +108,11 @@ span { @apply (--paper-font-body1);
 
 .content {
 	padding: 54px 64px;
+}
+
+#mainPaper {
+	max-width: 55em;
+	margin: auto;
 }
 </style>
 </head>
@@ -155,8 +160,7 @@ span { @apply (--paper-font-body1);
 	<!-- Main Toolbar --> <paper-toolbar id="mainToolbar" class="tall">
 	<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
 
-	<span class="space"></span> <!-- Toolbar icons --> <paper-icon-button
-		icon="refresh"></paper-icon-button> <paper-icon-button icon="search"></paper-icon-button>
+	<span class="space"></span>
 
 	<!-- Application name -->
 	<div class="middle middle-container">
@@ -169,9 +173,9 @@ span { @apply (--paper-font-body1);
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1">
+		<paper-material elevation="1" class="style-scope" id="mainPaper">
 		<div style="width: 100%;">
-			<div style="margin: 0 auto;">
+			<div style="margin: 0 auto; padding: 1em;">
 				<img src="../../images/touch/logotipo_tocho.png" class="img-logo">
 			</div>
 			<div style="width: 90%; margin-left: 5%;">
