@@ -10,6 +10,7 @@ public interface UsuariosDAO {
 	public UsuariosModel createUser(EntityManager em, UsuariosModel um);
 	public List<UsuariosModel> readUsers(EntityManager em);
 	public UsuariosModel readUserById(EntityManager em, Long id);
+	public UsuariosModel readUserByCardN(EntityManager em, String cardN);
 	public UsuariosModel readUserByName(EntityManager em, String name);
 	public UsuariosModel readUserByEmail(EntityManager em, String email);
 	public boolean updateUsuario(EntityManager em, UsuariosModel um);
@@ -25,5 +26,7 @@ public interface UsuariosDAO {
 	public boolean isEmailUnique(EntityManager em, String email);
 	boolean updateTransaction(EntityManager em, UsuariosModel um,
 			TransactionModel tm);
+	boolean deleteUserHistory(EntityManager em, HistoryModel hm,
+			UsuariosModel um);
 	
 }

@@ -11,24 +11,26 @@ import es.currexify.server.model.*;
 public class UsuariosDAOImpl implements UsuariosDAO {
 
 	private static UsuariosDAOImpl instance;
-	private UsuariosDAOImpl () {
+
+	private UsuariosDAOImpl() {
 	}
+
 	public static UsuariosDAOImpl getInstance() {
 		if (instance == null)
 			instance = new UsuariosDAOImpl();
 		return instance;
 	}
-	
+
 	@Override
 	public UsuariosModel createUser(EntityManager em, UsuariosModel um) {
-		
+
 		em.getTransaction().begin();
 		em.persist(um);
 		em.getTransaction().commit();
-		
+
 		return um;
 	}
-	
+
 	@Override
 	public List<UsuariosModel> readUsers(EntityManager em) {
 		Query q = em.createQuery("select u from UsuariosModel u");
@@ -38,62 +40,79 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 
 	@Override
 	public UsuariosModel readUserById(EntityManager em, Long id) {
-		
-		Query q = em.createQuery("select u from UsuariosModel u where u.id = :id");
+
+		Query q = em
+				.createQuery("select u from UsuariosModel u where u.id = :id");
 		q.setParameter("id", id);
 		UsuariosModel res = null;
-		List<UsuariosModel> ums= q.getResultList();
+		List<UsuariosModel> ums = q.getResultList();
 		if (ums.size() > 0)
 			res = (UsuariosModel) (q.getResultList().get(0));
-		
-		return res; 
+
+		return res;
+	}
+
+	@Override
+	public UsuariosModel readUserByCardN(EntityManager em, String cardN) {
+
+		Query q = em
+				.createQuery("select u from UsuariosModel u where u.cardN = :cardN");
+		q.setParameter("cardN", cardN);
+		UsuariosModel res = null;
+		List<UsuariosModel> ums = q.getResultList();
+		if (ums.size() > 0)
+			res = (UsuariosModel) (q.getResultList().get(0));
+
+		return res;
 	}
 
 	@Override
 	public UsuariosModel readUserByName(EntityManager em, String name) {
-		
-		Query q = em.createQuery("select u from UsuariosModel u where u.name = :name");
+
+		Query q = em
+				.createQuery("select u from UsuariosModel u where u.name = :name");
 		q.setParameter("name", name);
 		UsuariosModel res = null;
-		List<UsuariosModel> ums= q.getResultList();
+		List<UsuariosModel> ums = q.getResultList();
 		if (ums.size() > 0)
 			res = (UsuariosModel) (q.getResultList().get(0));
-		
-		return res; 
+
+		return res;
 	}
-	
+
 	@Override
 	public UsuariosModel readUserByEmail(EntityManager em, String email) {
-		
-		Query q = em.createQuery("select u from UsuariosModel u where u.email = :email");
+
+		Query q = em
+				.createQuery("select u from UsuariosModel u where u.email = :email");
 		q.setParameter("email", email);
 		UsuariosModel res = null;
-		List<UsuariosModel> ums= q.getResultList();
+		List<UsuariosModel> ums = q.getResultList();
 		if (ums.size() > 0)
 			res = (UsuariosModel) (q.getResultList().get(0));
-		
-		return res; 
+
+		return res;
 	}
 
 	@Override
 	public boolean updateUsuario(EntityManager em, UsuariosModel um) {
 
-		
 		em.getTransaction().begin();
 		em.merge(um);
 		em.getTransaction().commit();
-		
+
 		return true;
 
 	}
-	
+
 	@Override
-	public boolean updateTransaction(EntityManager em, UsuariosModel um, TransactionModel tm) {
+	public boolean updateTransaction(EntityManager em, UsuariosModel um,
+			TransactionModel tm) {
 
 		em.getTransaction().begin();
 		List<TransactionModel> tml = um.getUserTransactions();
-		for(TransactionModel tm2 : tml){
-			if(tm2.getId().equals(tm.getId())){
+		for (TransactionModel tm2 : tml) {
+			if (tm2.getId().equals(tm.getId())) {
 				tm2.setAmount(tm.getAmount());
 				tm2.setAmountLeft(tm.getAmountLeft());
 			}
@@ -104,14 +123,15 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		return true;
 
 	}
-	
+
 	@Override
-	public boolean updateCurrency(EntityManager em, UsuariosModel um, CurrencyBudgetModel cbm) {
+	public boolean updateCurrency(EntityManager em, UsuariosModel um,
+			CurrencyBudgetModel cbm) {
 
 		em.getTransaction().begin();
 		List<CurrencyBudgetModel> cbml = um.getUserCurrencies();
-		for(CurrencyBudgetModel cbm2 : cbml){
-			if(cbm2.getCurrency().equals(cbm.getCurrency())){
+		for (CurrencyBudgetModel cbm2 : cbml) {
+			if (cbm2.getCurrency().equals(cbm.getCurrency())) {
 				cbm2.setBudget(cbm.getBudget());
 				cbm2.setBlocked(cbm.getBlocked());
 			}
@@ -122,33 +142,35 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		return true;
 
 	}
-	
+
 	@Override
 	public boolean addFriend(EntityManager em, UsuariosModel um, String friend) {
-		
+
 		em.getTransaction().begin();
 		Set<String> userFriends = um.getFriends();
 		userFriends.add(friend);
 		em.merge(um);
 		em.getTransaction().commit();
-		
+
 		return true;
 	}
-	
+
 	@Override
-	public boolean deleteFriend(EntityManager em, UsuariosModel um, String friend) {
-		
+	public boolean deleteFriend(EntityManager em, UsuariosModel um,
+			String friend) {
+
 		em.getTransaction().begin();
 		Set<String> userFriends = um.getFriends();
 		userFriends.remove(friend);
 		em.merge(um);
 		em.getTransaction().commit();
-		
+
 		return true;
 	}
-	
+
 	@Override
-	public boolean addHistoryToUser(EntityManager em, HistoryModel hm, UsuariosModel um) {
+	public boolean addHistoryToUser(EntityManager em, HistoryModel hm,
+			UsuariosModel um) {
 
 		em.getTransaction().begin();
 		List<HistoryModel> hml = um.getHistories();
@@ -159,76 +181,100 @@ public class UsuariosDAOImpl implements UsuariosDAO {
 		em.getTransaction().commit();
 		return true;
 	}
-	
+
 	@Override
-	public boolean addCurrencyBudgetToUser(EntityManager em, CurrencyBudgetModel cbm, UsuariosModel um) {
-		
+	public boolean addCurrencyBudgetToUser(EntityManager em,
+			CurrencyBudgetModel cbm, UsuariosModel um) {
+
 		em.getTransaction().begin();
 		List<CurrencyBudgetModel> cbml = um.getUserCurrencies();
 		cbml.add(cbm);
 		um.setUserCurrencies(cbml);
 		em.merge(um);
 		em.getTransaction().commit();
-		
+
 		return true;
 	}
-	
-	public boolean addTransactionToUser(EntityManager em, TransactionModel tm, UsuariosModel um) {
-		
+
+	public boolean addTransactionToUser(EntityManager em, TransactionModel tm,
+			UsuariosModel um) {
+
 		em.getTransaction().begin();
 		List<TransactionModel> tml = um.getUserTransactions();
-		if (tml == null) tml = new ArrayList<TransactionModel>();
+		if (tml == null)
+			tml = new ArrayList<TransactionModel>();
 		tml.add(tm);
 		um.setUserTransactions(tml);
 		em.merge(um);
 		em.persist(tm);
 		em.getTransaction().commit();
-		
+
 		return true;
 	}
 	
-	public boolean deleteUserTransaction(EntityManager em, TransactionModel tm, UsuariosModel um) {
-		
+	@Override
+	public boolean deleteUserTransaction(EntityManager em, TransactionModel tm,
+			UsuariosModel um) {
+
 		em.getTransaction().begin();
 		List<TransactionModel> tml = um.getUserTransactions();
-		for(TransactionModel tmt : tml){
+		for (TransactionModel tmt : tml) {
 			if (tmt.getId().equals(tm.getId()))
 				tml.remove(tmt);
 		}
 		um.setUserTransactions(tml);
 		em.merge(um);
 		em.getTransaction().commit();
-		
+
+		return true;
+	}
+	
+	@Override
+	public boolean deleteUserHistory(EntityManager em, HistoryModel hm,
+			UsuariosModel um) {
+
+		em.getTransaction().begin();
+		List<HistoryModel> hml = um.getHistories();
+		for (HistoryModel hmt : hml) {
+			if (hmt.getId().equals(hm.getId()))
+				hml.remove(hmt);
+		}
+		um.setHistories(hml);
+		em.merge(um);
+		em.getTransaction().commit();
+
 		return true;
 	}
 
 	@Override
 	public boolean deleteUsuario(EntityManager em, UsuariosModel um) {
-		
+
 		em.getTransaction().begin();
 		em.remove(um);
 		em.getTransaction().commit();
 		return true;
 	}
-	
-	@Override 
+
+	@Override
 	public boolean isUserUnique(EntityManager em, String user) {
-		Query q = em.createQuery("select u from UsuariosModel u where u.name = :name");
+		Query q = em
+				.createQuery("select u from UsuariosModel u where u.name = :name");
 		q.setParameter("name", user);
-		List<UsuariosModel> ums= q.getResultList();
+		List<UsuariosModel> ums = q.getResultList();
 		if (ums.size() > 0)
 			return false;
 		else
 			return true;
 	}
-	
+
 	@Override
 	public boolean isEmailUnique(EntityManager em, String email) {
-		Query q = em.createQuery("select u from UsuariosModel u where u.email = :email");
+		Query q = em
+				.createQuery("select u from UsuariosModel u where u.email = :email");
 		q.setParameter("email", email);
-		List<UsuariosModel> ums= q.getResultList();
+		List<UsuariosModel> ums = q.getResultList();
 		return !(ums.size() > 0);
-		
+
 	}
 
 }

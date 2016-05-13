@@ -30,10 +30,10 @@ public class UsuariosModel implements Serializable {
 	private String cardN;
 	@Column(name="FRIENDS")
 	private Set<String> friends;
-	@OneToMany
+	@OneToMany(orphanRemoval=true)
 	@JoinColumn(name="USER_HISTORY")
 	private List<HistoryModel> histories;
-	@OneToMany
+	@OneToMany(orphanRemoval=true)
 	@JoinColumn(name="USER_CURRENCIES")
 	private List<CurrencyBudgetModel> userCurrencies;
 	@OneToMany(orphanRemoval=true)

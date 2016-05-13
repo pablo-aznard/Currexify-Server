@@ -63,13 +63,13 @@ public class TransactionServlet extends HttpServlet {
 				for (TransactionModel tm: tml) {
 					if(tm.getFriendId() != null) {
 						if(tm.getFriendId().longValue() == usuario.getId().longValue()){
-							json2.put("friend", udao.readUserById(em, tm.getFriendId()).getEmail());
+							json2.put("friend", udao.readUserByCardN(em, tm.getCardN()).getEmail());
 							json2.put("coinD", tm.getDCoin());
-							json2.put("quantityD", tm.getAmount());
+							json2.put("quantityS", tm.getAmount());
 							json2.put("coinS", tm.getSCoin());
-							json2.put("quantityS", getConverted(tm.getSCoin(), tm.getDCoin(), tm.getAmount(), times[2]));
+							json2.put("quantityD", getConverted(tm.getSCoin(), tm.getDCoin(), tm.getAmount(), times[2]));
+							json2.put("id", tm.getId());
 							jray2.add(json2.toString());
-							System.out.println(jray2.toString());
 						}
 					}
 				}
