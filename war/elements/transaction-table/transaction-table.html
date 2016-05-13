@@ -35,13 +35,19 @@ span { @apply (--paper-font-body1);
 }
 </style>
 <div style="width: 100%; margin-top: 20px">
-	<div
+	
+	<table style="padding: 10px; width: 100%; background-color: #EEE; border-bottom: 1px solid #ccc">
+		<tr
 		style="background-color: #666; color: white; padding: 10px 0 10px 10px;">
-		<span>{{title}}</span>
-	</div>
-	<template is="dom-repeat" items="{{transactions}}" as="item">
-		<table
-			style="padding: 10px; width: 100%; background-color: #EEE; border-bottom: 1px solid #ccc">
+			<th colspan="4"><span style="font-size: 18px; font-weight: bold">{{title}}</span></th>
+		</tr>
+	
+		<template is="dom-if" if="{{checkHistory()}}">
+		<tr>
+			<td colspan="4" style="text-align: center"><span>No tienes historial de transacciones</span></td>
+		</tr>
+		</template>
+		<template is="dom-repeat" items="{{transactions}}" as="item">
 			<tr>
 				<td style="width:24%"><span style="margin-right: 60px; float: left;">{{item.user}}</span></td>
 				<td style="width:24%"><span style="margin-right: 60px; float: left;">{{item.date}}</span></td>
@@ -51,8 +57,9 @@ span { @apply (--paper-font-body1);
 					<span class$="{{checkType(item.type)}}" style="margin-right: 30px; float: right;">{{checkMoves(item.type)}}{{item.quantity}}</span>
 				</td>
 			</tr>
-		</table>
-	</template>
+		</template>
+	</table>
+	
 	<table style="width: 100%; margin-top: 50px">
 		<tr style="width: 100%; background-color: #666; color: white; padding: 10px 0 10px 10px;">
 			<th style="width: 15%">Nombre</th>
@@ -62,22 +69,29 @@ span { @apply (--paper-font-body1);
 			<th style="width: 15%">Moneda</th>
 			<th style="width: 15%">Acciones</th>
 		</tr>
+		<template is="dom-if" if="{{checkFriend()}}">
+		<tr>
+			<td colspan="6" style="text-align: center"><span>No tienes transaccones de amigos</span></td>
+		</tr>
+		</template>
 		<template is="dom-repeat" items="{{friends}}" as="item">
 			<tr style="width: 100%;">
-				<form action="/newtransaction?amigo=true" method="post">
-						<td style="width: 15%; text-align: center"><span>{{item.friend}}</span>
-						<input hidden name="friend" value="{{item.friend}}"></td>
-						<td style="width: 15%; text-align: center"><span>{{roundNumber(item.quantityD)}}</span>
-						<input hidden name="amount" value="{{item.quantityD}}"></td>
-						<td style="width: 15%; text-align: center"><span>{{item.coinD}}</span>
-						<input hidden name="coinD" value="{{item.coinD}}"></td>
-						<td style="width: 15%; text-align: center"><span>{{roundNumber(item.quantityS)}}</span>
-						<input hidden name="amount" value="{{item.quantityS}}"></td>
-						<td style="width: 15%; text-align: center"><span>{{item.coinS}}</span>
-						<input hidden name="coinS" value="{{item.coinS}}"></td>
-						<td style="width: 15%; text-align: center"><button type="submit" name="action" style="background-color: transparent; border:none"><iron-icon icon="check" style="color:green"></iron-icon></button>
-						<button type="submit" name="action" style="background-color: transparent; border:none"><iron-icon icon="clear" style="color:red"></iron-icon></button> </td>
-				</form>
+						<td style="width: 15%; text-align: center"><span>{{item.friend}}</span></td>
+						<td style="width: 15%; text-align: center"><span>{{roundNumber(item.quantityD)}}</span></td>
+						<td style="width: 15%; text-align: center"><span>{{item.coinD}}</span></td>
+						<td style="width: 15%; text-align: center"><span>{{roundNumber(item.quantityS)}}</span></td>
+						<td style="width: 15%; text-align: center"><span>{{item.coinS}}</span></td>
+						<td style="width: 15%; text-align: center">
+							<form action="/newtransaction?amigo=true" method="post">
+								<input hidden name="friend" value="{{item.friend}}">
+								<input hidden name="amount" value="{{item.quantityD}}">
+								<input hidden name="coinD" value="{{item.coinD}}">
+								<input hidden name="amount" value="{{item.quantityS}}">
+								<input hidden name="coinS" value="{{item.coinS}}">
+								<button type="submit" name="action" style="background-color: transparent; border:none"><iron-icon icon="check" style="color:green"></iron-icon></button>
+								<button type="submit" name="action" style="background-color: transparent; border:none"><iron-icon icon="clear" style="color:red"></iron-icon></button> 		
+							</form>
+						</td>
 			</span>
 		</template>	
 	</table>
@@ -96,19 +110,7 @@ span { @apply (--paper-font-body1);
 				},
 				transactions : {
 					type : Array,
-					value : [ {
-						"user" : "Pablo Pavo",
-						"type" : "0.95",
-						"quantity" : "200€"
-					}, {
-						"user" : "Nacho Cano",
-						"type" : "0.05",
-						"quantity" : "300€"
-					}, {
-						"user" : "William Tell",
-						"type" : "2.95",
-						"quantity" : "500€"
-					} ]
+					value : []
 				},
 				friends: {
 					type: Array,
@@ -139,13 +141,20 @@ span { @apply (--paper-font-body1);
 				}
 			},
 			
-			checkFriend: function(friend) {
-				if (friend != undefined){
+			checkFriend: function() {
+				if (this.friends == undefined){
+					return true
+				} else {
+					return false
+				}	
+			},
+			
+			checkHistory: function() {
+				if (this.transactions == undefined){
 					return true
 				} else {
 					return false
 				}
-						
 			},
 			
 			roundNumber: function(number) {

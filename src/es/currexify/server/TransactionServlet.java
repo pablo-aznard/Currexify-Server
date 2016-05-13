@@ -62,9 +62,7 @@ public class TransactionServlet extends HttpServlet {
 				List<TransactionModel> tml = tdao.readTransactions(em);
 				for (TransactionModel tm: tml) {
 					if(tm.getFriendId() != null) {
-						System.out.println("PAVO NO NULO");
 						if(tm.getFriendId().longValue() == usuario.getId().longValue()){
-							System.out.println("PAVO IDENTIFICADO");
 							json2.put("friend", udao.readUserById(em, tm.getFriendId()).getEmail());
 							json2.put("coinD", tm.getDCoin());
 							json2.put("quantityD", tm.getAmount());
