@@ -36,16 +36,16 @@ span { @apply (--paper-font-body1);
 </style>
 <div style="width: 100%; margin-top: 20px">
 	
-	<table style="padding: 10px; width: 100%; background-color: #EEE; border-bottom: 1px solid #ccc">
+	<table style="padding: 10px; width: 100%;">
 		<tr
 		style="background-color: #666; color: white; padding: 10px 0 10px 10px;">
 			<th colspan="4"><span style="font-size: 18px; font-weight: bold">{{title}}</span></th>
 		</tr>
 	
-		<template is="dom-if" if="{{checkHistory()}}">
-		<tr>
-			<td colspan="4" style="text-align: center"><span>No tienes historial de transacciones</span></td>
-		</tr>
+		<template is="dom-if" if="{{checkHistory(transactions)}}">
+			<tr>
+				<td colspan="4" style="text-align: center"><span>No tienes historial de transacciones</span></td>
+			</tr>
 		</template>
 		<template is="dom-repeat" items="{{transactions}}" as="item">
 			<tr>
@@ -69,9 +69,9 @@ span { @apply (--paper-font-body1);
 			<th style="width: 15%">Moneda</th>
 			<th style="width: 15%">Acciones</th>
 		</tr>
-		<template is="dom-if" if="{{checkFriend()}}">
+		<template is="dom-if" if="{{checkFriend(friends)}}">
 		<tr>
-			<td colspan="6" style="text-align: center"><span>No tienes transaccones de amigos</span></td>
+			<td colspan="6" style="text-align: center"><span>No tienes transacciones de amigos</span></td>
 		</tr>
 		</template>
 		<template is="dom-repeat" items="{{friends}}" as="item">
@@ -84,10 +84,10 @@ span { @apply (--paper-font-body1);
 						<td style="width: 15%; text-align: center">
 							<form action="/newtransaction?amigo=true" method="post">
 								<input hidden name="friend" value="{{item.friend}}">
-								<input hidden name="amount" value="{{item.quantityD}}">
-								<input hidden name="coinD" value="{{item.coinD}}">
+								<input hidden name="amountND" value="{{item.quantityD}}">
+								<input hidden name="currND" value="{{item.coinD}}">
 								<input hidden name="amount" value="{{item.quantityS}}">
-								<input hidden name="coinS" value="{{item.coinS}}">
+								<input hidden name="currST" value="{{item.coinS}}">
 								<button type="submit" name="action" style="background-color: transparent; border:none"><iron-icon icon="check" style="color:green"></iron-icon></button>
 								<button type="submit" name="action" style="background-color: transparent; border:none"><iron-icon icon="clear" style="color:red"></iron-icon></button> 		
 							</form>
@@ -105,7 +105,7 @@ span { @apply (--paper-font-body1);
 
 			properties : {
 				title : {
-					type : "String",
+					type : String,
 					value : "Transactions"
 				},
 				transactions : {
@@ -119,7 +119,6 @@ span { @apply (--paper-font-body1);
 			},
 
 			ready : function() {
-				var that = this;
 			},
 
 			checkType : function(type) {
@@ -141,16 +140,16 @@ span { @apply (--paper-font-body1);
 				}
 			},
 			
-			checkFriend: function() {
-				if (this.friends == undefined){
+			checkFriend: function(friends) {
+				if (friends.toString() == ""){
 					return true
 				} else {
 					return false
 				}	
 			},
 			
-			checkHistory: function() {
-				if (this.transactions == undefined){
+			checkHistory: function(transactions) {
+				if (transactions.toString() == "") {
 					return true
 				} else {
 					return false
