@@ -81,6 +81,12 @@ public class NewTransactionServlet extends HttpServlet {
 			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 			usuario = udao.readUserByEmail(em, email);
 			
+			if (!hasMoney(from, Double.valueOf(amount))) {
+				resp.sendRedirect("transaction?error=true");// mensaje de no hay
+															// money
+				return;
+			}
+			
 			HistoryModel toHm = new HistoryModel(usuario.getCardN(), from, dAmountConverted, "saliente", new Date());
 			udao.addHistoryToUser(em, toHm,
 					udao.readUserByEmail(em, usuario.getEmail()));

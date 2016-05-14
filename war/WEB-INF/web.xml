@@ -110,6 +110,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/contact</url-pattern>
 	</servlet-mapping>
  	<servlet>
+		<servlet-name>Pay</servlet-name>
+		<servlet-class>es.currexify.server.PayServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Pay</servlet-name>
+		<url-pattern>/pay</url-pattern>
+	</servlet-mapping>
+ 	<servlet>
 		<servlet-name>AddMoney</servlet-name>
 		<servlet-class>es.currexify.server.AddMoneyServlet</servlet-class>
 	</servlet>

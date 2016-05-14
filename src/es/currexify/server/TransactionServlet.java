@@ -99,11 +99,11 @@ public class TransactionServlet extends HttpServlet {
 	private String getCurrencySymbol(String currencyName) {
 		switch (currencyName) {
 		case "EUR":
-			return "�";
+			return "€";
 		case "USD":
 			return "$";
 		case "GBP":
-			return "�";
+			return "£";
 		default:
 			return "";
 		}
