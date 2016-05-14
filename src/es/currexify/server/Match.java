@@ -56,7 +56,7 @@ public class Match extends HttpServlet {
 		List<TransactionModel> all = transdao.readTransactions(em);
 		Collections.sort(all, tmComparator);
 		for(TransactionModel tmt : all) {
-			if (tmt.getEDate().before(new Date()) && tmt.getFriendId() == null)
+			if (tmt.getEDate().before(new Date()) && tmt.getFriendId() == 0)
 				updateTransaction(tmt, tmt.getAmountLeft());
 			else 
 				break;
@@ -67,17 +67,17 @@ public class Match extends HttpServlet {
 			List<TransactionModel> list2) {
 		double totalAmount1 = 0;
 		double totalAmount2 = 0;
-
+		
 		for (TransactionModel tm : list1) {
 			// if (tm.getEDate().getTime() > new Date().getTime()+90000)
-			if (tm.getFriendId() != null)
+			if (tm.getFriendId() != 0)
 				list1.remove(tm);
 			else
 				totalAmount1 += tm.getAmountLeft();
 		}
 		for (TransactionModel tm : list2) {
 			// if (tm.getEDate().getTime() > new Date().getTime()+90000)
-			if (tm.getFriendId() != null)
+			if (tm.getFriendId() != 0)
 				list2.remove(tm);
 			else
 				totalAmount2 += tm.getAmountLeft();
@@ -172,7 +172,7 @@ public class Match extends HttpServlet {
 			double totalAmountConverted = getConverted(trans.getSCoin(),
 					trans.getDCoin(), trans.getAmount());
 			HistoryModel hm1e = new HistoryModel(um1.getCardN(),
-					trans.getDCoin(), totalAmountConverted*(1-trans.getCharge()), "Entrante",
+					trans.getDCoin(), totalAmountConverted*(1-trans.getCharge()), "entrante",
 					new Date());
 			
 			CurrencyBudgetModel cbm1 = new CurrencyBudgetModel(
@@ -182,7 +182,7 @@ public class Match extends HttpServlet {
 			for(HistoryModel h: hml){
 				if(h.getType().equals("bloqueado") && h.getAmount()==trans.getAmount()){
 					HistoryDAOImpl hdao = HistoryDAOImpl.getInstance();
-					h.setType("Saliente");
+					h.setType("saliente");
 					hdao.updateHistory(em, h);
 					break;
 				}

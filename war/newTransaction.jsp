@@ -197,7 +197,7 @@ div.recommended {
 					</paper-input>
 				</div>
 				<div class="column-6">
-					<paper-dropdown-menu label="Type"> <paper-menu
+					<paper-dropdown-menu label="Moneda Origen"> <paper-menu
 						class="dropdown-content" attr-for-selected="value"
 						selected="{{disk}}"> <c:forEach items="${currencies}"
 						var="curr">
@@ -219,7 +219,7 @@ div.recommended {
 					<input type="hidden" name="time" value="{{timer}}">
 				</div>
 				<div class="column-6">
-					<paper-dropdown-menu label="Type"> <paper-menu
+					<paper-dropdown-menu label="Moneda Destino"> <paper-menu
 						class="dropdown-content" attr-for-selected="value"
 						selected="{{disk2}}"> <c:forEach
 						items="${currencies}" var="curr2">

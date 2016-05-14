@@ -198,7 +198,7 @@ div.recommended {
 					onclick="clearQuantity()" icon="clear" alt="clear" title="clear"></paper-input>
 			</div>
 			<div class="row">
-					<paper-dropdown-menu label="Type"> <paper-menu
+					<paper-dropdown-menu label="Moneda"> <paper-menu
 						class="dropdown-content" attr-for-selected="value"
 						selected="{{curr}}"> <c:forEach
 						items="${currencies}" var="curr2">

@@ -193,7 +193,7 @@ div.recommended {
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
 		<paper-material elevation="1" class="style-scope" id="main-paper"> 
-		<a class="button-bottom" href="/newtransaction"> <paper-button title="New Transaction">Nueva Transacci&oacute;n</paper-button></a>
+		<a class="button-bottom" href="/newtransaction"> <paper-button title="New Transaction">Nueva Petici&oacute;n de Cambio</paper-button></a>
 		<transaction-table
 			style="margin-top:50px" title="Historial"
 			transactions='<c:out value="${history}"/>' friends='<c:out value="${friends}"/>'> </transaction-table> 

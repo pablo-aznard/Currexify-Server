@@ -21,7 +21,7 @@ import es.currexify.server.model.*;
 public class NewTransactionServlet extends HttpServlet {
 
 	String[] currencies = { "EUR", "USD", "GBP" };
-	String[] times = { "Instant -- 1.5%", "3 days -- 1.3%", "7 days -- 1%"};
+	String[] times = { "Instantánea -- 1.5%", "3 días -- 1.3%", "7 días -- 1%"};
 	private UsuariosModel usuario;
 	Calendar cal = Calendar.getInstance();
 	String friend = "";
