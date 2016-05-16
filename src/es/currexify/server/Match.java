@@ -55,7 +55,15 @@ public class Match extends HttpServlet {
 		
 		List<TransactionModel> all = transdao.readTransactions(em);
 		Collections.sort(all, tmComparator);
+		System.out.println("ALL Size : "+all.size());
 		for(TransactionModel tmt : all) {
+			System.out.println("ALL FriendId : "+tmt.getCardN());
+			System.out.println("ALL FriendId : "+tmt.getSCoin());
+			System.out.println("ALL FriendId : "+tmt.getDCoin());
+			System.out.println("ALL FriendId : "+tmt.getAmount());
+			System.out.println("ALL FriendId : "+tmt.getAmountLeft());
+			System.out.println("ALL FriendId : "+tmt.getEDate());
+			System.out.println("ALL FriendId : "+tmt.getFriendId());
 			if(tmt.getFriendId() == 0) {
 				if (tmt.getEDate().before(new Date())) {
 					updateTransaction(tmt, tmt.getAmountLeft());
@@ -73,6 +81,7 @@ public class Match extends HttpServlet {
 		double totalAmount2 = 0;
 		
 		for (TransactionModel tm : list1) {
+			System.out.println("List1 FriendId : "+tm.getFriendId());
 			// if (tm.getEDate().getTime() > new Date().getTime()+90000)
 			if (tm.getFriendId() != 0)
 				list1.remove(tm);
@@ -80,6 +89,7 @@ public class Match extends HttpServlet {
 				totalAmount1 += tm.getAmountLeft();
 		}
 		for (TransactionModel tm : list2) {
+			System.out.println("List2 FriendId : "+tm.getFriendId());
 			// if (tm.getEDate().getTime() > new Date().getTime()+90000)
 			if (tm.getFriendId() != 0)
 				list2.remove(tm);

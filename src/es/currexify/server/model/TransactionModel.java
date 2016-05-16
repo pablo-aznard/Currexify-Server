@@ -59,6 +59,7 @@ public class TransactionModel implements Serializable,
 		this.amount = amount;
 		this.amountLeft = amount;
 		this.eDate = eDate;
+		this.charge = 0.01;
 		this.friendId = friendId;
 	}
 

@@ -21,6 +21,7 @@ import es.currexify.server.model.*;
 public class CancelTransactionServlet extends HttpServlet {
 
 	private UsuariosModel usuario;
+	private UsuariosModel amigo;
 	String friend = "";
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -33,32 +34,32 @@ public class CancelTransactionServlet extends HttpServlet {
 
 		EntityManager em = EMFService.get().createEntityManager();
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-		UsuariosModel uFriend = udao.readUserByEmail(em, friend1);
 		usuario = udao.readUserByEmail(em, email);
+		amigo = udao.readUserByEmail(em, friend1);
 
-		List<TransactionModel> tml = usuario.getUserTransactions();
+		List<TransactionModel> tml = amigo.getUserTransactions();
 		for (TransactionModel a : tml) {
 			if (a.getId().toString().equals(id)) {
-				udao.deleteUserTransaction(em, a, usuario);
+				udao.deleteUserTransaction(em, a, amigo);
 			}
 		}
 
-		List<HistoryModel> hml = uFriend.getHistories();
+		List<HistoryModel> hml = amigo.getHistories();
 		for (HistoryModel h : hml) {
 			if (h.getType().equals("bloqueado") && h.getAmount() == Double.valueOf(amount)) {
-				udao.deleteUserHistory(em, h, uFriend);
+				udao.deleteUserHistory(em, h, amigo);
 			}
 		}
 
-		List<CurrencyBudgetModel> cbml = uFriend.getUserCurrencies();
+		List<CurrencyBudgetModel> cbml = amigo.getUserCurrencies();
 		for (CurrencyBudgetModel a : cbml) {
 			if (a.getCurrency().equals(to)) {
 				double newBudget = a.getBudget() + Double.valueOf(amount);
 				a.setBudget(newBudget);
 			}
 		}
-		uFriend.setUserCurrencies(cbml);
-		udao.updateUsuario(em, uFriend);
+		amigo.setUserCurrencies(cbml);
+		udao.updateUsuario(em,amigo);
 
 		em.close();
 		resp.sendRedirect("/transaction");

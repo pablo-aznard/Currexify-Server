@@ -23,6 +23,7 @@ public class AcceptTransactionServlet extends HttpServlet {
 	String[] currencies = { "EUR", "USD", "GBP" };
 	String[] times = { "Instantánea -- 1.5%", "3 días -- 1.3%", "7 días -- 1%" };
 	private UsuariosModel usuario;
+	private UsuariosModel amigo;
 	Calendar cal = Calendar.getInstance();
 	String friend = "";
 
@@ -40,6 +41,7 @@ public class AcceptTransactionServlet extends HttpServlet {
 		double dAmountConverted = Double.valueOf(amountConverted);
 		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 		usuario = udao.readUserByEmail(em, email);
+		amigo = udao.readUserByEmail(em, friend1);
 
 		if (!hasMoney(from, Double.valueOf(amount))) {
 			resp.sendRedirect("transaction?error=true");// mensaje de no hay
@@ -93,11 +95,12 @@ public class AcceptTransactionServlet extends HttpServlet {
 		uFriend.setUserCurrencies(cbmlFriend);
 		udao.updateUsuario(em, uFriend);
 
-		List<TransactionModel> tml = usuario.getUserTransactions();
-
-		for (TransactionModel a : tml) {
-			if (a.getId().toString().equals(id)) {
-				udao.deleteUserTransaction(em, a, usuario);
+		List<TransactionModel> tml = amigo.getUserTransactions();
+		System.out.println("TransIdLocal : "+id);
+		for (TransactionModel tmt : tml) {
+			System.out.println("TransId : "+tmt.getId().toString());
+			if (tmt.getId().toString().equals(id)) {
+				udao.deleteUserTransaction(em, tmt, amigo);
 			}
 		}
 

@@ -22,6 +22,7 @@ public class NewTransactionFriendServlet extends HttpServlet {
 
 	String[] currencies = { "EUR", "USD", "GBP" };
 	private UsuariosModel usuario;
+	private UsuariosModel amigo;
 	Calendar cal = Calendar.getInstance();
 	String friend = "";
 
@@ -58,22 +59,23 @@ public class NewTransactionFriendServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String amount = req.getParameter("amount");
-		String amountConverted = req.getParameter("amountND");
 		String from = req.getParameter("currST");
 		String to = req.getParameter("currND");
 		String friend1 = req.getParameter("friend");
 		String url = "";
 		String urlLinktext = "Login";
 		String user = "";
+		System.out.println("amount : "+amount);
+		System.out.println("from : "+from);
+		System.out.println("Friend2 : "+friend1);
 
 		String email = (String) req.getSession().getAttribute("login");
-
+		EntityManager em = EMFService.get().createEntityManager();
+		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 		if (email != null) {
-			EntityManager em = EMFService.get().createEntityManager();
-			UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
 			usuario = udao.readUserByEmail(em, email);
-
-			em.close();
+			amigo = udao.readUserByEmail(em, friend1);
+			System.out.println("Friend1 : "+friend1);
 			user = usuario.getName();
 			url = "/logout";
 			urlLinktext = "Logout";
@@ -87,33 +89,24 @@ public class NewTransactionFriendServlet extends HttpServlet {
 			return;
 		}
 
-		EntityManager em = EMFService.get().createEntityManager();
-		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
+		
 		if (!hasMoney(from, Double.valueOf(amount))) {
 			resp.sendRedirect("transaction?error=true");// mensaje de no hay
 														// money
 			return;
 		}
 
-		if (!friend.isEmpty()) {
-			sendRequestToFriend(friend, from, to, Double.parseDouble(amount));
-		}
-
-		int days = 7;
-		double charge = 0.01;
-		cal.add(cal.MINUTE, days);
 		HistoryModel fromHm = new HistoryModel(usuario.getCardN(), from, Double.parseDouble(amount), "bloqueado",
 				new Date());
 		udao.addHistoryToUser(em, fromHm, udao.readUserByEmail(em, usuario.getEmail()));
-
+		
 		TransactionModel tm = new TransactionModel(usuario.getCardN(), from, to, Double.parseDouble(amount),
-				cal.getTime(), charge);
+				new Date(), amigo.getId());
 		udao.addTransactionToUser(em, tm, udao.readUserByEmail(em, usuario.getEmail()));
 
-		cal.add(cal.MINUTE, days * -1);
-		UsuariosModel uTemp = udao.readUserByEmail(em, usuario.getEmail());
+		usuario = udao.readUserByEmail(em, usuario.getEmail());
 
-		List<CurrencyBudgetModel> cbml = uTemp.getUserCurrencies();
+		List<CurrencyBudgetModel> cbml = usuario.getUserCurrencies();
 		for (CurrencyBudgetModel a : cbml) {
 			System.out.println(a.getBudget() + " " + a.getCurrency());
 			if (a.getCurrency().equals(from)) {
@@ -123,11 +116,10 @@ public class NewTransactionFriendServlet extends HttpServlet {
 				a.setBlocked(newBlocked);
 			}
 		}
-		uTemp.setUserCurrencies(cbml);
-		udao.updateUsuario(em, uTemp);
+		usuario.setUserCurrencies(cbml);
+		udao.updateUsuario(em, usuario);
 
-		uTemp = udao.readUserByEmail(em, usuario.getEmail());
-		cbml = uTemp.getUserCurrencies();
+		usuario = udao.readUserByEmail(em, usuario.getEmail());
 
 		req.getSession().setAttribute("user", user);
 		req.getSession().setAttribute("url", url);
@@ -138,19 +130,6 @@ public class NewTransactionFriendServlet extends HttpServlet {
 		em.close();
 
 		resp.sendRedirect("transaction");
-	}
-
-	private String getCurrencySymbol(String currencyName) {
-		switch (currencyName) {
-		case "EUR":
-			return "€";
-		case "USD":
-			return "$";
-		case "GBP":
-			return "£";
-		default:
-			return "";
-		}
 	}
 
 	private boolean hasMoney(String currency, double amount) {
@@ -165,43 +144,5 @@ public class NewTransactionFriendServlet extends HttpServlet {
 			}
 		}
 		return false;
-	}
-
-	private double getConverted(String from, String to, double oAmount) {
-		EntityManager em = EMFService.get().createEntityManager();
-		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
-		double cAmount = 0.0;
-		double percent = 1.0;
-
-		if (from.equals("EUR")) {
-			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, to);
-			cAmount = oAmount * cer.getEuroEx();
-		} else if (to.equals("EUR")) {
-			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, from);
-			cAmount = oAmount / cer.getEuroEx();
-		} else if (from.equals("USD")) {
-			CurrencyExRateModel cer1 = cerdao.readCurrencyExRatesByCurrency(em, from);
-			CurrencyExRateModel cer2 = cerdao.readCurrencyExRatesByCurrency(em, to);
-			cAmount = oAmount / cer1.getEuroEx() * cer2.getEuroEx();
-		} else if (from.equals("GBP")) {
-			CurrencyExRateModel cer1 = cerdao.readCurrencyExRatesByCurrency(em, from);
-			CurrencyExRateModel cer2 = cerdao.readCurrencyExRatesByCurrency(em, to);
-			cAmount = oAmount / cer1.getEuroEx() * cer2.getEuroEx();
-		}
-		return cAmount * ((100 - percent) / 100);
-	}
-
-	private void sendRequestToFriend(String friendName, String from, String to, double oAmount) {
-		EntityManager em = EMFService.get().createEntityManager();
-		UsuariosDAOImpl udao = UsuariosDAOImpl.getInstance();
-		UsuariosModel friend = udao.readUserByEmail(em, friendName);
-		TransactionModel tm = new TransactionModel(usuario.getCardN(), from, to, oAmount, new Date(), friend.getId());
-		List<TransactionModel> tmList = friend.getUserTransactions();
-		if (tmList == null)
-			tmList = new ArrayList<TransactionModel>();
-		tmList.add(tm);
-		friend.setUserTransactions(tmList);
-
-		em.close();
 	}
 }

@@ -209,7 +209,8 @@ div.recommended {
 			</div>
 			<div class="row">
 				<div class="column-6">
-					<paper-input label="Transacción con" disabled name="friend" value="<c:out value="${friend}"/>"></paper-input>
+					<paper-input label="Transacción con" disabled value="<c:out value="${friend}"/>"></paper-input>
+     				<input hidden name="friend" value="<c:out value="${friend}"/>">
 				</div>
 				<div class="column-6">
 					<paper-dropdown-menu label="Moneda Destino"> <paper-menu
