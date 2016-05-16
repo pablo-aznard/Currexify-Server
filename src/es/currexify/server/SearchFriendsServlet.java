@@ -30,6 +30,8 @@ public class SearchFriendsServlet extends HttpServlet {
 		List<String> emails = new ArrayList<String>();
 		for(UsuariosModel um : usuarios) {
 			String email = um.getEmail();
+			if (email.equals(user) || email.matches(user+"(@.*)"))
+				continue;
 			if(email.matches(search+"(.*)"))
 				emails.add(email);
 		}

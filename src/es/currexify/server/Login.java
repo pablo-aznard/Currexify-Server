@@ -65,7 +65,9 @@ public class Login extends HttpServlet {
 			} else {
 				response.sendRedirect("login?error=true");	
 			}
-		} 
+		} else {
+			response.sendRedirect("login?error=true");
+		}
 		em.close();
 		
 	}
