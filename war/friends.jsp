@@ -297,7 +297,7 @@ table th {
 				<tr style="width:100%">
 					<td class="name" style="width:30%"><c:out value="${friend}" /></td>
 					<td align="right" style="width:30%">
-						<form action="/newtransaction" method="get" name="Form">
+						<form action="/newtransactionfriend" method="get" name="Form">
 							<input type="hidden" name="friend"
 								value="<c:out value="${friend}" />"><button type="submit" class="no-bg">Nueva Transacci&oacute;n<iron-icon icon="add"
 							alt="New transaction" class="blue" title="New Transaction"></iron-icon></button>

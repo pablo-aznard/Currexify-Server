@@ -102,6 +102,30 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
  	    <url-pattern>/newtransaction</url-pattern>
  	</servlet-mapping>
  	<servlet>
+		<servlet-name>NewTransactionFriend</servlet-name>
+		<servlet-class>es.currexify.server.NewTransactionFriendServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewTransactionFriend</servlet-name>
+		<url-pattern>/newtransactionfriend</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AcceptTransaction</servlet-name>
+		<servlet-class>es.currexify.server.AcceptTransactionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AcceptTransaction</servlet-name>
+		<url-pattern>/acceptTransaction</url-pattern>
+	</servlet-mapping>
+ 	<servlet>
+		<servlet-name>CancelTransaction</servlet-name>
+		<servlet-class>es.currexify.server.CancelTransactionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CancelTransaction</servlet-name>
+		<url-pattern>/cancelTransaction</url-pattern>
+	</servlet-mapping>
+ 	<servlet>
 		<servlet-name>Contact</servlet-name>
 		<servlet-class>es.currexify.server.ContactServlet</servlet-class>
 	</servlet>

@@ -73,10 +73,26 @@ span { @apply (--paper-font-body1);
 	
 }
 
-.img-logo {
-	max-width: 200px;
-	display: block;
-	margin: 0 auto;
+#main-paper {
+	padding: 1em 1em 5em;
+	max-width: 55em;
+	margin: auto;
+}
+
+.column-6 {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	width: 49.5%;
+}
+
+paper-dropdown-menu {
+	width: 100%;
+}
+
+div.recommended {
+	vertical-align: bottom;
 }
 
 #submit {
@@ -87,7 +103,7 @@ span { @apply (--paper-font-body1);
 	position: relative;
 	box-sizing: border-box;
 	min-width: 5.14em;
-	margin: 0 0.29em;
+	margin: 1em 0.29em 0;
 	border: none;
 	text-align: center;
 	font: inherit;
@@ -106,23 +122,8 @@ span { @apply (--paper-font-body1);
 		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
-#clear {
-	color: white;
-	background-color: #4AAECF;
-	width: 20%;
-	float: right;
-}
-
-paper-input iron-icon {
-	margin-right: 20px
-}
-
 .content {
 	padding: 54px 64px;
-}
-
-paper-input iron-icon {
-	margin-right: 20px
 }
 </style>
 </head>
@@ -139,7 +140,7 @@ paper-input iron-icon {
 		class="menu-name"><img src="images/touch/logotipo_tocho.png"
 		style="width: 80px"></span> </paper-toolbar> <!-- Drawer Content --> <paper-menu
 		class="app-menu" attr-for-selected="data-route" selected="[[route]]">
-	<a data-route="home" href="/"> <iron-icon icon="home"></iron-icon>
+	<a data-route="home" href="{{baseUrl}}"> <iron-icon icon="home"></iron-icon>
 		<span>Home</span>
 	</a> <c:if test='${user != ""}'>
 		<a data-route="profile" href="profile"> <iron-icon icon="face"></iron-icon>
@@ -185,47 +186,45 @@ paper-input iron-icon {
 	</div>
 	</paper-toolbar> <!-- Main Content -->
 	<div class="content">
-		<paper-material elevation="1">
-		<div style="width: 100%;">
-			<div style="margin: 0 auto;">
-				<img src="../../images/touch/logotipo_tocho.png" class="img-logo">
+		<paper-material class="style-scope" id="main-paper">
+		<form action="newtransactionfriend" method="post" name="Form"
+			onsubmit="return validateForm()">
+			<div class="row">
+				<div class="column-6">
+					<paper-input id="amountInput" type="number" name="amount"
+						label="Introduzca una cantidad" onkeydown="amountChanged(this.value)">
+					<div suffix>{{currency}}</div>
+					</paper-input>
+				</div>
+				<div class="column-6">
+					<paper-dropdown-menu label="Moneda Origen"> <paper-menu
+						class="dropdown-content" attr-for-selected="value"
+						selected="{{disk}}"> <c:forEach items="${currencies}"
+						var="curr">
+						<paper-item value="<c:out value="${curr}"/>"> <c:out
+							value="${curr}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+					<input type="hidden" name="currST" value="{{disk}}">
+				</div>
 			</div>
-			<div style="width: 90%; margin-left: 5%;">
-
-				<form action="modificar" method="post">
-					<div>
-						<paper-input id="name" label="Usuario" name="name" value="<c:url value="${name}"/>">
-						<iron-icon icon="account-circle" prefix></iron-icon> <paper-icon-button
-							suffix onclick="clearName()" icon="clear" alt="clear"
-							title="clear"></paper-input>
-						<paper-input id="pass" name="pass" label="Contraseña"
-							type="password"> <iron-icon icon="fingerprint"
-							prefix></iron-icon> <paper-icon-button suffix
-							onclick="clearPass()" icon="clear" alt="clear" title="clear"></paper-input>
-						<paper-input label="E-mail" name="email" id="email" value="<c:url value="${email}"/>">
-						<iron-icon icon="mail" prefix></iron-icon> <paper-icon-button
-							suffix onclick="clearEmail()" icon="clear" alt="clear"
-							title="clear"> </paper-icon-button> </paper-input>
-						<paper-input id="address" name="address" label="Dirección" value="<c:url value="${address}"/>">
-						<iron-icon icon="home" prefix></iron-icon> <paper-icon-button
-							suffix onclick="clearAddress()" icon="clear" alt="clear"
-							title="clear"></paper-input>
-						<gold-phone-input label="Número teléfono" label="Phone" name="phone" country-code="34"
-							phone-number-pattern="XXX-XXX-XXX" id="phone"  auto-validate  value="<c:url value="${phone}"/>">
-						</gold-phone-input>
-					</div>
-					<div style="margin-top: 2em;">
-						<div style="display: inline-block; width: 100%; margin: 0 auto">
-							<paper-button id="clear" raised onclick="clearAll()">Clear
-							fields</paper-button>
-							<input type="submit" value="submit" id="submit">
-						</div>
-					</div>
-
-				</form>
+			<div class="row">
+				<div class="column-6">
+					<paper-input label="Transacción con" disabled name="friend" value="<c:out value="${friend}"/>"></paper-input>
+				</div>
+				<div class="column-6">
+					<paper-dropdown-menu label="Moneda Destino"> <paper-menu
+						class="dropdown-content" attr-for-selected="value"
+						selected="{{disk2}}"> <c:forEach
+						items="${currencies}" var="curr2">
+						<paper-item value="<c:out value="${curr2}"/>"> <c:out
+							value="${curr2}" /></paper-item>
+					</c:forEach> </paper-menu> </paper-dropdown-menu>
+					<input type="hidden" name="currND" value="{{disk2}}">
+				</div>
 			</div>
-		</div>
+			<input type="submit" value="Enviar" id="submit">
 		</paper-material>
+		</form>
 	</paper-scroll-header-panel> </paper-drawer-panel> <paper-toast id="toast"> <span
 		class="toast-hide-button" role="button" tabindex="0"
 		onclick="app.$.toast.hide()">Ok</span> </paper-toast> <!-- Uncomment next block to enable Service Worker support (1/2) -->
@@ -249,36 +248,41 @@ paper-input iron-icon {
 	<!-- build:js scripts/app.js -->
 	<script src="scripts/app.js"></script>
 	<!-- endbuild-->
-	<script type="text/javascript">
-		function clearAll() {
-			document.getElementById("name").value = "";
-			document.getElementById("pass").value = "";
-			document.getElementById("email").value = "";
-			document.getElementById("address").value = "";
-			document.getElementById("phone").value = "";
-			document.getElementById("cardnum").value = "";
-		}
-
-		function clearName() {
-			document.getElementById("name").value = "";
-		}
-
-		function clearPass() {
-			document.getElementById("pass").value = "";
-		}
-
-		function clearEmail() {
-			document.getElementById("email").value = "";
-		}
-
-		function clearAddress() {
-			document.getElementById("address").value = "";
-		}
-
-		function clearPhone() {
-			document.getElementById("phone").value = "";
-		}
-	</script>
 </body>
+
+<script>
+	window.onload = getUrlVars;
+	function getUrlVars() {
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+				function(m, key, value) {
+					vars[key] = value;
+				});
+		if (vars.error == "true")
+			alert("No tienes suficiente dinero para crear esa transacción")
+		else if (vars.equal == "true")
+			alert("Las monedas de cambio no pueden ser iguales")
+	}
+
+	function validateForm() {
+		var amount = document.forms["Form"]["amount"].value;
+		var from = document.forms["Form"]["currST"].value;
+		var to = document.forms["Form"]["currND"].value;
+
+		if(!amount){
+			alert("Debe introducir una cantidad válida")
+			return false;
+		}
+		if (!from || !to || from == to) {
+			alert("Debes elegir unas divisas y ser distintas");
+			return false;
+		}
+	}
+
+	function amountChanged(val) {
+		var change = 1.05;
+		document.getElementById("amountChanged").innerHTML = val * change;
+	}
+</script>
 
 </html>

@@ -82,14 +82,22 @@ span { @apply (--paper-font-body1);
 						<td style="width: 15%; text-align: center"><span>{{roundNumber(item.quantityD)}}</span></td>
 						<td style="width: 15%; text-align: center"><span>{{item.coinD}}</span></td>
 						<td style="width: 15%; text-align: center">
-							<form action="/newtransaction?amigo=true" method="post">
+							<form action="/acceptTransaction" method="post">
 								<input hidden name="friend" value="{{item.friend}}">
 								<input hidden name="amount" value="{{item.quantityS}}">
 								<input hidden name="currND" value="{{item.coinS}}">
 								<input hidden name="amountND" value="{{item.quantityD}}">
 								<input hidden name="currST" value="{{item.coinD}}">
 								<input hidden name="id" value="{{item.id}}">
-								<button type="submit" name="action" value="accept" style="background-color: transparent; border:none"><iron-icon icon="check" style="color:green"></iron-icon></button>
+								<button type="submit" name="action" value="accept" style="background-color: transparent; border:none"><iron-icon icon="check" style="color:green"></iron-icon></button>		
+							</form>
+							<form action="/cancelTransaction" method="post">
+								<input hidden name="friend" value="{{item.friend}}">
+								<input hidden name="amount" value="{{item.quantityS}}">
+								<input hidden name="currND" value="{{item.coinS}}">
+								<input hidden name="amountND" value="{{item.quantityD}}">
+								<input hidden name="currST" value="{{item.coinD}}">
+								<input hidden name="id" value="{{item.id}}">
 								<button type="submit" name="action" value="cancel" style="background-color: transparent; border:none"><iron-icon icon="clear" style="color:red"></iron-icon></button> 		
 							</form>
 						</td>

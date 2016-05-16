@@ -36,7 +36,6 @@ public class TransactionServlet extends HttpServlet {
 		Comparator<HistoryModel> tmComparator = new Comparator<HistoryModel>() {
 			@Override
 			public int compare(HistoryModel o1, HistoryModel o2) {
-				// TODO Auto-generated method stub
 				return o2.getDate().compareTo(o1.getDate());
 			}
 			
@@ -124,10 +123,6 @@ public class TransactionServlet extends HttpServlet {
 
 		if (from.equals("EUR")) {
 			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, to);
-			System.out.println(cer);
-			System.out.println(to);
-			System.out.println(oAmount);
-			System.out.println(cer.getEuroEx());
 			cAmount = oAmount * cer.getEuroEx();
 		} else if (to.equals("EUR")) {
 			CurrencyExRateModel cer = cerdao.readCurrencyExRatesByCurrency(em, from);

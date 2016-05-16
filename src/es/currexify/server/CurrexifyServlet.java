@@ -19,16 +19,6 @@ import es.currexify.server.model.*;
 public class CurrexifyServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/plain");
-		//ESTO ES LA PUTA CLAVE, CUANDO SE USE LA BBDD HAY QUE CREAR UN EM GLOBAL AL SERVLET
-//		EntityManager em = EMFService.get().createEntityManager(); 
-//		CurrencyExRateDAOImpl cerdao = CurrencyExRateDAOImpl.getInstance();
-//		if(cerdao.readCurrencyExRates(em).size() == 0) {
-//			System.out.println("ENTRA AL IF");
-//			CurrencyExRateModel cer1 = new CurrencyExRateModel(1.128, "USD");
-//			CurrencyExRateModel cer2 = new CurrencyExRateModel(0.796, "GBP");
-//			cerdao.createCurrencyExRate(em, cer1);
-//			cerdao.createCurrencyExRate(em, cer2);
-//		}
 		String url = "";
 		String urlLinktext = "Login";
 		String user = "";
@@ -52,27 +42,5 @@ public class CurrexifyServlet extends HttpServlet {
 		req.getSession().setAttribute("urlLinktext", urlLinktext);
 		RequestDispatcher view = req.getRequestDispatcher("index.jsp");
 		view.forward(req, resp);
-		/*UsuariosDAOImpl umdao = UsuariosDAOImpl.getInstance();
-		UsuariosModel um = new UsuariosModel("Perico", "qwerasdf", "qwer@asdf.com", "Calle Pinos", "123456789");
-		umdao.createUser(em, um);
-		UsuariosModel um1 = umdao.readUserById(em, um.getId());
-		resp.getWriter().println(um1.getId()+" "+um1.getCardN());
-		em.close();*/
-//		List<CurrencyExRateModel> cerl = cerdao.readCurrencyExRates(em);
-//		for(CurrencyExRateModel cer : cerl) {
-//			resp.getWriter().print(cer.getCurrency()+" "+cer.getEuroEx());
-//		}
-//		
-//		em.close();
-		/*HistoryModel hm = new HistoryModel(um.getCardN(), "Euro", 10.0, "entrante", new Date());
-		umdao.addHistoryToUser(em, hm, um);
-		List<UsuariosModel> uml = umdao.readUsers(em);
-		for(UsuariosModel umr : uml){
-			resp.getWriter().println(um.getId()+" "+um.getName());
-			List<HistoryModel> hmlTemp = umr.getHistories();
-			for(HistoryModel hmr : hmlTemp){
-				resp.getWriter().println(hmr.getId()+" "+hmr.getCardN()+" "+hmr.getCoin()+" "+hmr.getAmount()+" "+hmr.getDate());
-			}
-		}*/
 	}
   }
