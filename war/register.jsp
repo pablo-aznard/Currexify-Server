@@ -198,10 +198,12 @@ paper-input iron-icon {
 						<iron-icon icon="account-circle" prefix></iron-icon> <paper-icon-button
 							suffix onclick="clearName()" icon="clear" alt="clear"
 							title="clear"></paper-input>
-						<paper-input id="pass" name="pass" label="Contraseña"
+						<paper-input id="password" name="password" label="Contraseña"
 							type="password"> <iron-icon icon="fingerprint"
 							prefix></iron-icon> <paper-icon-button suffix
 							onclick="clearPass()" icon="clear" alt="clear" title="clear"></paper-input>
+						<paper-input id="pass" hidden name="pass" label="Contraseña"
+							type="password"></paper-input>
 						<paper-input label="E-mail" name="email" id="email">
 						<iron-icon icon="mail" prefix></iron-icon> <paper-icon-button
 							suffix onclick="clearEmail()" icon="clear" alt="clear"
@@ -282,7 +284,8 @@ paper-input iron-icon {
 		function validateForm() {
 			
 			var pass = document.getElementById('pass');
-			pass.value = CryptoJS.SHA3(pass.value);
+			var password = document.getElementById('password');
+			pass.value = CryptoJS.SHA3(password.value);
 			
 		}
 	</script>

@@ -186,7 +186,10 @@ span { @apply (--paper-font-body1);
 					<div>
 						<form action="login" method="post" id="login" onsubmit="return validateForm()">
 							<paper-input label="Usuario" name="user"></paper-input>
-							<paper-input label="Contraseña" name="pass" id="pass" type="password"></paper-input>
+							<paper-input id="password" name="password" label="Contraseña"
+								type="password"></paper-input>
+							<paper-input id="pass" hidden name="pass" label="Contraseña"
+								type="password"></paper-input>
 							<input type="submit" id="submit" value="Enviar">
 						</form>
 					</div>
@@ -194,7 +197,6 @@ span { @apply (--paper-font-body1);
 				<div style="margin-top: 2em;">
 					<c:if test='${user == ""}'>
 						<div style="display: inline-block; width: 49.5%">
-							<paper-checkbox>Mantener sesión iniciada</paper-checkbox>
 							<p>
 								<span>¿No estás registrado?<a href="register.jsp">Regístrate</a></span>
 							</p>
@@ -242,7 +244,8 @@ span { @apply (--paper-font-body1);
 	function validateForm() {
 		
 		var pass = document.getElementById('pass');
-		pass.value = CryptoJS.SHA3(pass.value);
+		var password = document.getElementById('password');
+		pass.value = CryptoJS.SHA3(password.value);
 		
 	}
 	</script>

@@ -67,15 +67,10 @@ public class AcceptTransactionServlet extends HttpServlet {
 		usuario.setUserCurrencies(cbml);
 		udao.updateUsuario(em, usuario);
 
-		// TRANSACCION DEL COLEGA
 		UsuariosModel uFriend = udao.readUserByEmail(em, friend1);
 		HistoryModel fromHmFriend = new HistoryModel(uFriend.getCardN(), from, dAmountConverted, "entrante",
 				new Date());
 		udao.addHistoryToUser(em, fromHmFriend, udao.readUserByEmail(em, uFriend.getEmail()));
-		// HistoryModel toHmFriend = new HistoryModel(uFriend.getCardN(), from,
-		// amountConverted, "saliente", new Date());
-		// udao.addHistoryToUser(em, toHmFriend,
-		// udao.readUserByEmail(em, uFriend.getEmail()));
 
 		List<HistoryModel> hml = uFriend.getHistories();
 		for (HistoryModel h : hml) {

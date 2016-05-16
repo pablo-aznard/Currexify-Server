@@ -56,10 +56,14 @@ public class Match extends HttpServlet {
 		List<TransactionModel> all = transdao.readTransactions(em);
 		Collections.sort(all, tmComparator);
 		for(TransactionModel tmt : all) {
-			if (tmt.getEDate().before(new Date()) && tmt.getFriendId() == 0)
-				updateTransaction(tmt, tmt.getAmountLeft());
-			else 
-				break;
+			if(tmt.getFriendId() == 0) {
+				if (tmt.getEDate().before(new Date())) {
+					updateTransaction(tmt, tmt.getAmountLeft());
+				}
+				else {
+					break;
+				}
+			}
 		}
 	}
 
