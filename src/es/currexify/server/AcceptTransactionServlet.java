@@ -96,9 +96,7 @@ public class AcceptTransactionServlet extends HttpServlet {
 		udao.updateUsuario(em, uFriend);
 
 		List<TransactionModel> tml = amigo.getUserTransactions();
-		System.out.println("TransIdLocal : "+id);
 		for (TransactionModel tmt : tml) {
-			System.out.println("TransId : "+tmt.getId().toString());
 			if (tmt.getId().toString().equals(id)) {
 				udao.deleteUserTransaction(em, tmt, amigo);
 			}

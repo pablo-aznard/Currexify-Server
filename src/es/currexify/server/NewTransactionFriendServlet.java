@@ -65,9 +65,6 @@ public class NewTransactionFriendServlet extends HttpServlet {
 		String url = "";
 		String urlLinktext = "Login";
 		String user = "";
-		System.out.println("amount : "+amount);
-		System.out.println("from : "+from);
-		System.out.println("Friend2 : "+friend1);
 
 		String email = (String) req.getSession().getAttribute("login");
 		EntityManager em = EMFService.get().createEntityManager();
@@ -75,7 +72,6 @@ public class NewTransactionFriendServlet extends HttpServlet {
 		if (email != null) {
 			usuario = udao.readUserByEmail(em, email);
 			amigo = udao.readUserByEmail(em, friend1);
-			System.out.println("Friend1 : "+friend1);
 			user = usuario.getName();
 			url = "/logout";
 			urlLinktext = "Logout";
@@ -108,7 +104,6 @@ public class NewTransactionFriendServlet extends HttpServlet {
 
 		List<CurrencyBudgetModel> cbml = usuario.getUserCurrencies();
 		for (CurrencyBudgetModel a : cbml) {
-			System.out.println(a.getBudget() + " " + a.getCurrency());
 			if (a.getCurrency().equals(from)) {
 				double newBudget = a.getBudget() - Double.valueOf(amount);
 				double newBlocked = a.getBlocked() + Double.valueOf(amount);
